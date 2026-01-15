@@ -32,7 +32,7 @@ export default function AboutSection() {
 							<div className="space-y-4 sm:space-y-6 text-left">
 								<div>
 									<h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black dark:text-white mb-2">
-										Dhruv
+										Dhruvesh Patil
 									</h3>
 									<p className="text-black dark:text-white opacity-70 text-base sm:text-lg font-medium">
 										Computer Engineering Student
@@ -47,27 +47,35 @@ export default function AboutSection() {
 								</p>
 
 								<div>
-									<h4 className="font-semibold text-xl sm:text-2xl mb-3">My Journey</h4>
+									<h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black dark:text-white mb-2">
+										My Journey
+									</h3>
 									<p>
 										My journey into technology started during my early college years, where I explored web development alongside core computer science fundamentals. Over time, I moved from basic projects to more structured, real-world applications, gaining hands-on experience through academic projects, personal builds, and internship-oriented work. I believe in learning by building and constantly refining my skills through practice and experimentation.
 									</p>
 								</div>
 
 								<div>
-									<h4 className="font-semibold text-xl sm:text-2xl mb-3">What I Do</h4>
+									<h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black dark:text-white mb-2">
+										What I do
+									</h3>
 									<p>
 										I work primarily as a frontend-focused developer with experience in React.js and modern UI design. I&apos;ve also built full-stack applications using Java, Spring Boot, and REST APIs, connecting them with React frontends. I enjoy creating clean, responsive interfaces, structuring scalable codebases, and turning complex ideas into simple, usable solutions.
 									</p>
 								</div>
 
 								<div>
-									<h4 className="font-semibold text-xl sm:text-2xl mb-3">Education</h4>
+									<h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black dark:text-white mb-2">
+										Education
+									</h3>
 									<p className="font-medium">K.K. Wagh Institute of Engineering Education and Research, Nashik</p>
 									<p className="text-sm opacity-80">B.Tech in Computer Engineering (2022 – 2026)</p>
 								</div>
 
 								<div>
-									<h4 className="font-semibold text-xl sm:text-2xl mb-3">Interests</h4>
+									<h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black dark:text-white mb-2">
+										Interests
+									</h3>
 									<p>
 										Beyond coding, I enjoy building portfolio-ready projects, experimenting with new UI/UX ideas, and exploring emerging technologies like AI-powered tools and automation. I actively work on improving my problem-solving skills through DSA practice and stay updated with industry trends by reading tech blogs and exploring open-source projects.
 									</p>

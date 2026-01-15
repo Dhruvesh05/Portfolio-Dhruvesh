@@ -27,15 +27,15 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 w-full shadow-md border-b transition-all duration-300 z-9999 ${
+    <nav className={`fixed top-0 left-0 w-full shadow-md transition-all duration-300 z-50 ${
       isScrolled ? 'bg-white/50 dark:bg-black/50 backdrop-blur-md border-black dark:border-white' : 'bg-transparent border-transparent'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-center items-center h-20 relative">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+        <div className="flex justify-center items-center h-16 md:h-20 relative">
 
           <div className="absolute left-0">
             <Link href="/">
-              <span className="text-black dark:text-white text-xl font-semibold transition-colors duration-300">
+              <span className="text-black dark:text-white text-base md:text-xl font-semibold transition-colors duration-300">
                 Dhruvesh Patil
               </span>
             </Link>
@@ -44,11 +44,8 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <div 
             className={`hidden md:flex items-center bg-transparent border transition-all duration-300 ${
-              isScrolled ? 'border-black dark:border-white/20' : 'border-black dark:border-transparent'
+              isScrolled ? 'border-black dark:border-white/20 shadow-[0_8px_16px_-4px_rgba(255,255,255,0.4)]' : 'border-black dark:border-transparent'
             }`}
-            style={{
-              boxShadow: '0 0 15px rgba(128, 128, 128, 0.1), 0 0 8px rgba(128, 128, 128, 0.05)'
-            }}
           >
             {[
               ['Home', '/'],
@@ -62,7 +59,7 @@ export default function Navbar() {
               <Link
                 key={href}
                 href={href}
-                className="relative text-black dark:text-white text-base px-4 py-2 hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
+                className="relative text-black dark:text-white text-sm lg:text-base px-2 lg:px-4 py-2 hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
               >
                 {label}
               </Link>
@@ -102,7 +99,7 @@ export default function Navbar() {
           isOpen ? 'max-h-150 opacity-100' : 'max-h-0 opacity-0'
         } overflow-hidden`}
       >
-        <div className="px-4 pt-3 pb-4 space-y-2">
+        <div className="px-3 pt-2 pb-3 space-y-1">
           {[
             ['Home', '/'],
             ['About Me', '/about'],
@@ -116,7 +113,7 @@ export default function Navbar() {
               key={href}
               href={href}
               onClick={() => setIsOpen(false)}
-              className="block w-full text-left px-4 py-3 rounded-lg text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
+              className="block w-full text-left px-3 py-2 rounded-lg text-sm text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
             >
               {label}
             </Link>

@@ -1,25 +1,29 @@
+import Image from "next/image";
+
 export default function AboutSection() {
 	return (
-		<section className="min-h-screen py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8">
+		<section className="min-h-screen py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black">
 			<div className="max-w-6xl mx-auto">
 				{/* Header */}
 				<div className="mb-12 sm:mb-16 md:mb-20">
-					<h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 dark:text-white">
+					<h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-black dark:text-white">
 						About Me
 					</h2>
 				</div>
 
 				{/* Profile Section */}
 				<div className="mb-16 sm:mb-20 md:mb-24">
-					<div className="backdrop-blur-lg border border-gray-300 dark:border-white p-6 sm:p-8 md:p-10 hover:border-gray-400 dark:hover:border-white transition-all duration-300 bg-white/80 dark:bg-white/4 shadow-lg">
+					<div className="border border-black dark:border-white p-6 sm:p-8 md:p-10 hover:opacity-95 transition-all duration-300 bg-white dark:bg-black">
 						<div className="grid grid-cols-1 md:grid-cols-[300px,1fr] lg:grid-cols-[350px,1fr] gap-6 sm:gap-8 md:gap-12 items-start">
 							{/* Profile Image */}
 							<div className="flex justify-center md:justify-start">
 								<div className="relative">
-									<img
+									<Image
 										src="/profileimage.png"
 										alt="Profile"
-									className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 object-cover shadow-2xl"
+										width={288}
+										height={288}
+										className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 object-cover shadow-2xl"
 									/>
 								</div>
 							</div>
@@ -27,14 +31,14 @@ export default function AboutSection() {
 							{/* Description */}
 							<div className="space-y-4 sm:space-y-6 text-left">
 								<div>
-									<h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
+									<h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black dark:text-white mb-2">
 										Dhruv
 									</h3>
-									<p className="text-gray-700 dark:text-white text-base sm:text-lg font-medium">
+									<p className="text-black dark:text-white opacity-70 text-base sm:text-lg font-medium">
 										Computer Engineering Student
 									</p>
 								</div>
-								<div className="space-y-6 text-gray-700 dark:text-gray-200 leading-relaxed text-sm sm:text-base">
+								<div className="space-y-6 text-black dark:text-white opacity-70 leading-relaxed text-sm sm:text-base">
 								<p>
 									Hello, I&apos;m <span className="font-semibold">Dhruvesh Patil</span>
 								</p>
@@ -59,7 +63,7 @@ export default function AboutSection() {
 								<div>
 									<h4 className="font-semibold text-xl sm:text-2xl mb-3">Education</h4>
 									<p className="font-medium">K.K. Wagh Institute of Engineering Education and Research, Nashik</p>
-									<p className="text-sm">B.Tech in Computer Engineering (2022 – 2026)</p>
+									<p className="text-sm opacity-80">B.Tech in Computer Engineering (2022 – 2026)</p>
 								</div>
 
 								<div>

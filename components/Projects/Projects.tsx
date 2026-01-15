@@ -13,14 +13,14 @@ export default function ProjectsSection() {
   ];
 
   return (
-    <section id="projects" className="py-24 bg-gray-50 dark:bg-[#020617] px-6">
-      <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
+    <section id="projects" className="py-24 px-6 bg-white dark:bg-black text-black dark:text-white">
+      <h2 className="text-3xl font-bold text-center mb-12">
         Projects
       </h2>
 
       {projectGroups.map(group => (
         <div key={group.title} className="max-w-6xl mx-auto mb-16">
-          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">
+          <h3 className="text-xl font-semibold mb-6">
             {group.title}
           </h3>
 
@@ -29,17 +29,17 @@ export default function ProjectsSection() {
               <Link
                 key={p}
                 href={`/projects/project-${p}`}
-                className="bg-white dark:bg-[#111827] border border-gray-200 dark:border-white/10 rounded-2xl p-6 hover:border-[#38BDF8]/40 transition"
+                className="bg-white dark:bg-black border border-black dark:border-white rounded-2xl p-6 transition"
               >
-                <h4 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+                <h4 className="text-lg font-semibold mb-2">
                   Project Title {p}
                 </h4>
 
-                <p className="text-sm text-gray-600 dark:text-[#9CA3AF] mb-4">
+                <p className="text-sm opacity-70 mb-4">
                   Short overview of the project and its objective.
                 </p>
 
-                <span className="text-[#38BDF8] text-sm">
+                <span className="text-sm opacity-70">
                   View Case Study →
                 </span>
               </Link>

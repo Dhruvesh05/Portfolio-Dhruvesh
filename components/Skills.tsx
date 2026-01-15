@@ -1,15 +1,12 @@
 export default function SkillsSection() {
   return (
-    <section id="skills" className="py-24 bg-gray-50 dark:bg-[#020617] px-6">
-      <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">
-        Skills & Certifications
-      </h2>
+    <section id="skills" className="py-24 px-6 bg-white dark:bg-black text-black dark:text-white">
+      <h2 className="text-3xl font-bold text-center mb-12">Skills & Certifications</h2>
 
       <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10">
-
         {/* Skills */}
         <div>
-          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Technical Skills</h3>
+          <h3 className="text-xl font-semibold mb-6">Technical Skills</h3>
           <div className="grid grid-cols-2 gap-4">
             {[
               "React / Next.js",
@@ -23,7 +20,7 @@ export default function SkillsSection() {
             ].map(skill => (
               <div
                 key={skill}
-                className="bg-white dark:bg-[#111827] border border-gray-200 dark:border-white/10 rounded-xl py-3 px-4 text-sm text-gray-900 dark:text-white"
+                className="bg-white dark:bg-black border border-black dark:border-white rounded-xl py-3 px-4 text-sm text-black dark:text-white"
               >
                 {skill}
               </div>
@@ -33,8 +30,8 @@ export default function SkillsSection() {
 
         {/* Certifications */}
         <div>
-          <h3 className="text-xl font-semibold mb-6 text-gray-900 dark:text-white">Certifications</h3>
-          <ul className="space-y-4 text-gray-600 dark:text-[#9CA3AF]">
+          <h3 className="text-xl font-semibold mb-6">Certifications</h3>
+          <ul className="space-y-4 text-black dark:text-white">
             <li>✔ Full Stack Web Development – Internship</li>
             <li>✔ Java Programming Certification</li>
             <li>✔ AI & Automation Tools Training</li>

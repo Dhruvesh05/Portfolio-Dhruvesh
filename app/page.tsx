@@ -1,4 +1,4 @@
-import Hero from "@/components/Hero";
+import HomePage from "@/components/Home";
 // import About from "@/components/About/About";
 // import Skills from "@/components/Skills";
 // import Experience from "@/components/Experience/Experience";
@@ -9,9 +9,9 @@ import Hero from "@/components/Hero";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-white text-black dark:bg-black dark:text-white">
       <div id="hero">
-        <Hero />
+        <HomePage />
       </div>
       {/* <div id="about-us">
         <About />

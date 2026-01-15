@@ -5,31 +5,31 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <main className="bg-background text-foreground">
+    <main className="bg-white dark:bg-black text-black dark:text-white">
 
       {/* ================= HERO ================= */}
-      <section className="min-h-screen flex items-center justify-center text-center px-4">
-        <div className="max-w-2xl rounded-[40px] border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur p-10 hover:border-[#38BDF8]/50 transition">
+      <section className="min-h-screen flex items-center justify-center text-center px-4 bg-white dark:bg-black">
+        <div className="max-w-2xl rounded-[40px] border border-black dark:border-white bg-white dark:bg-black p-10 transition">
           <div className="flex justify-center mb-6">
             <Image
               src="/profileimage.png"
               alt="Dhruvesh Patil"
               width={160}
               height={160}
-              className="rounded-full border-2 border-black/10 dark:border-white/20 shadow-lg"
+              className="rounded-full border-2 border-black dark:border-white"
             />
           </div>
 
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="block text-sm text-black/60 dark:text-white/60 mb-1">Hello, I&apos;m</span>
+            <span className="block text-sm opacity-70 mb-1">Hello, I&apos;m</span>
             Dhruvesh Patil
           </h1>
 
-          <p className="text-lg text-[#38BDF8] mb-4">
+          <p className="text-lg mb-4">
             Full Stack Developer & Designer
           </p>
 
-          <p className="text-black/70 dark:text-white/70 mb-8 leading-relaxed">
+          <p className="opacity-70 mb-8 leading-relaxed">
             B.Tech Computer Engineering undergraduate passionate about building
             modern web applications, solving problems, and exploring AI & AI
             automations.
@@ -38,13 +38,13 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/projects"
-              className="px-6 py-3 rounded-full bg-[#38BDF8] text-white hover:bg-[#38BDF8]/85 transition"
+              className="px-6 py-3 rounded-full bg-black text-white dark:bg-white dark:text-black hover:opacity-90 transition"
             >
               View Projects
             </Link>
             <Link
               href="/contact"
-              className="px-6 py-3 rounded-full border-2 border-[#38BDF8] text-[#38BDF8] hover:bg-[#38BDF8]/10 dark:hover:bg-[#38BDF8]/15 transition"
+              className="px-6 py-3 rounded-full border-2 border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition"
             >
               Contact Me
             </Link>
@@ -55,7 +55,7 @@ export default function HomePage() {
       {/* ================= ABOUT ================= */}
       <section id="about" className="py-24 px-6 max-w-5xl mx-auto">
         <h2 className="text-3xl font-bold mb-6 text-center">About Me</h2>
-        <p className="text-black/70 dark:text-white/70 text-center leading-relaxed">
+        <p className="opacity-70 text-center leading-relaxed">
           I&apos;m a computer engineering student with hands-on experience in
           full-stack development using React, Next.js, Node.js, and Java.
           I enjoy turning complex problems into simple, beautiful solutions
@@ -64,7 +64,7 @@ export default function HomePage() {
       </section>
 
       {/* ================= SKILLS ================= */}
-      <section id="skills" className="py-24 bg-black/5 dark:bg-white/5 px-6">
+      <section id="skills" className="py-24 px-6 bg-white dark:bg-black">
         <h2 className="text-3xl font-bold text-center mb-10">Skills</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
           {[
@@ -83,7 +83,7 @@ export default function HomePage() {
           ].map((skill) => (
             <div
               key={skill}
-              className="text-center py-3 rounded-xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5 hover:border-[#38BDF8]/50 transition"
+              className="text-center py-3 rounded-xl border border-black dark:border-white bg-white dark:bg-black transition"
             >
               {skill}
             </div>
@@ -99,16 +99,16 @@ export default function HomePage() {
           {[1, 2, 3].map((p) => (
             <div
               key={p}
-              className="rounded-2xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5 p-6 hover:border-[#38BDF8]/50 transition"
+              className="rounded-2xl border border-black dark:border-white bg-white dark:bg-black p-6 transition"
             >
               <h3 className="text-xl font-semibold mb-2">
                 Project Title {p}
               </h3>
-              <p className="text-sm text-gray-600 dark:text-[#9CA3AF] mb-4">
+              <p className="text-sm opacity-70 mb-4">
                 Short description of the project, what problem it solves and
                 what technologies were used.
               </p>
-              <span className="text-sm text-[#38BDF8]">
+              <span className="text-sm opacity-70">
                 React • Node • MongoDB
               </span>
             </div>
@@ -117,9 +117,9 @@ export default function HomePage() {
       </section>
 
       {/* ================= ACHIEVEMENTS ================= */}
-      <section id="achievements" className="py-24 bg-black/5 dark:bg-white/5 px-6">
+      <section id="achievements" className="py-24 px-6 bg-white dark:bg-black">
         <h2 className="text-3xl font-bold text-center mb-10">Achievements</h2>
-        <ul className="max-w-3xl mx-auto text-black/70 dark:text-white/70 space-y-4 list-disc list-inside">
+        <ul className="max-w-3xl mx-auto opacity-70 space-y-4 list-disc list-inside">
           <li>Completed multiple internships in web development</li>
           <li>Built and deployed full-stack applications</li>
           <li>Active contributor on GitHub</li>
@@ -130,12 +130,12 @@ export default function HomePage() {
       {/* ================= CONTACT ================= */}
       <section id="contact" className="py-24 px-6 text-center">
         <h2 className="text-3xl font-bold mb-6">Let&apos;s Work Together</h2>
-        <p className="text-black/70 dark:text-white/70 mb-8">
+        <p className="opacity-70 mb-8">
           Have a project, opportunity, or just want to say hi?
         </p>
         <a
           href="mailto:your-email@example.com"
-          className="inline-block px-8 py-3 rounded-full bg-[#38BDF8] text-white hover:bg-[#38BDF8]/85 transition"
+          className="inline-block px-8 py-3 rounded-full bg-black text-white dark:bg-white dark:text-black hover:opacity-90 transition"
         >
           Get In Touch
         </a>

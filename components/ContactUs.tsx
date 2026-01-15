@@ -128,10 +128,10 @@ export default function ContactUs() {
 						<div className="border border-black dark:border-white p-6">
 							<h4 className="font-bold mb-2 text-lg">Email</h4>
 							<a
-								href="mailto:dhruvnagar1211@gmail.com"
+								href="mailto:dhruvneshpatil7777@gmail.com"
 								className="opacity-70 hover:opacity-100 transition break-all"
 							>
-								dhruvneshpatil7777@gmail.com@gmail.com
+								dhruvneshpatil7777@gmail.com
 							</a>
 						</div>
 

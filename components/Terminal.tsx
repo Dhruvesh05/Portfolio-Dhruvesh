@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { X, Square, Minus } from "lucide-react";
+import { useTheme } from "next-themes";
 
 export type TerminalOpenReason = "navbar" | "easter-egg";
 
@@ -26,9 +27,14 @@ function clamp(value: number, min: number, max: number) {
 }
 
 export default function TerminalWindow({ isOpen, onRequestClose, openReason = "navbar", onMount }: TerminalWindowProps) {
+  const { resolvedTheme } = useTheme();
+  // Invert: dark site => light terminal, light site => dark terminal
+  const terminalIsDark = resolvedTheme !== "dark";
+
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isInteracting, setIsInteracting] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const [history, setHistory] = useState<string[]>(() => {
     const base = [
       "Welcome to Dhruvesh's Terminal",
@@ -42,9 +48,13 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
   const [command, setCommand] = useState("");
   const [cursorVisible, setCursorVisible] = useState(true);
 
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const bodyRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const draggingRef = useRef<{ startX: number; startY: number; startLeft: number; startTop: number } | null>(null);
   const interactionTimeoutRef = useRef<number | null>(null);
+  const dragRafRef = useRef<number | null>(null);
+  const pendingPositionRef = useRef<{ left: number; top: number } | null>(null);
 
   // Expose toggleVisibility to parent
   useEffect(() => {
@@ -57,6 +67,11 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
     const top = Math.max(20, window.innerHeight - DEFAULT_HEIGHT - 80);
     return { left, top };
   });
+
+  const focusInput = () => {
+    // On mobile, focusing an actual input is required to open the keyboard.
+    inputRef.current?.focus();
+  };
 
   const commands = useMemo<TerminalCommand[]>(
     () => [
@@ -111,6 +126,15 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
     }
   }, [isOpen, isVisible]);
 
+  // Focus input when opening (best-effort; mobile may require user gesture).
+  useEffect(() => {
+    if (!isOpen || !isVisible) return;
+    const timeout = window.setTimeout(() => {
+      focusInput();
+    }, 0);
+    return () => window.clearTimeout(timeout);
+  }, [isOpen, isVisible]);
+
   // Cursor blink effect
   useEffect(() => {
     if (!isOpen) return;
@@ -143,6 +167,10 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
       if (interactionTimeoutRef.current) {
         window.clearTimeout(interactionTimeoutRef.current);
       }
+      if (dragRafRef.current) {
+        window.cancelAnimationFrame(dragRafRef.current);
+        dragRafRef.current = null;
+      }
     };
   }, []);
 
@@ -159,14 +187,39 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
       const height = DEFAULT_HEIGHT;
       const maxLeft = window.innerWidth - width - 10;
       const maxTop = window.innerHeight - height - 10;
-      setPosition({
+
+      pendingPositionRef.current = {
         left: clamp(draggingRef.current.startLeft + dx, 10, maxLeft),
         top: clamp(draggingRef.current.startTop + dy, 10, maxTop),
-      });
+      };
+
+      // Coalesce high-frequency pointer events to one DOM update per frame.
+      if (dragRafRef.current == null) {
+        dragRafRef.current = window.requestAnimationFrame(() => {
+          dragRafRef.current = null;
+          if (pendingPositionRef.current) {
+            const next = pendingPositionRef.current;
+            // Update transform imperatively for maximum smoothness.
+            if (containerRef.current && !isFullscreen) {
+              containerRef.current.style.transform = `translate3d(${next.left}px, ${next.top}px, 0)`;
+            }
+          }
+        });
+      }
     }
 
     function onPointerUp() {
       draggingRef.current = null;
+      if (pendingPositionRef.current) {
+        const finalPos = pendingPositionRef.current;
+        setPosition(finalPos);
+      }
+      pendingPositionRef.current = null;
+      if (dragRafRef.current) {
+        window.cancelAnimationFrame(dragRafRef.current);
+        dragRafRef.current = null;
+      }
+      setIsDragging(false);
     }
 
     window.addEventListener("pointermove", onPointerMove);
@@ -177,58 +230,36 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
     };
   }, [isOpen, isFullscreen]);
 
-  // Handle keyboard input (real terminal feel)
-  useEffect(() => {
-    if (!isOpen || !isVisible) return;
+  const runCommand = useMemo(() => {
+    return () => {
+      bumpInteraction();
+      const trimmed = command.trim();
 
-    function handleKeyDown(e: KeyboardEvent) {
-      // Ignore if typing in other inputs
-      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+      if (!trimmed) {
+        setHistory((prev) => [...prev, `> ${command}`]);
+        setCommand("");
         return;
       }
 
-      if (e.key === "Enter") {
-        e.preventDefault();
-        bumpInteraction();
-        const trimmed = command.trim();
-        
-        if (!trimmed) {
-          setHistory((prev) => [...prev, `> ${command}`]);
-          setCommand("");
-          return;
-        }
+      const cmd = trimmed.toLowerCase();
+      const found = commands.find((c) => c.name === cmd);
+      const result = found ? found.run() : "Command not found";
 
-        const cmd = trimmed.toLowerCase();
-        const found = commands.find((c) => c.name === cmd);
-        const result = found ? found.run() : "Command not found";
+      setHistory((prev) => [...prev, `> ${trimmed}`]);
 
-        setHistory((prev) => [...prev, `> ${trimmed}`]);
-
-        if (typeof result === "string") {
-          setHistory((prev) => [...prev, result]);
-        } else if (result.type === "clear") {
-          setHistory([]);
-        } else if (result.type === "close") {
-          onRequestClose();
-          setCommand("");
-          return;
-        }
-
+      if (typeof result === "string") {
+        setHistory((prev) => [...prev, result]);
+      } else if (result.type === "clear") {
+        setHistory([]);
+      } else if (result.type === "close") {
+        onRequestClose();
         setCommand("");
-      } else if (e.key === "Backspace") {
-        e.preventDefault();
-        bumpInteraction();
-        setCommand((prev) => prev.slice(0, -1));
-      } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
-        e.preventDefault();
-        bumpInteraction();
-        setCommand((prev) => prev + e.key);
+        return;
       }
-    }
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, isVisible, command, commands, onRequestClose]);
+      setCommand("");
+    };
+  }, [command, commands, onRequestClose]);
 
   const terminalBodyClass = useMemo(() => {
     const base =
@@ -237,25 +268,40 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
     const scrollbarHidden =
       "[scrollbar-width:none] [&::-webkit-scrollbar]:w-0 [&::-webkit-scrollbar]:h-0";
 
-    const scrollbarShown =
-      "[scrollbar-gutter:stable] [scrollbar-width:thin] [scrollbar-color:rgba(0,0,0,0.45)_transparent] dark:[scrollbar-color:rgba(255,255,255,0.35)_transparent] [&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar-track]:bg-black/5 dark:[&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30 dark:[&::-webkit-scrollbar-thumb]:bg-white/30 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-black/50 dark:hover:[&::-webkit-scrollbar-thumb]:bg-white/50 [&::-webkit-scrollbar-thumb]:border-2 [&::-webkit-scrollbar-thumb]:border-transparent";
+    const scrollbarShown = terminalIsDark
+      ? "[scrollbar-gutter:stable] [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.35)_transparent] [&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar-track]:bg-white/5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/30 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-white/50 [&::-webkit-scrollbar-thumb]:border-2 [&::-webkit-scrollbar-thumb]:border-transparent"
+      : "[scrollbar-gutter:stable] [scrollbar-width:thin] [scrollbar-color:rgba(0,0,0,0.45)_transparent] [&::-webkit-scrollbar]:w-3 [&::-webkit-scrollbar-track]:bg-black/5 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-black/30 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-black/50 [&::-webkit-scrollbar-thumb]:border-2 [&::-webkit-scrollbar-thumb]:border-transparent";
 
     return `${base} ${isInteracting ? scrollbarShown : scrollbarHidden}`;
-  }, [isInteracting]);
+  }, [isInteracting, terminalIsDark]);
+
+  const containerThemeClass = terminalIsDark
+    ? "border-white/10 bg-black/75 text-white"
+    : "border-black/10 bg-white/75 text-black";
+
+  const headerThemeClass = terminalIsDark
+    ? "bg-zinc-900/85 border-white/10"
+    : "bg-zinc-100/85 border-black/10";
+
+  const controlHoverClass = terminalIsDark
+    ? "hover:bg-white hover:text-black"
+    : "hover:bg-black hover:text-white";
 
   return (
     <div
       role="dialog"
       aria-label="Terminal window"
-      className={`fixed shadow-2xl flex flex-col overflow-hidden border border-black/10 dark:border-white/10 bg-white/75 dark:bg-black/75 backdrop-blur-md text-black dark:text-white transition-all duration-300 ease-out`}
+      ref={containerRef}
+      className={`fixed shadow-2xl flex flex-col overflow-hidden border backdrop-blur-md will-change-transform transition-[opacity,border-radius] duration-300 ease-out ${isDragging ? "transition-none" : ""} ${containerThemeClass}`}
       style={{
         ...(isFullscreen
-          ? { left: 0, top: 0, width: '100vw', height: '100vh', zIndex: 9999 }
+          ? { left: 0, top: 0, width: '100vw', height: '100vh', transform: 'none', zIndex: 9999 }
           : {
-              left: position.left,
-              top: position.top,
+              left: 0,
+              top: 0,
               width: DEFAULT_WIDTH,
               height: DEFAULT_HEIGHT,
+              transform: `translate3d(${position.left}px, ${position.top}px, 0)`,
               zIndex: 9999,
             }),
         opacity: isVisible && isOpen ? 1 : 0,
@@ -265,10 +311,11 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
     >
       {/* Header */}
       <div
-        className="flex items-center justify-between bg-zinc-100/85 dark:bg-zinc-900/85 backdrop-blur-md px-3 py-2 select-none cursor-move border-b border-black/10 dark:border-white/10"
+        className={`flex items-center justify-between backdrop-blur-md px-3 py-2 select-none cursor-move touch-none border-b ${headerThemeClass}`}
         onPointerDown={(e) => {
           if (isFullscreen) return;
           (e.currentTarget as HTMLDivElement).setPointerCapture(e.pointerId);
+          setIsDragging(true);
           draggingRef.current = {
             startX: e.clientX,
             startY: e.clientY,
@@ -284,7 +331,7 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
             onPointerDown={(e) => e.stopPropagation()}
             onClick={() => setIsFullscreen((v) => !v)}
             aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
-            className="p-1 rounded hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+            className={`p-1 rounded-full transition-colors ${controlHoverClass}`}
           >
             <Square size={14} />
           </button>
@@ -292,7 +339,7 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
             onPointerDown={(e) => e.stopPropagation()}
             onClick={() => setIsVisible(false)}
             aria-label="Minimize"
-            className="p-1 rounded hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
+            className={`p-1 rounded-full transition-colors ${controlHoverClass}`}
           >
             <Minus size={14} />
           </button>
@@ -307,7 +354,7 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
               onRequestClose();
             }}
             aria-label="Close"
-            className="p-1 rounded hover:bg-red-500/15 transition-colors"
+            className="p-1 rounded-full hover:bg-red-500 hover:text-white transition-colors"
           >
             <X size={14} />
           </button>
@@ -319,13 +366,35 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
           className={terminalBodyClass}
           onClick={() => {
             bumpInteraction();
-            bodyRef.current?.focus();
+            focusInput();
           }}
           onFocus={() => setIsInteracting(true)}
           onBlur={() => setIsInteracting(false)}
           onWheel={() => bumpInteraction()}
           tabIndex={0}
         >
+          <input
+            ref={inputRef}
+            value={command}
+            onChange={(e) => {
+              bumpInteraction();
+              setCommand(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                runCommand();
+                // Keep the mobile keyboard open after running.
+                window.setTimeout(() => focusInput(), 0);
+              }
+            }}
+            inputMode="text"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            aria-label="Terminal input"
+            className="absolute left-0 top-0 h-px w-px opacity-0 pointer-events-none"
+          />
           {history.map((line, idx) => (
             <div key={idx}>{line}</div>
           ))}

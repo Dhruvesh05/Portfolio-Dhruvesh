@@ -3,10 +3,12 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
+import { useTerminal } from './TerminalProvider';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { toggleVisibility } = useTerminal();
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
@@ -68,12 +70,30 @@ export default function Navbar() {
 
           {/* Desktop Theme Toggle */}
           <div className="absolute right-0 hidden md:block">
-            <ThemeToggle />
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => toggleVisibility()}
+                aria-label="Toggle terminal"
+                className="p-2 text-black dark:text-white"
+              >
+                <span className="font-mono text-base leading-none">&gt;_</span>
+              </button>
+              <ThemeToggle />
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="absolute right-0 md:hidden flex items-center gap-2">
             <ThemeToggle />
+            <button
+              type="button"
+              onClick={() => toggleVisibility()}
+              className="p-2 text-black dark:text-white"
+              aria-label="Toggle terminal"
+            >
+              <span className="font-mono text-base leading-none">&gt;_</span>
+            </button>
             <button
               onClick={toggleMenu}
               className="p-2 text-black dark:text-white"
@@ -100,6 +120,16 @@ export default function Navbar() {
         } overflow-hidden`}
       >
         <div className="px-3 pt-2 pb-3 space-y-1">
+          <button
+            type="button"
+            onClick={() => {
+              toggleVisibility();
+              setIsOpen(false);
+            }}
+            className="block w-full text-left px-3 py-2 rounded-lg text-sm text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
+          >
+            <span className="font-mono">&gt;_</span>
+          </button>
           {[
             ['Home', '/'],
             ['About Me', '/about'],

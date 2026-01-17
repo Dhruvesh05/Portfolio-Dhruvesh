@@ -45,54 +45,79 @@ export default function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="py-12 md:py-20 lg:py-24 px-4 md:px-6 max-w-7xl mx-auto bg-white dark:bg-black text-black dark:text-white"
+      className="w-full py-12 md:py-20 lg:py-24 px-4 md:px-6 bg-white dark:bg-black text-black dark:text-white"
     >
       <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-8 md:mb-12 lg:mb-16">
         Experience
       </h2>
 
       {/* TECHNICAL */}
-  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8 text-center">Technical</h3>
+      <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8 text-center">
+        Technical
+      </h3>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-0.5 max-w-4xl mx-auto">
-        {technicalExperience.map((item, i) => (
-          <Link
-            key={i}
-            href={item.link}
-            className="relative h-56 md:h-64 border border-black dark:border-white bg-white dark:bg-black overflow-hidden group"
-          >
-            <Image src={item.image} alt={item.org} fill className="object-cover" />
+      <div className="w-full max-w-5xl mx-auto">
+        <div className="flex flex-col gap-4 md:gap-5">
+          {technicalExperience.map((item, i) => (
+            <Link
+              key={i}
+              href={item.link}
+              className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden"
+            >
+              <div className="flex flex-col md:flex-row">
+                <div className="relative w-full md:w-64 lg:w-72 h-44 md:h-48 shrink-0">
+                  <Image
+                    src={item.image}
+                    alt={item.org}
+                    fill
+                    sizes="(min-width: 1024px) 288px, (min-width: 768px) 256px, 100vw"
+                    className="object-cover"
+                  />
+                </div>
 
-            <div className="absolute inset-0 bg-black/70 dark:bg-black/80 opacity-0 group-hover:opacity-100 transition flex flex-col p-4 md:p-6">
-              <div>
-                <h4 className="font-bold text-sm md:text-base text-black dark:text-white">{item.title}</h4>
-                  <p className="text-xs md:text-sm opacity-80">{item.org}</p>
-                  <p className="text-xs mt-1 md:mt-2 opacity-70">{item.desc}</p>
+                <div className="flex-1 p-4 md:p-5 flex flex-col justify-between">
+                  <div>
+                    <h4 className="font-bold text-base md:text-lg">{item.title}</h4>
+                    <p className="text-sm opacity-80 mt-1">{item.org}</p>
+                    <p className="text-sm opacity-70 mt-2 md:mt-3">{item.desc}</p>
+                  </div>
+
+                  <div className="mt-4 md:mt-5">
+                    <span className="inline-flex items-center justify-center px-4 py-2 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
+                      View details
+                    </span>
+                  </div>
+                </div>
               </div>
-
-              <div className="mt-auto flex w-full -mx-4 -mb-4 md:-mx-6 md:-mb-6">
-                <button className="flex-1 py-1.5 md:py-2 text-[10px] md:text-xs border border-black dark:border-white text-black dark:text-white bg-white dark:bg-black">Live</button>
-                <button className="flex-1 py-1.5 md:py-2 text-[10px] md:text-xs border border-l-0 border-black dark:border-white text-black dark:text-white bg-white dark:bg-black">GitHub</button>
-                <button className="flex-1 py-1.5 md:py-2 text-[10px] md:text-xs border border-l-0 border-black dark:border-white text-black dark:text-white bg-white dark:bg-black">More</button>
-              </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </div>
       </div>
 
       {/* CLUBS */}
-  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mt-12 md:mt-16 lg:mt-20 mb-6 md:mb-8 text-center">Clubs & Activities</h3>
+      <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mt-12 md:mt-16 lg:mt-20 mb-6 md:mb-8 text-center">
+        Clubs & Activities
+      </h3>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-0 max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-0 max-w-3xl mx-auto">
         {clubExperience.map((item, i) => (
-          <div key={i} className="flex border border-black dark:border-white h-28 md:h-32 relative group bg-white dark:bg-black text-black dark:text-white">
-            <div className="w-24 md:w-32 relative shrink-0">
+          <div
+            key={i}
+            className="flex border border-black dark:border-white h-24 md:h-28 relative group bg-white dark:bg-black text-black dark:text-white"
+          >
+            <div className="w-20 md:w-24 relative shrink-0">
               {item.image.endsWith(".svg") ? (
                 // next/image + SVG can be restricted depending on config; <img> is safe for local public assets.
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={item.image} alt={item.org} className="h-full w-full object-cover" />
               ) : (
-                <Image src={item.image} alt={item.org} fill className="object-cover" />
+                <Image
+                  src={item.image}
+                  alt={item.org}
+                  fill
+                  sizes="(min-width: 768px) 96px, 80px"
+                  className="object-cover"
+                />
               )}
             </div>
             <div className="p-3 md:p-4 flex flex-col justify-center">

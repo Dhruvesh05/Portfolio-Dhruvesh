@@ -1,11 +1,11 @@
 import HomePage from "@/components/Home";
+import Footer from "@/components/Footer";
 // import About from "@/components/About/About";
 // import Skills from "@/components/Skills";
 // import Experience from "@/components/Experience/Experience";
 // import Projects from "@/components/Projects/Projects";
 // import Gallery from "@/components/Gallery";
 // import ContactUs from "@/components/ContactUs";
-// import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -30,10 +30,10 @@ export default function Home() {
       </div>
       <div id="contact">
         <ContactUs />
-      </div>
+      </div> */}
       <div id="footer">
         <Footer />
-      </div> */}
+      </div>
     </div>
   );
 }

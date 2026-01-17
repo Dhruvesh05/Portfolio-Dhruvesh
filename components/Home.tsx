@@ -125,7 +125,7 @@ export default function HomePage() {
       <div className="h-screen"></div>
 
       {/* ================= ALL SECTIONS WRAPPER ================= */}
-      <section className="relative z-10 bg-white/100 dark:bg-black/80 backdrop-blur-md">
+      <section className="relative z-10 bg-white/80 dark:bg-black/80 backdrop-blur-md">
         
         {/* ================= ABOUT ================= */}
         <div id="about" className="py-16 md:py-24 px-4 md:px-6 max-w-5xl mx-auto">
@@ -165,7 +165,7 @@ export default function HomePage() {
         </div>
 
         {/* ================= SKILLS ================= */}
-        <div id="skills" className="py-16 md:py-24 px-4 md:px-6 bg-gradient-to-b from-white to-gray-50 dark:from-black dark:to-gray-900">
+        <div id="skills" className="py-16 md:py-24 px-4 md:px-6">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-3 sm:mb-4">Technical Skills</h2>
             <p className="text-center opacity-60 mb-8 sm:mb-12 max-w-2xl mx-auto text-sm md:text-base">
@@ -254,6 +254,14 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+          <div className="text-center mt-8">
+            <Link 
+              href="/skills" 
+              className="inline-block px-6 py-3  border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
+            >
+              View All Skills
+            </Link>
+          </div>
         </div>
 
         {/* ================= PROJECTS ================= */}
@@ -261,7 +269,7 @@ export default function HomePage() {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 md:mb-12">Featured Projects</h2>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="rounded-2xl border border-black dark:border-white bg-white dark:bg-black p-6 transition hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:shadow-xl">
+            <div className="border border-black dark:border-white bg-white dark:bg-black p-6 transition hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:shadow-xl">
               <h3 className="text-2xl font-semibold mb-3">Full-Stack Web Application</h3>
               <p className="text-sm opacity-70 mb-4">
                 Built end-to-end web application with user authentication, CRUD operations, and database integration.
@@ -276,7 +284,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-black dark:border-white bg-white dark:bg-black p-6 transition hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:shadow-xl">
+            <div className="border border-black dark:border-white bg-white dark:bg-black p-6 transition hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black hover:shadow-xl">
               <h3 className="text-2xl font-semibold mb-3">VR Experience Development</h3>
               <p className="text-sm opacity-70 mb-4">
                 Developed immersive VR application showcasing interactive 3D environments and user interactions.
@@ -293,7 +301,7 @@ export default function HomePage() {
           <div className="text-center mt-8">
             <Link 
               href="/projects" 
-              className="inline-block px-6 py-3 rounded-full border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
+              className="inline-block px-6 py-3  border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
             >
               View All Projects
             </Link>

@@ -29,12 +29,14 @@ function clamp(value: number, min: number, max: number) {
 export default function TerminalWindow({ isOpen, onRequestClose, openReason = "navbar", onMount }: TerminalWindowProps) {
   const { resolvedTheme } = useTheme();
   // Invert: dark site => light terminal, light site => dark terminal
+  // Default to dark terminal (light mode site) to match SSR
   const terminalIsDark = resolvedTheme !== "dark";
 
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isInteracting, setIsInteracting] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const [history, setHistory] = useState<string[]>(() => {
     const base = [
       "Welcome to Dhruvesh's Terminal",
@@ -56,17 +58,26 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
   const dragRafRef = useRef<number | null>(null);
   const pendingPositionRef = useRef<{ left: number; top: number } | null>(null);
 
+  // Track mounted state for hydration safety
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   // Expose toggleVisibility to parent
   useEffect(() => {
     onMount?.({ toggleVisibility: () => setIsVisible((v) => !v) });
   }, [onMount]);
 
-  const [position, setPosition] = useState<{ left: number; top: number }>(() => {
-    if (typeof window === "undefined") return { left: 20, top: 20 };
-    const left = Math.max(20, window.innerWidth - DEFAULT_WIDTH - 40);
-    const top = Math.max(20, window.innerHeight - DEFAULT_HEIGHT - 80);
-    return { left, top };
-  });
+  const [position, setPosition] = useState<{ left: number; top: number }>({ left: 20, top: 20 });
+
+  // Update position on client after mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const left = Math.max(20, window.innerWidth - DEFAULT_WIDTH - 40);
+      const top = Math.max(20, window.innerHeight - DEFAULT_HEIGHT - 80);
+      setPosition({ left, top });
+    }
+  }, []);
 
   const focusInput = () => {
     // On mobile, focusing an actual input is required to open the keyboard.
@@ -274,15 +285,19 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
     ? "hover:bg-white hover:text-black"
     : "hover:bg-black hover:text-white";
 
-  const buttonBaseClass = terminalIsDark
-    ? "text-white"
-    : "text-black";
+  // Use mounted state to avoid hydration mismatch
+  const buttonBaseClass = !isMounted 
+    ? "text-black" 
+    : terminalIsDark
+    ? "text-black"
+    : "text-white";
 
   return (
     <div
       role="dialog"
       aria-label="Terminal window"
       ref={containerRef}
+      suppressHydrationWarning
       className={`fixed shadow-2xl flex flex-col overflow-hidden border backdrop-blur-md will-change-transform transition-[opacity,border-radius] duration-300 ease-out ${isDragging ? "transition-none" : ""} ${containerThemeClass}`}
       style={{
         touchAction: 'none',
@@ -324,7 +339,8 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
             onPointerDown={(e) => e.stopPropagation()}
             onClick={() => setIsFullscreen((v) => !v)}
             aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
-            className={`p-1 rounded-full transition-colors ${terminalIsDark ? 'text-white' : 'text-black'} hover:!bg-green-500 hover:!text-white`}
+            suppressHydrationWarning
+            className={`p-1 rounded-full transition-colors ${!isMounted ? 'text-black' : terminalIsDark ? 'text-black' : 'text-white'} hover:!bg-green-500 hover:!text-white`}
           >
             <Square size={12} />
           </button>
@@ -332,6 +348,7 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
             onPointerDown={(e) => e.stopPropagation()}
             onClick={() => setIsVisible(false)}
             aria-label="Minimize"
+            suppressHydrationWarning
             className={`p-1 rounded-full transition-colors ${buttonBaseClass} ${controlHoverClass}`}
           >
             <Minus size={12} />
@@ -347,7 +364,10 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
               onRequestClose();
             }}
             aria-label="Close"
-            className={`p-1 rounded-full transition-colors ${terminalIsDark ? 'text-white' : 'text-black'} hover:!bg-red-500 hover:!text-white`}
+            suppressHydrationWarning
+            className={`p-1 rounded-full transition-colors ${
+              !isMounted ? "text-black" : terminalIsDark ? "text-black" : "text-white"
+            } hover:!bg-red-500 hover:!text-white`}
           >
             <X size={12} />
           </button>

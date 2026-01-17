@@ -287,6 +287,10 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
     ? "hover:bg-white hover:text-black"
     : "hover:bg-black hover:text-white";
 
+  const buttonBaseClass = terminalIsDark
+    ? "text-white"
+    : "text-black";
+
   return (
     <div
       role="dialog"
@@ -331,7 +335,7 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
             onPointerDown={(e) => e.stopPropagation()}
             onClick={() => setIsFullscreen((v) => !v)}
             aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
-            className={`p-1 rounded-full transition-colors ${controlHoverClass}`}
+            className={`p-1 rounded-full transition-colors hover:bg-orange-500 hover:text-white ${buttonBaseClass}`}
           >
             <Square size={14} />
           </button>
@@ -339,7 +343,7 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
             onPointerDown={(e) => e.stopPropagation()}
             onClick={() => setIsVisible(false)}
             aria-label="Minimize"
-            className={`p-1 rounded-full transition-colors ${controlHoverClass}`}
+            className={`p-1 rounded-full transition-colors ${controlHoverClass} ${buttonBaseClass}`}
           >
             <Minus size={14} />
           </button>
@@ -354,7 +358,7 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
               onRequestClose();
             }}
             aria-label="Close"
-            className="p-1 rounded-full hover:bg-red-500 hover:text-white transition-colors"
+            className={`p-1 rounded-full hover:bg-red-500 hover:text-white transition-colors ${buttonBaseClass}`}
           >
             <X size={14} />
           </button>

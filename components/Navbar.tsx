@@ -75,7 +75,7 @@ export default function Navbar() {
                 type="button"
                 onClick={() => toggleVisibility()}
                 aria-label="Toggle terminal"
-                className="p-2 text-black dark:text-white"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
               >
                 <span className="font-mono text-base leading-none">&gt;_</span>
               </button>
@@ -89,14 +89,14 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => toggleVisibility()}
-              className="p-2 text-black dark:text-white"
+              className="w-10 h-10 rounded-full flex items-center justify-center text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
               aria-label="Toggle terminal"
             >
               <span className="font-mono text-base leading-none">&gt;_</span>
             </button>
             <button
               onClick={toggleMenu}
-              className="p-2 text-black dark:text-white"
+              className="p-2 text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300 rounded-full"
               aria-label="Toggle menu"
             >
               {isOpen ? (

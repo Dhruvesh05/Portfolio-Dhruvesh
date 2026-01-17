@@ -65,7 +65,7 @@ export default function ExperienceSection() {
               className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden"
             >
               <div className="flex flex-col md:flex-row">
-                <div className="relative w-full md:w-64 lg:w-72 h-44 md:h-48 shrink-0">
+                <div className="relative w-full md:w-96 lg:w-[28rem] h-56 md:h-64 shrink-0">
                   <Image
                     src={item.image}
                     alt={item.org}
@@ -103,9 +103,9 @@ export default function ExperienceSection() {
         {clubExperience.map((item, i) => (
           <div
             key={i}
-            className="flex border border-black dark:border-white h-24 md:h-28 relative group bg-white dark:bg-black text-black dark:text-white"
+            className="flex border border-black dark:border-white h-32 md:h-36 relative group bg-white dark:bg-black text-black dark:text-white"
           >
-            <div className="w-20 md:w-24 relative shrink-0">
+            <div className="w-32 md:w-40 relative shrink-0">
               {item.image.endsWith(".svg") ? (
                 // next/image + SVG can be restricted depending on config; <img> is safe for local public assets.
                 // eslint-disable-next-line @next/next/no-img-element

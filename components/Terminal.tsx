@@ -188,24 +188,15 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
       const maxLeft = window.innerWidth - width - 10;
       const maxTop = window.innerHeight - height - 10;
 
-      pendingPositionRef.current = {
-        left: clamp(draggingRef.current.startLeft + dx, 10, maxLeft),
-        top: clamp(draggingRef.current.startTop + dy, 10, maxTop),
-      };
+      const newLeft = clamp(draggingRef.current.startLeft + dx, 10, maxLeft);
+      const newTop = clamp(draggingRef.current.startTop + dy, 10, maxTop);
 
-      // Coalesce high-frequency pointer events to one DOM update per frame.
-      if (dragRafRef.current == null) {
-        dragRafRef.current = window.requestAnimationFrame(() => {
-          dragRafRef.current = null;
-          if (pendingPositionRef.current) {
-            const next = pendingPositionRef.current;
-            // Update transform imperatively for maximum smoothness.
-            if (containerRef.current && !isFullscreen) {
-              containerRef.current.style.transform = `translate3d(${next.left}px, ${next.top}px, 0)`;
-            }
-          }
-        });
+      // Update transform immediately for maximum smoothness on mobile
+      if (containerRef.current && !isFullscreen) {
+        containerRef.current.style.transform = `translate3d(${newLeft}px, ${newTop}px, 0)`;
       }
+
+      pendingPositionRef.current = { left: newLeft, top: newTop };
     }
 
     function onPointerUp() {
@@ -215,10 +206,6 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
         setPosition(finalPos);
       }
       pendingPositionRef.current = null;
-      if (dragRafRef.current) {
-        window.cancelAnimationFrame(dragRafRef.current);
-        dragRafRef.current = null;
-      }
       setIsDragging(false);
     }
 
@@ -298,8 +285,9 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
       ref={containerRef}
       className={`fixed shadow-2xl flex flex-col overflow-hidden border backdrop-blur-md will-change-transform transition-[opacity,border-radius] duration-300 ease-out ${isDragging ? "transition-none" : ""} ${containerThemeClass}`}
       style={{
+        touchAction: 'none',
         ...(isFullscreen
-          ? { left: 0, top: 0, width: '100vw', height: '100vh', transform: 'none', zIndex: 9999 }
+          ? { left: 0, top: 0, width: '100vw', height: '100vh', transform: 'translateZ(0)', zIndex: 9999 }
           : {
               left: 0,
               top: 0,
@@ -307,6 +295,7 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
               height: DEFAULT_HEIGHT,
               transform: `translate3d(${position.left}px, ${position.top}px, 0)`,
               zIndex: 9999,
+              willChange: isDragging ? 'transform' : 'auto',
             }),
         opacity: isVisible && isOpen ? 1 : 0,
         pointerEvents: isVisible && isOpen ? 'auto' : 'none',
@@ -335,17 +324,17 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
             onPointerDown={(e) => e.stopPropagation()}
             onClick={() => setIsFullscreen((v) => !v)}
             aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
-            className={`p-1 rounded-full transition-colors hover:bg-orange-500 hover:text-white ${buttonBaseClass}`}
+            className={`p-1 rounded-full transition-colors ${terminalIsDark ? 'text-white' : 'text-black'} hover:!bg-green-500 hover:!text-white`}
           >
-            <Square size={14} />
+            <Square size={12} />
           </button>
           <button
             onPointerDown={(e) => e.stopPropagation()}
             onClick={() => setIsVisible(false)}
             aria-label="Minimize"
-            className={`p-1 rounded-full transition-colors ${controlHoverClass} ${buttonBaseClass}`}
+            className={`p-1 rounded-full transition-colors ${buttonBaseClass} ${controlHoverClass}`}
           >
-            <Minus size={14} />
+            <Minus size={12} />
           </button>
           <button
             onPointerDown={(e) => e.stopPropagation()}
@@ -358,9 +347,9 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
               onRequestClose();
             }}
             aria-label="Close"
-            className={`p-1 rounded-full hover:bg-red-500 hover:text-white transition-colors ${buttonBaseClass}`}
+            className={`p-1 rounded-full transition-colors ${terminalIsDark ? 'text-white' : 'text-black'} hover:!bg-red-500 hover:!text-white`}
           >
-            <X size={14} />
+            <X size={12} />
           </button>
         </div>
       </div>
@@ -396,6 +385,7 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
             autoCapitalize="none"
             autoCorrect="off"
             spellCheck={false}
+            dir="ltr"
             aria-label="Terminal input"
             className="absolute left-0 top-0 h-px w-px opacity-0 pointer-events-none"
           />
@@ -405,9 +395,9 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
           <div className="flex items-start">
             <span className="text-emerald-500 mr-2">&gt;</span>
             <span className="flex-1 flex items-center">
-              <span className="text-[#00e5ff]">{command}</span>
+              <span className="text-[#499bf9]">{command}</span>
               <span 
-                className={`inline-block w-2 h-4 ml-0.5 bg-[#00e5ff] ${
+                className={`inline-block w-2 h-4 ml-0.5 bg-[#00499c] ${
                   cursorVisible ? 'opacity-100' : 'opacity-0'
                 }`}
                 style={{ transition: 'opacity 0.1s' }}

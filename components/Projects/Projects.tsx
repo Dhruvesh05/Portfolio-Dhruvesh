@@ -89,18 +89,18 @@ export default function ProjectsSection() {
               href={item.link}
               className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden"
             >
-              <div className="flex flex-row">
-                <div className="relative w-[40%] shrink-0">
+              <div className="flex flex-col md:flex-row">
+                <div className="relative w-full md:w-1/2 lg:w-[45%] h-48 md:h-auto shrink-0">
                   <Image
                     src={item.image}
                     alt={item.org}
                     fill
-                    sizes="40vw"
+                    sizes="(max-width: 768px) 100vw, 45vw"
                     className="object-cover"
                   />
                 </div>
 
-                <div className="flex-1 p-4 md:p-5 lg:p-6 flex flex-col justify-between min-h-[240px] sm:min-h-[260px] md:min-h-[280px]">
+                <div className="flex-1 p-4 md:p-5 lg:p-6 flex flex-col justify-between md:min-h-[280px]">
                   <div>
                     <h4 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl">{item.title}</h4>
                     <p className="text-xs sm:text-sm md:text-base opacity-80 mt-1 md:mt-2">{item.org}</p>
@@ -136,18 +136,18 @@ export default function ProjectsSection() {
               href={item.link}
               className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden"
             >
-              <div className="flex flex-row">
-                <div className="relative w-[40%] shrink-0">
+              <div className="flex flex-col md:flex-row">
+                <div className="relative w-full md:w-1/2 lg:w-[45%] h-48 md:h-auto shrink-0">
                   <Image
                     src={item.image}
                     alt={item.org}
                     fill
-                    sizes="40vw"
+                    sizes="(max-width: 768px) 100vw, 40vw"
                     className="object-cover"
                   />
                 </div>
 
-                <div className="flex-1 p-4 md:p-5 lg:p-6 flex flex-col justify-between min-h-[240px] sm:min-h-[260px] md:min-h-[280px]">
+                <div className="flex-1 p-4 md:p-5 lg:p-6 flex flex-col justify-between md:min-h-[280px]">
                   <div>
                     <h4 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl">{item.title}</h4>
                     <p className="text-xs sm:text-sm md:text-base opacity-80 mt-1 md:mt-2">{item.org}</p>
@@ -183,18 +183,18 @@ export default function ProjectsSection() {
               href={item.link}
               className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden"
             >
-              <div className="flex flex-row">
-                <div className="relative w-[40%] shrink-0">
+              <div className="flex flex-col md:flex-row">
+                <div className="relative w-full md:w-1/2 lg:w-[45%] h-48 md:h-auto shrink-0">
                   <Image
                     src={item.image}
                     alt={item.org}
                     fill
-                    sizes="40vw"
+                    sizes="(max-width: 768px) 100vw, 45vw"
                     className="object-cover"
                   />
                 </div>
 
-                <div className="flex-1 p-4 md:p-5 lg:p-6 flex flex-col justify-between min-h-[240px] sm:min-h-[260px] md:min-h-[280px]">
+                <div className="flex-1 p-4 md:p-5 lg:p-6 flex flex-col justify-between md:min-h-[280px]">
                   <div>
                     <h4 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl">{item.title}</h4>
                     <p className="text-xs sm:text-sm md:text-base opacity-80 mt-1 md:mt-2">{item.org}</p>

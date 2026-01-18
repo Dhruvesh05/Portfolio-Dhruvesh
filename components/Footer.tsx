@@ -3,9 +3,6 @@
 import Link from "next/link";
 
 export default function Footer() {
-  const scrollToTop = () =>
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
   return (
     <footer className="relative z-20 bg-black text-white border-t border-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -68,7 +65,7 @@ export default function Footer() {
               <h4 className="text-base md:text-lg font-semibold mb-4">Connect</h4>
               <div className="flex flex-wrap justify-center md:justify-start gap-3">
                 <a
-                  href="https://github.com/yourusername"
+                  href="https://github.com/Dhruvesh05/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-white flex items-center justify-center hover:bg-white hover:text-black transition-all"
@@ -80,7 +77,7 @@ export default function Footer() {
                 </a>
 
                 <a
-                  href="https://linkedin.com/in/yourusername"
+                  href="https://www.linkedin.com/in/dhruvesh-patil-a31917280/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-white flex items-center justify-center hover:bg-white hover:text-black transition-all"
@@ -92,7 +89,7 @@ export default function Footer() {
                 </a>
 
                 <a
-                  href="https://instagram.com/yourusername"
+                  href="https://instagram.com/dhruvesh810220"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-white flex items-center justify-center hover:bg-white hover:text-black transition-all"
@@ -104,7 +101,7 @@ export default function Footer() {
                 </a>
 
                 <a
-                  href="mailto:your.email@gmail.com"
+                  href="mailto:dhruveshpatil7777@gmail.com"
                   className="w-10 h-10 rounded-full border border-white flex items-center justify-center hover:bg-white hover:text-black transition-all"
                   aria-label="Gmail"
                 >
@@ -119,17 +116,10 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-white py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm opacity-70 text-center md:text-left">
+          <div className="flex justify-center items-center">
+            <p className="text-sm opacity-70 text-center">
               © {new Date().getFullYear()} Dhruvesh Patil. All rights reserved.
             </p>
-            
-            <button
-              onClick={scrollToTop}
-              className="px-5 py-2 text-sm rounded-full border border-white bg-black hover:bg-white hover:text-black transition-all"
-            >
-              ↑ Back to Top
-            </button>
           </div>
         </div>
       </div>

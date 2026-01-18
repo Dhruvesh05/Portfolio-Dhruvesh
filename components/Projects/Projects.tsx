@@ -25,15 +25,15 @@ const groupProjects = [
     github: "https://github.com/Sarthak2477/CSI-KKWIEER",
     image: "/csi.png",
   },
-  {
-    title: "Shubh Construction",
-    org: "Client-Based Project",
-    desc: "A professional client-based construction website developed to establish a strong online presence, showcasing services, projects, and contact information with a clean and responsive UI. Helped the client improve digital visibility and credibility while delivering a real-world, production-ready web solution.",
-    link: "/projects/shubh-construction",
-    live: "https://shubh-construction.vercel.app/",
-    github: "https://github.com/Dhruvesh05/shubh_construction",
-    image: "/shubh.png",
-  },
+  // {
+  //   title: "Shubh Construction",
+  //   org: "Client-Based Project",
+  //   desc: "A professional client-based construction website developed to establish a strong online presence, showcasing services, projects, and contact information with a clean and responsive UI. Helped the client improve digital visibility and credibility while delivering a real-world, production-ready web solution.",
+  //   link: "/projects/shubh-construction",
+  //   live: "https://shubh-construction.vercel.app/",
+  //   github: "https://github.com/Dhruvesh05/shubh_construction",
+  //   image: "/shubh.png",
+  // },
   {
     title: "LinkTrace-3D Flow Visualizer & Bug Explorer",
     org: "Development Tool",
@@ -67,10 +67,10 @@ const groupProjects = [
 const finalYearProject = [
   {
     title: "Final Year Project",
-    org: "Computer Engineering Department",
-    desc: "Capstone project showcasing technical expertise and research.",
+    org: "Best Project Award - KKWIEER",
+    desc: "Coming Soon....",
     link: "/projects/final-year",
-    image: "/deptproj.png",
+    image: "/comingsoon.png",
   },
 ];
 

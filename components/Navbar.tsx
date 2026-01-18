@@ -63,7 +63,6 @@ export default function Navbar() {
               ['Experience', '/experience'],
               ['Projects', '/projects'],
               ['Skills', '/skills'],
-              ['Gallery', '/gallery'],
               ['Contact Me', '/contact'],
             ].map(([label, href]) => (
               <Link
@@ -144,7 +143,6 @@ export default function Navbar() {
             ['Experience', '/experience'],
             ['Projects', '/projects'],
             ['Skills', '/skills'],
-            ['Gallery', '/gallery'],
             ['Contact Me', '/contact'],
           ].map(([label, href]) => (
             <Link

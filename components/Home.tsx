@@ -108,7 +108,7 @@ export default function HomePage() {
               href="/projects"
               className="px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base rounded-2xl sm:rounded-2xl sm:rounded-r-none border-2 border-black dark:border-white bg-black text-white dark:bg-white dark:text-black hover:bg-black hover:text-white transition font-semibold"
             >
-              View My Work 
+              View My Work →
             </Link>
             <Link
               href="https://drive.google.com/file/d/1a-Q6RMehygXArEbf2a_IwLqzub59akoK/view?usp=drive_link"
@@ -178,7 +178,7 @@ export default function HomePage() {
               href="/about" 
               className="inline-block px-6 py-3  border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
             >
-              Know More About Me
+              Know More About Me →
             </Link>
           </div>
         </div>
@@ -236,7 +236,7 @@ export default function HomePage() {
               href="/experience" 
               className="inline-block px-6 py-3  border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
             >
-              View All Experience
+              View All Experience →
             </Link>
           </div>
         </div>
@@ -372,7 +372,7 @@ export default function HomePage() {
               href="/skills" 
               className="inline-block px-6 py-3  border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
             >
-              View All Skills
+              View All Skills →
             </Link>
           </div>
         </div>
@@ -477,7 +477,7 @@ export default function HomePage() {
               href="/projects" 
               className="inline-block px-6 py-3  border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
             >
-              View All Projects
+              View All Projects →
             </Link>
           </div>
         </div>
@@ -564,7 +564,7 @@ export default function HomePage() {
                 href="/contact"
                 className="inline-block px-8 py-3 border-2 border-black dark:border-white bg-black text-white dark:bg-white dark:text-black hover:bg-transparent hover:text-black dark:hover:bg-transparent dark:hover:text-white transition-all duration-300 font-semibold"
               >
-                Get In Touch
+                Get In Touch →
               </Link>
             </div>
           </div>

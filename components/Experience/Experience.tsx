@@ -13,15 +13,15 @@ const technicalExperience = [
     github: "https://github.com/Dhruvesh05/ayunexts",
     image: "/ayunext.png",
   },
-  {
-    title: "Frontend Developer",
-    org: "Shubh Construction - Client Project",
-    desc: "A professional client-based construction website developed to establish a strong online presence, showcasing services, projects, and contact information with a clean and responsive UI. Helped the client improve digital visibility and credibility while delivering a real-world, production-ready web solution.",
-    link: "/experience/shubh-constructions",
-    live: "https://shubh-construction.vercel.app/",
-    github: "https://github.com/Dhruvesh05/shubh_construction",
-    image: "/shubh.png",
-  },
+  // {
+  //   title: "Frontend Developer",
+  //   org: "Shubh Construction - Client Project",
+  //   desc: "A professional client-based construction website developed to establish a strong online presence, showcasing services, projects, and contact information with a clean and responsive UI. Helped the client improve digital visibility and credibility while delivering a real-world, production-ready web solution.",
+  //   link: "/experience/shubh-constructions",
+  //   live: "https://shubh-construction.vercel.app/",
+  //   github: "https://github.com/Dhruvesh05/shubh_construction",
+  //   image: "/shubh.png",
+  // },
   {
     title: "Full Stack Developer",
     org: "UniMail Pro - Department Project",
@@ -125,7 +125,7 @@ export default function ExperienceSection() {
         Clubs & Activities
       </h3>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-0 max-w-3xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-0 max-w-5xl mx-auto">
         {clubExperience.map((item, i) => (
           <div
             key={i}

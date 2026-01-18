@@ -40,27 +40,17 @@ export default function SkillsSection() {
 
   const certifications = [
     { 
-      title: "RDBMS PostgreSQL",
-      issuer: "Coursera",
-      date: "2024",
-      link: "#"
-    },
-    { 
       title: "Unity Essentials",
-      issuer: "Unity Technologies",
-      date: "2024",
+      issuer: "Unity",
+      date: "Sep 2025",
+      description: "Basics of Unity engine and VR development.",
       link: "#"
     },
     { 
-      title: "Full Stack Web Development",
-      issuer: "Internship Certificate",
-      date: "2024",
-      link: "#"
-    },
-    { 
-      title: "Java Programming",
-      issuer: "Online Course",
-      date: "2023",
+      title: "RDBMS PostgreSQL",
+      issuer: "Spoken Tutorial, IIT Bombay",
+      date: "Jul 2025",
+      description: "Core DBMS concepts and SQL using PostgreSQL.",
       link: "#"
     },
   ];
@@ -128,6 +118,7 @@ export default function SkillsSection() {
                     <h4 className="text-lg md:text-xl font-bold mb-1">{cert.title}</h4>
                     <p className="text-sm opacity-70">{cert.issuer}</p>
                     <p className="text-xs opacity-60 mt-1">{cert.date}</p>
+                    <p className="text-sm opacity-80 mt-2">{cert.description}</p>
                   </div>
                 </div>
                 <a

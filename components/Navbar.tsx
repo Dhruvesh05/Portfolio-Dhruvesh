@@ -29,14 +29,22 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 w-full shadow-md transition-all duration-300 z-50 ${
+    <nav className={`fixed top-0 left-0 w-full shadow-md dark:shadow-[0_4px_12px_-2px_rgba(255,255,255,0.15)] transition-all duration-300 z-50 ${
       isScrolled ? 'bg-white/50 dark:bg-black/50 backdrop-blur-md border-black dark:border-white' : 'bg-transparent border-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
         <div className="flex justify-center items-center h-16 md:h-20 relative">
 
           <div className="absolute left-0">
-            <Link href="/">
+            <Link 
+              href="/#hero"
+              onClick={(e) => {
+                if (window.location.pathname === '/') {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+            >
               <span className="text-black dark:text-white text-base md:text-xl font-semibold transition-colors duration-300">
                 Dhruvesh Patil
               </span>
@@ -46,7 +54,7 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <div 
             className={`hidden md:flex items-center bg-transparent border transition-all duration-300 ${
-              isScrolled ? 'border-black dark:border-white/20 shadow-[0_8px_16px_-4px_rgba(255,255,255,0.4)]' : 'border-black dark:border-transparent'
+              isScrolled ? 'border-black dark:border-white/20' : 'border-black dark:border-transparent'
             }`}
           >
             {[

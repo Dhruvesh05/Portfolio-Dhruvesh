@@ -36,7 +36,6 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
   const [isVisible, setIsVisible] = useState(true);
   const [isInteracting, setIsInteracting] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const [history, setHistory] = useState<string[]>(() => {
     const base = [
       "Welcome to Dhruvesh's Terminal",
@@ -58,26 +57,17 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
   const dragRafRef = useRef<number | null>(null);
   const pendingPositionRef = useRef<{ left: number; top: number } | null>(null);
 
-  // Track mounted state for hydration safety
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
   // Expose toggleVisibility to parent
   useEffect(() => {
     onMount?.({ toggleVisibility: () => setIsVisible((v) => !v) });
   }, [onMount]);
 
-  const [position, setPosition] = useState<{ left: number; top: number }>({ left: 20, top: 20 });
-
-  // Update position on client after mount
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const left = Math.max(20, window.innerWidth - DEFAULT_WIDTH - 40);
-      const top = Math.max(20, window.innerHeight - DEFAULT_HEIGHT - 80);
-      setPosition({ left, top });
-    }
-  }, []);
+  const [position, setPosition] = useState<{ left: number; top: number }>(() => {
+    if (typeof window === "undefined") return { left: 20, top: 20 };
+    const left = Math.max(20, window.innerWidth - DEFAULT_WIDTH - 40);
+    const top = Math.max(20, window.innerHeight - DEFAULT_HEIGHT - 80);
+    return { left, top };
+  });
 
   const focusInput = () => {
     // On mobile, focusing an actual input is required to open the keyboard.
@@ -285,12 +275,7 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
     ? "hover:bg-white hover:text-black"
     : "hover:bg-black hover:text-white";
 
-  // Use mounted state to avoid hydration mismatch
-  const buttonBaseClass = !isMounted 
-    ? "text-black" 
-    : terminalIsDark
-    ? "text-black"
-    : "text-white";
+  const buttonBaseClass = terminalIsDark ? "text-black" : "text-white";
 
   return (
     <div
@@ -340,7 +325,7 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
             onClick={() => setIsFullscreen((v) => !v)}
             aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
             suppressHydrationWarning
-            className={`p-1 rounded-full transition-colors ${!isMounted ? 'text-black' : terminalIsDark ? 'text-black' : 'text-white'} hover:!bg-green-500 hover:!text-white`}
+            className={`p-1 rounded-full transition-colors ${buttonBaseClass} hover:bg-green-500! hover:text-white!`}
           >
             <Square size={12} />
           </button>
@@ -365,9 +350,7 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
             }}
             aria-label="Close"
             suppressHydrationWarning
-            className={`p-1 rounded-full transition-colors ${
-              !isMounted ? "text-black" : terminalIsDark ? "text-black" : "text-white"
-            } hover:!bg-red-500 hover:!text-white`}
+            className={`p-1 rounded-full transition-colors ${buttonBaseClass} hover:bg-red-500! hover:text-white!`}
           >
             <X size={12} />
           </button>

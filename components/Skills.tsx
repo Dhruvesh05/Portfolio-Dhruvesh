@@ -1,42 +1,142 @@
 export default function SkillsSection() {
-  return (
-    <section id="skills" className="py-24 px-6 bg-white dark:bg-black text-black dark:text-white">
-      <h2 className="text-3xl font-bold text-center mb-12">Skills & Certifications</h2>
+  const skillCategories = [
+    {
+      category: "Programming Languages",
+      skills: [
+        { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+        { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+        { name: "Java", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+        { name: "C++", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" },
+      ]
+    },
+    {
+      category: "Frontend",
+      skills: [
+        { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+        { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
+        { name: "HTML5", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+        { name: "CSS3", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+      ]
+    },
+    {
+      category: "Backend",
+      skills: [
+        { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+        { name: "Express.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" },
+        { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
+        { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+        { name: "PostgreSQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
+      ]
+    },
+    {
+      category: "Tools & Others",
+      skills: [
+        { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+        { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
+        { name: "Unity", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/unity/unity-original.svg" },
+      ]
+    },
+  ];
 
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10">
-        {/* Skills */}
-        <div>
-          <h3 className="text-xl font-semibold mb-6">Technical Skills</h3>
-          <div className="grid grid-cols-2 gap-4">
-            {[
-              "React / Next.js",
-              "JavaScript / TypeScript",
-              "Node.js",
-              "Java / Spring Boot",
-              "MongoDB / MySQL",
-              "REST APIs",
-              "Git & GitHub",
-              "AI Tools & Automation",
-            ].map(skill => (
+  const certifications = [
+    { 
+      title: "RDBMS PostgreSQL",
+      issuer: "Coursera",
+      date: "2024",
+      link: "#"
+    },
+    { 
+      title: "Unity Essentials",
+      issuer: "Unity Technologies",
+      date: "2024",
+      link: "#"
+    },
+    { 
+      title: "Full Stack Web Development",
+      issuer: "Internship Certificate",
+      date: "2024",
+      link: "#"
+    },
+    { 
+      title: "Java Programming",
+      issuer: "Online Course",
+      date: "2023",
+      link: "#"
+    },
+  ];
+
+  return (
+    <section id="skills" className="py-16 md:py-24 px-4 md:px-6 bg-white dark:bg-black text-black dark:text-white">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-3 sm:mb-4">Skills & Certifications</h2>
+        <p className="text-center opacity-60 mb-12 md:mb-16 max-w-2xl mx-auto text-sm md:text-base">
+          Technologies I work with and achievements I&apos;ve earned
+        </p>
+
+        {/* Skills Section */}
+        <div className="mb-16 md:mb-20">
+          <h3 className="text-2xl md:text-3xl font-bold mb-8 md:mb-10 text-center">Technical Skills</h3>
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            {skillCategories.map((category) => (
               <div
-                key={skill}
-                className="bg-white dark:bg-black border border-black dark:border-white rounded-xl py-3 px-4 text-sm text-black dark:text-white"
+                key={category.category}
+                className="rounded-2xl border-2 border-black dark:border-white bg-white dark:bg-black p-6 md:p-8 hover:shadow-2xl transition-all duration-300"
               >
-                {skill}
+                <h4 className="text-xl md:text-2xl font-bold mb-6 text-center">{category.category}</h4>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6">
+                  {category.skills.map((skill) => (
+                    <div
+                      key={skill.name}
+                      className="flex flex-col items-center justify-center gap-2 group"
+                    >
+                      <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                        <img 
+                          src={skill.icon} 
+                          alt={skill.name}
+                          className="w-full h-full object-contain dark:invert-[0.9] dark:brightness-200"
+                        />
+                      </div>
+                      <span className="text-xs font-medium text-center opacity-80">{skill.name}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Certifications */}
+        {/* Certifications Section */}
         <div>
-          <h3 className="text-xl font-semibold mb-6">Certifications</h3>
-          <ul className="space-y-4 text-black dark:text-white">
-            <li>✔ Full Stack Web Development – Internship</li>
-            <li>✔ Java Programming Certification</li>
-            <li>✔ AI & Automation Tools Training</li>
-            <li>✔ Project-Based Internship Completion</li>
-          </ul>
+          <h3 className="text-2xl md:text-3xl font-bold mb-8 md:mb-10 text-center">Certifications</h3>
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            {certifications.map((cert, index) => (
+              <div
+                key={index}
+                className="rounded-2xl border-2 border-black dark:border-white bg-white dark:bg-black p-6 md:p-8 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
+              >
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-black dark:border-white flex items-center justify-center flex-shrink-0 bg-black text-white dark:bg-white dark:text-black">
+                    <svg className="w-6 h-6 md:w-7 md:h-7" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5zm-2 13l-3-3 1.41-1.41L10 12.17l5.59-5.59L17 8l-7 7z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-grow">
+                    <h4 className="text-lg md:text-xl font-bold mb-1">{cert.title}</h4>
+                    <p className="text-sm opacity-70">{cert.issuer}</p>
+                    <p className="text-xs opacity-60 mt-1">{cert.date}</p>
+                  </div>
+                </div>
+                <a
+                  href={cert.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block w-full text-center px-4 py-2.5 text-sm border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 font-medium"
+                >
+                  View Certificate
+                </a>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

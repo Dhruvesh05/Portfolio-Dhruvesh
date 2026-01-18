@@ -6,30 +6,38 @@ import Link from "next/link";
 const technicalExperience = [
   {
     title: "Web Development Intern",
-    org: "Ayunext Internship",
-    desc: "Worked on real-world web applications and delivered production-ready features.",
+    org: "Ayunext Solutions",
+    desc: "Worked on real-world web development tasks during a 2-month internship, contributing to live projects and implementing production-ready features in a professional environment. Gained hands-on industry experience, strengthened problem-solving skills, and delivered meaningful features under real deadlines.",
     link: "/experience/ayunext",
+    live: "https://www.ayunexts.com/",
+    github: "https://github.com/Dhruvesh05/ayunexts",
     image: "/ayunext.png",
   },
   {
     title: "Frontend Developer",
-    org: "Shubh Constructions",
-    desc: "Built and deployed a professional business website.",
+    org: "Shubh Construction - Client Project",
+    desc: "A professional client-based construction website developed to establish a strong online presence, showcasing services, projects, and contact information with a clean and responsive UI. Helped the client improve digital visibility and credibility while delivering a real-world, production-ready web solution.",
     link: "/experience/shubh-constructions",
+    live: "https://shubh-construction.vercel.app/",
+    github: "https://github.com/Dhruvesh05/shubh_construction",
     image: "/shubh.png",
   },
   {
-    title: "Departmental Project",
-    org: "Computer Engineering Dept.",
-    desc: "Academic project with structured problem-solving.",
+    title: "Full Stack Developer",
+    org: "UniMail Pro - Department Project",
+    desc: "A centralized email management system for university departments, enabling structured email drafting, translation, storage, and export of official communications. Streamlined departmental communication workflows and reduced manual effort in managing and exporting official emails.",
     link: "/experience/departmental-project",
+    live: "https://unimail-kkwieer.vercel.app/",
+    github: "https://github.com/Hrishikesh-Gavai/UniMail-KKWIEER",
     image: "/deptproj.png",
   },
   {
     title: "Web Team Member",
-    org: "CSI Official Website",
-    desc: "Worked on accessibility and scalability.",
+    org: "CSI-KKWIEER Official Website",
+    desc: "An official website for the Computer Society of India (CSI) student chapter at KKWIEER, showcasing events, members, and technical activities. Improved visibility and communication for the student chapter by providing a centralized and professional online presence.",
     link: "/experience/csi-website",
+    live: "https://csi-kkwieer.vercel.app",
+    github: "https://github.com/Sarthak2477/CSI-KKWIEER",
     image: "/csi.png",
   },
 ];
@@ -82,10 +90,28 @@ export default function ExperienceSection() {
                     <p className="text-sm opacity-70 mt-2 md:mt-3">{item.desc}</p>
                   </div>
 
-                  <div className="mt-4 md:mt-5">
-                    <span className="inline-flex items-center justify-center px-4 py-2 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
-                      View details
-                    </span>
+                  <div className="mt-4 md:mt-5 flex flex-wrap gap-2">
+                    <a
+                      href={item.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
+                    >
+                      Live
+                    </a>
+                    <a
+                      href={item.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
+                    >
+                      GitHub
+                    </a>
+                    <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
+                      More
+                    </button>
                   </div>
                 </div>
               </div>

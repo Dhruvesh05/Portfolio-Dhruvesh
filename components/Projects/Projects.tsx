@@ -5,57 +5,63 @@ import Link from "next/link";
 
 const internshipProjects = [
   {
-    title: "Ayunext Web Application",
-    org: "Ayunext Internship",
-    desc: "Developed production-ready features for real-world web applications.",
+    title: "Ayunext Solutions (2-Month Internship)",
+    org: "Ayunext Solutions",
+    desc: "Worked on real-world web development tasks during a 2-month internship, contributing to live projects and implementing production-ready features in a professional environment. Gained hands-on industry experience, strengthened problem-solving skills, and delivered meaningful features under real deadlines.",
     link: "/projects/ayunext",
+    live: "https://www.ayunexts.com/",
+    github: "https://github.com/Dhruvesh05/ayunexts",
     image: "/ayunext.png",
   },
 ];
 
 const groupProjects = [
   {
-    title: "Group Project 1",
-    org: "Team Project",
-    desc: "Collaborative project with innovative solutions.",
-    link: "/projects/group-1",
+    title: "CSI-KKWIEER (CSI Student Chapter Website)",
+    org: "Student Chapter Project",
+    desc: "An official website for the Computer Society of India (CSI) student chapter at KKWIEER, showcasing events, members, and technical activities. Improved visibility and communication for the student chapter by providing a centralized and professional online presence.",
+    link: "/projects/csi-kkwieer",
+    live: "https://csi-kkwieer.vercel.app",
+    github: "https://github.com/Sarthak2477/CSI-KKWIEER",
     image: "/csi.png",
   },
   {
-    title: "Group Project 2",
-    org: "Team Project",
-    desc: "Full-stack application built with modern technologies.",
-    link: "/projects/group-2",
+    title: "Shubh Construction",
+    org: "Client-Based Project",
+    desc: "A professional client-based construction website developed to establish a strong online presence, showcasing services, projects, and contact information with a clean and responsive UI. Helped the client improve digital visibility and credibility while delivering a real-world, production-ready web solution.",
+    link: "/projects/shubh-construction",
+    live: "https://shubh-construction.vercel.app/",
+    github: "https://github.com/Dhruvesh05/shubh_construction",
     image: "/shubh.png",
   },
   {
-    title: "Group Project 3",
-    org: "Team Project",
-    desc: "Solved real-world problems with creative approach.",
-    link: "/projects/group-3",
-    image: "/foss.png",
+    title: "LinkTrace-3D Flow Visualizer & Bug Explorer",
+    org: "Development Tool",
+    desc: "A 3D visualization tool that maps file-to-file connections and error flows within a codebase, helping developers understand project structure and debug efficiently. Enhanced code comprehension and debugging by transforming complex dependencies into an interactive visual experience.",
+    link: "/projects/linktrace-3d",
+    live: "https://link-trace-3-d-flow-visualizer-bug.vercel.app/",
+    github: "https://github.com/Dhruvesh05/LinkTrace-3D-Flow-Visualizer-Bug-Explorer",
+    image: "/linktrace.png",
   },
   {
-    title: "Group Project 4",
-    org: "Team Project",
-    desc: "Implemented scalable architecture and design patterns.",
-    link: "/projects/group-4",
-    image: "/mlsc.png",
+    title: "UniMail Pro – Department Dispatch Mail System",
+    org: "University Project",
+    desc: "A centralized email management system for university departments, enabling structured email drafting, translation, storage, and export of official communications. Streamlined departmental communication workflows and reduced manual effort in managing and exporting official emails.",
+    link: "/projects/unimail-pro",
+    live: "https://unimail-kkwieer.vercel.app/",
+    github: "https://github.com/Hrishikesh-Gavai/UniMail-KKWIEER",
+    image: "/deptproj.png",
   },
   {
-    title: "Group Project 5",
-    org: "Team Project",
-    desc: "Worked on performance optimization and UX improvements.",
-    link: "/projects/group-5",
-    image: "/innovera.png",
+    title: "Real-Time Chat Application",
+    org: "React + Spring Boot",
+    desc: "A full-stack real-time chat application enabling users to connect and exchange messages instantly using a modern React frontend and Spring Boot backend. Demonstrated scalable full-stack architecture and real-time communication, simulating industry-grade chat systems.",
+    link: "/projects/realtime-chat",
+    live: "https://chat-app-frontend-nine-sigma.vercel.app/",
+    github: "https://github.com/Dhruvesh05/chat-app-frontend",
+    image: "/chat.png",
   },
-  {
-    title: "Group Project 6",
-    org: "Team Project",
-    desc: "Developed innovative features with team collaboration.",
-    link: "/projects/group-6",
-    image: "/csilogo.png",
-  },
+  
 ];
 
 const finalYearProject = [
@@ -108,12 +114,24 @@ export default function ProjectsSection() {
                   </div>
 
                   <div className="mt-4 md:mt-5 flex flex-wrap gap-2">
-                    <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
+                    <a
+                      href={item.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
+                    >
                       Live
-                    </button>
-                    <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
+                    </a>
+                    <a
+                      href={item.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
+                    >
                       GitHub
-                    </button>
+                    </a>
                     <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
                       More
                     </button>
@@ -155,12 +173,24 @@ export default function ProjectsSection() {
                   </div>
 
                   <div className="mt-4 md:mt-5 flex flex-wrap gap-2">
-                    <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
+                    <a
+                      href={item.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
+                    >
                       Live
-                    </button>
-                    <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
+                    </a>
+                    <a
+                      href={item.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
+                    >
                       GitHub
-                    </button>
+                    </a>
                     <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
                       More
                     </button>

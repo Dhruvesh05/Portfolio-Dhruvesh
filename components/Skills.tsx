@@ -93,7 +93,11 @@ export default function SkillsSection() {
                         <img 
                           src={skill.icon} 
                           alt={skill.name}
-                          className="w-full h-full object-contain dark:invert-[0.9] dark:brightness-200"
+                          className={`w-full h-full object-contain ${
+                            skill.name === 'Express.js' || skill.name === 'Next.js' || skill.name === 'GitHub' 
+                              ? 'dark:invert' 
+                              : ''
+                          }`}
                         />
                       </div>
                       <span className="text-xs font-medium text-center opacity-80">{skill.name}</span>

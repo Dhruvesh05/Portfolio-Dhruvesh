@@ -252,83 +252,119 @@ export default function HomePage() {
             <div className="grid sm:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
               {/* Programming Languages */}
               <div className="group rounded-2xl md:rounded-3xl border-2 border-black dark:border-white bg-white dark:bg-black p-6 md:p-8 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
-                <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
-                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black dark:bg-white flex items-center justify-center">
-                    <span className="text-white dark:text-black text-lg md:text-xl font-bold">{'</>'}</span>
+                <h4 className="text-xl md:text-2xl font-bold mb-6 text-center">Programming Languages</h4>
+                <div className="grid grid-cols-3 sm:grid-cols-6 gap-4 md:gap-6">
+                  <div className="flex flex-col items-center justify-center gap-2 group">
+                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                      <img 
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" 
+                        alt="C"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <span className="text-xs font-medium text-center opacity-80">C</span>
                   </div>
-                  <h3 className="text-lg md:text-xl font-bold">Programming Languages</h3>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  {["C", "C++", "JavaScript", "SQL", "HTML", "CSS"].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-5 py-2.5 text-sm font-medium rounded-full border-2 border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 cursor-pointer"
-                    >
-                      {skill}
-                    </span>
-                  ))}
+                  <div className="flex flex-col items-center justify-center gap-2 group">
+                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                      <img 
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" 
+                        alt="C++"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <span className="text-xs font-medium text-center opacity-80">C++</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-2 group">
+                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                      <img 
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" 
+                        alt="JavaScript"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <span className="text-xs font-medium text-center opacity-80">JavaScript</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-2 group">
+                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                      <img 
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azuresqldatabase/azuresqldatabase-original.svg" 
+                        alt="SQL"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <span className="text-xs font-medium text-center opacity-80">SQL</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-2 group">
+                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                      <img 
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" 
+                        alt="HTML"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <span className="text-xs font-medium text-center opacity-80">HTML</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-2 group">
+                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                      <img 
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" 
+                        alt="CSS"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <span className="text-xs font-medium text-center opacity-80">CSS</span>
+                  </div>
                 </div>
               </div>
 
               {/* Frameworks & Libraries */}
               <div className="group rounded-2xl md:rounded-3xl border-2 border-black dark:border-white bg-white dark:bg-black p-6 md:p-8 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
-                <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
-                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black dark:bg-white flex items-center justify-center">
-                    <span className="text-white dark:text-black text-lg md:text-xl font-bold">⚛</span>
+                <h4 className="text-xl md:text-2xl font-bold mb-6 text-center">Frameworks & Libraries</h4>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6">
+                  <div className="flex flex-col items-center justify-center gap-2 group">
+                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                      <img 
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" 
+                        alt="React.js"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <span className="text-xs font-medium text-center opacity-80">React.js</span>
                   </div>
-                  <h3 className="text-lg md:text-xl font-bold">Frameworks & Libraries</h3>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  {["React.js", "Node.js", "Express.js", "Next.js"].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-5 py-2.5 text-sm font-medium rounded-full border-2 border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 cursor-pointer"
-                    >
-                      {skill}
-                    </span>
-                  ))}
+                  <div className="flex flex-col items-center justify-center gap-2 group">
+                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                      <img 
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" 
+                        alt="Node.js"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <span className="text-xs font-medium text-center opacity-80">Node.js</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-2 group">
+                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                      <img 
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" 
+                        alt="Express.js"
+                        className="w-full h-full object-contain dark:invert"
+                      />
+                    </div>
+                    <span className="text-xs font-medium text-center opacity-80">Express.js</span>
+                  </div>
+                  <div className="flex flex-col items-center justify-center gap-2 group">
+                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                      <img 
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" 
+                        alt="Next.js"
+                        className="w-full h-full object-contain dark:invert"
+                      />
+                    </div>
+                    <span className="text-xs font-medium text-center opacity-80">Next.js</span>
+                  </div>
                 </div>
               </div>
 
-              {/* Databases */}
-              <div className="group rounded-2xl md:rounded-3xl border-2 border-black dark:border-white bg-white dark:bg-black p-6 md:p-8 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
-                <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
-                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black dark:bg-white flex items-center justify-center">
-                    <span className="text-white dark:text-black text-lg md:text-xl font-bold">⚡</span>
-                  </div>
-                  <h3 className="text-lg md:text-xl font-bold">Databases</h3>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  {["PostgreSQL", "MySQL", "MongoDB"].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-5 py-2.5 text-sm font-medium rounded-full border-2 border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 cursor-pointer"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Developer Tools */}
-              <div className="group rounded-2xl md:rounded-3xl border-2 border-black dark:border-white bg-white dark:bg-black p-6 md:p-8 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
-                <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
-                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black dark:bg-white flex items-center justify-center">
-                    <span className="text-white dark:text-black text-lg md:text-xl font-bold">🛠</span>
-                  </div>
-                  <h3 className="text-lg md:text-xl font-bold">Tools & Technologies</h3>
-                </div>
-                <div className="flex flex-wrap gap-3">
-                  {["Git", "GitHub", "VS Code", "Postman", "Unity", "VR Development", "RESTful APIs"].map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-5 py-2.5 text-sm font-medium rounded-full border-2 border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 cursor-pointer"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              
             </div>
           </div>
           <div className="text-center mt-8">
@@ -359,27 +395,30 @@ export default function HomePage() {
               
               {/* Project Content */}
               <div className="p-6 md:p-8">
-                <h3 className="text-xl md:text-2xl font-bold mb-3">Full-Stack Web Application</h3>
+                <h3 className="text-xl md:text-2xl font-bold mb-3">UniMail Pro</h3>
                 <p className="text-sm md:text-base opacity-70 mb-4 leading-relaxed">
-                  Built end-to-end web application with user authentication, CRUD operations, and database integration.
-                  Implemented RESTful API architecture with secure JWT authentication. Optimized database queries
-                  resulting in 40% faster page load times.
+                  A centralized communication platform that bridges the gap between students, faculties, and departments within an educational institution. UniMail Pro streamlines announcements, event notifications, and important updates with role-based access control and real-time messaging.
                 </p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   <span className="text-xs px-3 py-1.5 border-2 border-black dark:border-white rounded-md font-medium">React.js</span>
                   <span className="text-xs px-3 py-1.5 border-2 border-black dark:border-white rounded-md font-medium">Node.js</span>
                   <span className="text-xs px-3 py-1.5 border-2 border-black dark:border-white rounded-md font-medium">Express.js</span>
                   <span className="text-xs px-3 py-1.5 border-2 border-black dark:border-white rounded-md font-medium">PostgreSQL</span>
+                  <span className="text-xs px-3 py-1.5 border-2 border-black dark:border-white rounded-md font-medium">Socket.io</span>
                 </div>
                 <div className="flex gap-3">
                   <a 
-                    href="#" 
+                    href="https://unimail-pro-frontend.vercel.app/" 
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex-1 text-center px-4 py-2 text-sm border-2 border-black dark:border-white bg-black text-white dark:bg-white dark:text-black hover:bg-transparent hover:text-black dark:hover:bg-transparent dark:hover:text-white transition-all duration-300"
                   >
                     Live Demo
                   </a>
                   <a 
-                    href="#" 
+                    href="https://github.com/Dhruvesh05/Unimail_pro" 
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex-1 text-center px-4 py-2 text-sm border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300"
                   >
                     GitHub
@@ -401,25 +440,29 @@ export default function HomePage() {
               
               {/* Project Content */}
               <div className="p-6 md:p-8">
-                <h3 className="text-xl md:text-2xl font-bold mb-3">VR Experience Development</h3>
+                <h3 className="text-xl md:text-2xl font-bold mb-3">CSI-KKWIEER</h3>
                 <p className="text-sm md:text-base opacity-70 mb-4 leading-relaxed">
-                  Developed immersive VR application showcasing interactive 3D environments and user interactions.
-                  Implemented physics-based mechanics and optimized performance for VR headsets using Unity and C#.
+                  Official website for the Computer Society of India Student Chapter at K.K. Wagh Institute. Features event management, member profiles, and blog system to showcase technical activities and achievements of the student community.
+                  It also hosted anaptitude test on its very own portal developed by Technical Team of CSI
                 </p>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-xs px-3 py-1.5 border-2 border-black dark:border-white rounded-md font-medium">Unity</span>
-                  <span className="text-xs px-3 py-1.5 border-2 border-black dark:border-white rounded-md font-medium">C#</span>
-                  <span className="text-xs px-3 py-1.5 border-2 border-black dark:border-white rounded-md font-medium">Virtual Reality</span>
+                  <span className="text-xs px-3 py-1.5 border-2 border-black dark:border-white rounded-md font-medium">Next.js</span>
+                  <span className="text-xs px-3 py-1.5 border-2 border-black dark:border-white rounded-md font-medium">React.js</span>
+                  <span className="text-xs px-3 py-1.5 border-2 border-black dark:border-white rounded-md font-medium">Tailwind CSS</span>
                 </div>
                 <div className="flex gap-3">
                   <a 
-                    href="#" 
+                    href="https://csi-kkwieer.vercel.app/" 
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex-1 text-center px-4 py-2 text-sm border-2 border-black dark:border-white bg-black text-white dark:bg-white dark:text-black hover:bg-transparent hover:text-black dark:hover:bg-transparent dark:hover:text-white transition-all duration-300"
                   >
                     Live Demo
                   </a>
                   <a 
-                    href="#" 
+                    href="https://github.com/Dhruvesh05/csi-kkwieer" 
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex-1 text-center px-4 py-2 text-sm border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300"
                   >
                     GitHub

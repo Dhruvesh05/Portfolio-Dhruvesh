@@ -408,7 +408,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex gap-3">
                   <a 
-                    href="https://unimail-pro-frontend.vercel.app/" 
+                    href="https://unimail-kkwieer.vercel.app/" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 text-center px-4 py-2 text-sm border-2 border-black dark:border-white bg-black text-white dark:bg-white dark:text-black hover:bg-transparent hover:text-black dark:hover:bg-transparent dark:hover:text-white transition-all duration-300"
@@ -416,7 +416,7 @@ export default function HomePage() {
                     Live Demo
                   </a>
                   <a 
-                    href="https://github.com/Dhruvesh05/Unimail_pro" 
+                    href="https://github.com/Hrishikesh-Gavai/UniMail-KKWIEER" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 text-center px-4 py-2 text-sm border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300"
@@ -460,7 +460,7 @@ export default function HomePage() {
                     Live Demo
                   </a>
                   <a 
-                    href="https://github.com/Dhruvesh05/csi-kkwieer" 
+                    href="https://github.com/Sarthak2477/CSI-KKWIEER" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 text-center px-4 py-2 text-sm border-2 border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300"

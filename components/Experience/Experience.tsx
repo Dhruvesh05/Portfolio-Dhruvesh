@@ -66,57 +66,78 @@ export default function ExperienceSection() {
 
       <div className="w-full max-w-5xl mx-auto">
         <div className="flex flex-col gap-4 md:gap-5">
-          {technicalExperience.map((item, i) => (
-            <Link
-              key={i}
-              href={item.link}
-              className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden"
-            >
-              <div className="flex flex-col md:flex-row">
-                <div className="relative w-full md:w-96 lg:w-[28rem] h-56 md:h-64 shrink-0">
-                  <Image
-                    src={item.image}
-                    alt={item.org}
-                    fill
-                    sizes="(min-width: 1024px) 288px, (min-width: 768px) 256px, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-
-                <div className="flex-1 p-4 md:p-5 flex flex-col justify-between">
-                  <div>
-                    <h4 className="font-bold text-base md:text-lg">{item.title}</h4>
-                    <p className="text-sm opacity-80 mt-1">{item.org}</p>
-                    <p className="text-sm opacity-70 mt-2 md:mt-3">{item.desc}</p>
+          {technicalExperience.map((item, i) => {
+            const driveLinks = [
+              "https://drive.google.com/file/d/1asaEA1YVshXZDlrBucP_aBDqg6VuU82I/view?usp=drive_link",
+              "https://drive.google.com/file/d/121fqO1YcF09bQ9BYctM0Z10ILFU0qP7u/view?usp=drive_link",
+              "https://drive.google.com/file/d/1xl6RoCfpXemZ2tB7M7Pv9xDFx3CWmzQs/view?usp=drive_link"
+            ];
+            return (
+              <a
+                key={i}
+                href={driveLinks[i] || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden block"
+              >
+                <div className="flex flex-col md:flex-row">
+                  <div className="relative w-full md:w-96 lg:w-[28rem] h-56 md:h-64 shrink-0">
+                    <Image
+                      src={item.image}
+                      alt={item.org}
+                      fill
+                      sizes="(min-width: 1024px) 288px, (min-width: 768px) 256px, 100vw"
+                      className="object-cover"
+                    />
                   </div>
 
-                  <div className="mt-4 md:mt-5 flex flex-wrap gap-2">
-                    <a
-                      href={item.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
-                    >
-                      Live
-                    </a>
-                    <a
-                      href={item.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
-                    >
-                      GitHub
-                    </a>
-                    <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
-                      More
-                    </button>
+                  <div className="flex-1 p-4 md:p-5 flex flex-col justify-between">
+                    <div>
+                      <h4 className="font-bold text-base md:text-lg">{item.title}</h4>
+                      <p className="text-sm opacity-80 mt-1">{item.org}</p>
+                      <p className="text-sm opacity-70 mt-2 md:mt-3">{item.desc}</p>
+                    </div>
+
+                    <div className="mt-4 md:mt-5 flex flex-wrap gap-2">
+                      <a
+                        href={item.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
+                      >
+                        Live
+                      </a>
+                      <a
+                        href={item.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
+                      >
+                        GitHub
+                      </a>
+                      {driveLinks[i] ? (
+                        <a
+                          href={driveLinks[i]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()}
+                          className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition text-center"
+                        >
+                          More
+                        </a>
+                      ) : (
+                        <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
+                          More
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </a>
+            );
+          })}
         </div>
       </div>
 
@@ -152,7 +173,46 @@ export default function ExperienceSection() {
             </div>
 
             <div className="absolute inset-0 bg-black/80 dark:bg-black/90 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
-              <button className="px-4 md:px-6 py-1.5 md:py-2 text-xs md:text-sm border border-black dark:border-white text-black dark:text-white bg-white dark:bg-black">Learn More</button>
+              {i === 0 && (
+                <a
+                  href="https://drive.google.com/file/d/1xl6RoCfpXemZ2tB7M7Pv9xDFx3CWmzQs/view?usp=drive_link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 md:px-6 py-1.5 md:py-2 text-xs md:text-sm border border-black dark:border-white text-black dark:text-white bg-white dark:bg-black text-center"
+                >
+                  Learn More
+                </a>
+              )}
+              {i === 1 && (
+                <a
+                  href="https://drive.google.com/file/d/1rCuS2ji967hDyEobx6m9PN0aByASNkv5/view?usp=drive_link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 md:px-6 py-1.5 md:py-2 text-xs md:text-sm border border-black dark:border-white text-black dark:text-white bg-white dark:bg-black text-center"
+                >
+                  Learn More
+                </a>
+              )}
+              {i === 2 && (
+                <a
+                  href="https://drive.google.com/file/d/1langMpVCTEHyhejUYOJTR_5WLoyVgV2E/view?usp=drive_link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 md:px-6 py-1.5 md:py-2 text-xs md:text-sm border border-black dark:border-white text-black dark:text-white bg-white dark:bg-black text-center"
+                >
+                  Learn More
+                </a>
+              )}
+              {i === 3 && (
+                <a
+                  href="https://drive.google.com/file/d/16i4RtNqO-ej1maoUkpqkCbjY7iDOyIYo/view?usp=drive_link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 md:px-6 py-1.5 md:py-2 text-xs md:text-sm border border-black dark:border-white text-black dark:text-white bg-white dark:bg-black text-center"
+                >
+                  Learn More
+                </a>
+              )}
             </div>
           </div>
         ))}

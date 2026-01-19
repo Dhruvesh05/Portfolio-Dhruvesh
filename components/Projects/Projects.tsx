@@ -67,7 +67,7 @@ const groupProjects = [
 const finalYearProject = [
   {
     title: "Final Year Project",
-    org: "Best Project Award - KKWIEER",
+    org: "Best Project Award - KKWIEER  ",
     desc: "Coming Soon....",
     link: "/projects/final-year",
     image: "/comingsoon.png",
@@ -90,10 +90,12 @@ export default function ProjectsSection() {
       <div className="w-full max-w-5xl mx-auto">
         <div className="flex flex-col gap-4 md:gap-5">
           {internshipProjects.map((item, i) => (
-            <Link
+            <a
               key={i}
-              href={item.link}
-              className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden"
+              href="https://drive.google.com/file/d/1asaEA1YVshXZDlrBucP_aBDqg6VuU82I/view?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden block"
             >
               <div className="flex flex-col md:flex-row">
                 <div className="relative w-full md:w-1/2 lg:w-[45%] h-48 md:h-auto shrink-0">
@@ -118,7 +120,7 @@ export default function ProjectsSection() {
                       href={item.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
+                      onClick={e => e.stopPropagation()}
                       className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
                     >
                       Live
@@ -127,18 +129,24 @@ export default function ProjectsSection() {
                       href={item.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
+                      onClick={e => e.stopPropagation()}
                       className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
                     >
                       GitHub
                     </a>
-                    <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
+                    <a
+                      href="https://drive.google.com/file/d/1asaEA1YVshXZDlrBucP_aBDqg6VuU82I/view?usp=drive_link"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={e => e.stopPropagation()}
+                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition text-center"
+                    >
                       More
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>
@@ -148,57 +156,74 @@ export default function ProjectsSection() {
 
       <div className="w-full max-w-5xl mx-auto">
         <div className="flex flex-col gap-4 md:gap-5">
-          {groupProjects.map((item, i) => (
-            <Link
-              key={i}
-              href={item.link}
-              className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden"
-            >
-              <div className="flex flex-col md:flex-row">
-                <div className="relative w-full md:w-1/2 lg:w-[45%] h-48 md:h-auto shrink-0">
-                  <Image
-                    src={item.image}
-                    alt={item.org}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 40vw"
-                    className="object-cover"
-                  />
-                </div>
-
-                <div className="flex-1 p-4 md:p-5 lg:p-6 flex flex-col justify-between md:min-h-[280px]">
-                  <div>
-                    <h4 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl">{item.title}</h4>
-                    <p className="text-xs sm:text-sm md:text-base opacity-80 mt-1 md:mt-2">{item.org}</p>
-                    <p className="text-xs sm:text-sm md:text-base opacity-70 mt-2 md:mt-3">{item.desc}</p>
+          {groupProjects.map((item, i) => {
+            // Drive links for each project in order
+            const driveLinks = [
+              "https://drive.google.com/file/d/1xl6RoCfpXemZ2tB7M7Pv9xDFx3CWmzQs/view?usp=drive_link", // CSI
+              "https://drive.google.com/file/d/1oHb3vJVvSNjnEC3Zc9hCSN47yQU8NT-8/view?usp=drive_link", // LinkTrace-3D
+              "https://drive.google.com/file/d/121fqO1YcF09bQ9BYctM0Z10ILFU0qP7u/view?usp=drive_link", // UniMail Pro
+              "https://drive.google.com/file/d/1bPIBa0fBWZjrDqF6JpsuaGkv0dcC2bIX/view?usp=drive_link", // Chat App
+            ];
+            return (
+              <a
+                key={i}
+                href={driveLinks[i]}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden block"
+              >
+                <div className="flex flex-col md:flex-row">
+                  <div className="relative w-full md:w-1/2 lg:w-[45%] h-48 md:h-auto shrink-0">
+                    <Image
+                      src={item.image}
+                      alt={item.org}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 40vw"
+                      className="object-cover"
+                    />
                   </div>
 
-                  <div className="mt-4 md:mt-5 flex flex-wrap gap-2">
-                    <a
-                      href={item.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
-                    >
-                      Live
-                    </a>
-                    <a
-                      href={item.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
-                    >
-                      GitHub
-                    </a>
-                    <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
-                      More
-                    </button>
+                  <div className="flex-1 p-4 md:p-5 lg:p-6 flex flex-col justify-between md:min-h-[280px]">
+                    <div>
+                      <h4 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl">{item.title}</h4>
+                      <p className="text-xs sm:text-sm md:text-base opacity-80 mt-1 md:mt-2">{item.org}</p>
+                      <p className="text-xs sm:text-sm md:text-base opacity-70 mt-2 md:mt-3">{item.desc}</p>
+                    </div>
+
+                    <div className="mt-4 md:mt-5 flex flex-wrap gap-2">
+                      <a
+                        href={item.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
+                      >
+                        Live
+                      </a>
+                      <a
+                        href={item.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
+                      >
+                        GitHub
+                      </a>
+                      <a
+                        href={driveLinks[i]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition text-center"
+                      >
+                        More
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </a>
+            );
+          })}
         </div>
       </div>
 

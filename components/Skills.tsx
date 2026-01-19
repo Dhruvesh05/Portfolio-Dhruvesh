@@ -44,14 +44,14 @@ export default function SkillsSection() {
       issuer: "Unity",
       date: "Sep 2025",
       description: "Basics of Unity engine and VR development.",
-      link: "#"
+      link: "https://drive.google.com/file/d/1IqYnbiqyvEtLs3fVyPGlNu8Yy6mf1JQi/view?usp=drive_link"
     },
     { 
       title: "RDBMS PostgreSQL",
       issuer: "Spoken Tutorial, IIT Bombay",
       date: "Jul 2025",
       description: "Core DBMS concepts and SQL using PostgreSQL.",
-      link: "#"
+      link: "https://drive.google.com/file/d/1S4RkXxYQlep8DA-OeS96HQk7nUknMz47/view?usp=drive_link"
     },
   ];
 

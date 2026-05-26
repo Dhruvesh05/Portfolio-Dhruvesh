@@ -13,24 +13,26 @@ const technicalExperience = [
     github: "https://github.com/Dhruvesh05/ayunexts",
     image: "/ayunext.png",
   },
-  // {
-  //   title: "Frontend Developer",
-  //   org: "Shubh Construction - Client Project",
-  //   desc: "A professional client-based construction website developed to establish a strong online presence, showcasing services, projects, and contact information with a clean and responsive UI. Helped the client improve digital visibility and credibility while delivering a real-world, production-ready web solution.",
-  //   link: "/experience/shubh-constructions",
-  //   live: "https://shubh-construction.vercel.app/",
-  //   github: "https://github.com/Dhruvesh05/shubh_construction",
-  //   image: "/shubh.png",
-  // },
   {
     title: "Full Stack Developer",
-    org: "UniMail Pro - Department Project",
-    desc: "A centralized email management system for university departments, enabling structured email drafting, translation, storage, and export of official communications. Streamlined departmental communication workflows and reduced manual effort in managing and exporting official emails.",
-    link: "/experience/departmental-project",
-    live: "https://unimail-kkwieer.vercel.app/",
-    github: "https://github.com/Hrishikesh-Gavai/UniMail-KKWIEER",
-    image: "/deptproj.png",
+    org: "Shubh Construction - Client Project",
+    desc: "Shubh Constructions is a full-stack construction management platform built with Next.js, Node.js, Express, Supabase and Cloudinary. It streamlines project tracking, client bookings, and expense management through a centralized digital system with real-time updates, secure APIs, and an intuitive user interface.",
+    link: "/experience/shubh-constructions",
+    live: "https://shubhcons.in",
+    github: "https://github.com/Dhruvesh05/full_stack",
+    image: "/shubhcons.png",
   },
+
+  {
+    title: "ML + Full Stack Developer",
+    org: "Skinlytix",
+    desc: "Skinlytix is an AI-powered skincare recommendation system that analyzes cosmetic ingredients using machine learning. It provides personalized product suggestions, identifies similar products and affordable dupes, and visualizes skincare market trends.",
+    link: "/experience/skinlytix",
+    live: "https://skinlytics-lyart.vercel.app/",
+    github: "https://github.com/Dhruvesh05/GlowGuide",
+    image: "/skinlytix.png",
+  },
+
   {
     title: "Web Team Member",
     org: "CSI-KKWIEER Official Website",
@@ -39,6 +41,16 @@ const technicalExperience = [
     live: "https://csi-kkwieer.vercel.app",
     github: "https://github.com/Sarthak2477/CSI-KKWIEER",
     image: "/csi.png",
+  },
+  
+    {
+    title: "Full Stack Developer",
+    org: "UniMail Pro - Department Project",
+    desc: "A centralized email management system for university departments, enabling structured email drafting, translation, storage, and export of official communications. Streamlined departmental communication workflows and reduced manual effort in managing and exporting official emails.",
+    link: "/experience/departmental-project",
+    live: "https://unimail-kkwieer.vercel.app/",
+    github: "https://github.com/Hrishikesh-Gavai/UniMail-KKWIEER",
+    image: "/deptproj.png",
   },
 ];
 
@@ -68,9 +80,11 @@ export default function ExperienceSection() {
         <div className="flex flex-col gap-4 md:gap-5">
           {technicalExperience.map((item, i) => {
             const driveLinks = [
-              "https://drive.google.com/file/d/1asaEA1YVshXZDlrBucP_aBDqg6VuU82I/view?usp=drive_link",
-              "https://drive.google.com/file/d/121fqO1YcF09bQ9BYctM0Z10ILFU0qP7u/view?usp=drive_link",
-              "https://drive.google.com/file/d/1xl6RoCfpXemZ2tB7M7Pv9xDFx3CWmzQs/view?usp=drive_link"
+              "https://drive.google.com/drive/folders/1U28Kx7YRQnaYQUEWe_wi3IJCHWY20h8F?usp=sharing",
+              "https://drive.google.com/drive/folders/1IT2JkdOorLKzmR26lQA-CrwHvbiNDhtn?usp=sharing",
+              "https://drive.google.com/file/d/16L8s5aQzqNnUyBIOcuh3aYDPbzyCYBA7/view?usp=sharing",
+              "https://drive.google.com/file/d/1xl6RoCfpXemZ2tB7M7Pv9xDFx3CWmzQs/view?usp=sharing",
+              "https://drive.google.com/file/d/121fqO1YcF09bQ9BYctM0Z10ILFU0qP7u/view?usp=sharing"
             ];
             return (
               <a

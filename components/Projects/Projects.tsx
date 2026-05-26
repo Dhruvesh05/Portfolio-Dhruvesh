@@ -15,7 +15,32 @@ const internshipProjects = [
   },
 ];
 
+// https://drive.google.com/drive/folders/1IT2JkdOorLKzmR26lQA-CrwHvbiNDhtn?usp=sharing
+
+const clientProjects = [
+  {
+    title: "Full Stack Developer",
+    org: "Shubh Construction - Client Project",
+    desc: "Shubh Constructions is a full-stack construction management platform built with Next.js, Node.js, Express, Supabase and Cloudinary. It streamlines project tracking, client bookings, and expense management through a centralized digital system with real-time updates, secure APIs, and an intuitive user interface.",
+    link: "/projects/shubh-constructions",
+    live: "https://shubhcons.in",
+    github: "https://github.com/Dhruvesh05/full_stack",
+    image: "/shubhcons.png",
+  },
+];
+
 const groupProjects = [
+
+  {
+    title: "Skinlytix: Intelligent skincare recommendation engine powered by machine learning",
+    org: "React + Spring Boot",
+    desc: "Skinlytix is an AI-powered skincare recommendation system that analyzes cosmetic ingredients using machine learning. It provides personalized product suggestions, identifies similar products and affordable dupes, and visualizes skincare market trends.",
+    link: "/projects/skinlytix",
+    live: "https://skinlytics-lyart.vercel.app/",
+    github: "https://github.com/Dhruvesh05/GlowGuide",
+    image: "/skinlytix.png",
+  },
+
   {
     title: "CSI-KKWIEER (CSI Student Chapter Website)",
     org: "Student Chapter Project",
@@ -25,15 +50,8 @@ const groupProjects = [
     github: "https://github.com/Sarthak2477/CSI-KKWIEER",
     image: "/csi.png",
   },
-  // {
-  //   title: "Shubh Construction",
-  //   org: "Client-Based Project",
-  //   desc: "A professional client-based construction website developed to establish a strong online presence, showcasing services, projects, and contact information with a clean and responsive UI. Helped the client improve digital visibility and credibility while delivering a real-world, production-ready web solution.",
-  //   link: "/projects/shubh-construction",
-  //   live: "https://shubh-construction.vercel.app/",
-  //   github: "https://github.com/Dhruvesh05/shubh_construction",
-  //   image: "/shubh.png",
-  // },
+
+
   {
     title: "LinkTrace-3D Flow Visualizer & Bug Explorer",
     org: "Development Tool",
@@ -53,16 +71,17 @@ const groupProjects = [
     image: "/deptproj.png",
   },
   {
-    title: "Real-Time Chat Application",
+    title: "ProChat : Real-Time Chat Application",
     org: "React + Spring Boot",
     desc: "A full-stack real-time chat application enabling users to connect and exchange messages instantly using a modern React frontend and Spring Boot backend. Demonstrated scalable full-stack architecture and real-time communication, simulating industry-grade chat systems.",
     link: "/projects/realtime-chat",
     live: "https://chat-app-frontend-nine-sigma.vercel.app/",
     github: "https://github.com/Dhruvesh05/chat-app-frontend",
-    image: "/chat.png",
+    image: "/prochat.png",
   },
   
 ];
+
 
 const finalYearProject = [
   {
@@ -92,7 +111,7 @@ export default function ProjectsSection() {
           {internshipProjects.map((item, i) => (
             <a
               key={i}
-              href="https://drive.google.com/file/d/1asaEA1YVshXZDlrBucP_aBDqg6VuU82I/view?usp=drive_link"
+              href="https://drive.google.com/drive/folders/1U28Kx7YRQnaYQUEWe_wi3IJCHWY20h8F?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden block"
@@ -135,7 +154,74 @@ export default function ProjectsSection() {
                       GitHub
                     </a>
                     <a
-                      href="https://drive.google.com/file/d/1asaEA1YVshXZDlrBucP_aBDqg6VuU82I/view?usp=drive_link"
+                      href="https://drive.google.com/file/d/1asaEA1YVshXZDlrBucP_aBDqg6VuU82I/view?usp=sharing"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={e => e.stopPropagation()}
+                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition text-center"
+                    >
+                      More
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* CLIENT-BASED PROJECTS */}
+      <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mt-12 md:mt-16 lg:mt-20 mb-6 md:mb-8 text-center">Client-Based Projects</h3>
+
+      <div className="w-full max-w-5xl mx-auto">
+        <div className="flex flex-col gap-4 md:gap-5">
+          {clientProjects.map((item, i) => (
+            <a
+              key={i}
+              href="https://drive.google.com/drive/folders/1IT2JkdOorLKzmR26lQA-CrwHvbiNDhtn?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden block"
+            >
+              <div className="flex flex-col md:flex-row">
+                <div className="relative w-full md:w-1/2 lg:w-[45%] h-48 md:h-auto shrink-0">
+                  <Image
+                    src={item.image}
+                    alt={item.org}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 40vw"
+                    className="object-cover"
+                  />
+                </div>
+
+                <div className="flex-1 p-4 md:p-5 lg:p-6 flex flex-col justify-between md:min-h-[280px]">
+                  <div>
+                    <h4 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl">{item.title}</h4>
+                    <p className="text-xs sm:text-sm md:text-base opacity-80 mt-1 md:mt-2">{item.org}</p>
+                    <p className="text-xs sm:text-sm md:text-base opacity-70 mt-2 md:mt-3">{item.desc}</p>
+                  </div>
+
+                  <div className="mt-4 md:mt-5 flex flex-wrap gap-2">
+                    <a
+                      href={item.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={e => e.stopPropagation()}
+                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
+                    >
+                      Live
+                    </a>
+                    <a
+                      href={item.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={e => e.stopPropagation()}
+                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
+                    >
+                      GitHub
+                    </a>
+                    <a
+                      href="https://drive.google.com/drive/folders/1IT2JkdOorLKzmR26lQA-CrwHvbiNDhtn?usp=sharing"
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={e => e.stopPropagation()}
@@ -159,10 +245,11 @@ export default function ProjectsSection() {
           {groupProjects.map((item, i) => {
             // Drive links for each project in order
             const driveLinks = [
-              "https://drive.google.com/file/d/1xl6RoCfpXemZ2tB7M7Pv9xDFx3CWmzQs/view?usp=drive_link", // CSI
-              "https://drive.google.com/file/d/1oHb3vJVvSNjnEC3Zc9hCSN47yQU8NT-8/view?usp=drive_link", // LinkTrace-3D
-              "https://drive.google.com/file/d/121fqO1YcF09bQ9BYctM0Z10ILFU0qP7u/view?usp=drive_link", // UniMail Pro
-              "https://drive.google.com/file/d/1bPIBa0fBWZjrDqF6JpsuaGkv0dcC2bIX/view?usp=drive_link", // Chat App
+              "https://drive.google.com/file/d/16L8s5aQzqNnUyBIOcuh3aYDPbzyCYBA7/view?usp=sharing",
+              "https://drive.google.com/file/d/1xl6RoCfpXemZ2tB7M7Pv9xDFx3CWmzQs/view?usp=sharing", // CSI
+              "https://drive.google.com/file/d/1oHb3vJVvSNjnEC3Zc9hCSN47yQU8NT-8/view?usp=sharing", // LinkTrace-3D
+              "https://drive.google.com/file/d/121fqO1YcF09bQ9BYctM0Z10ILFU0qP7u/view?usp=sharing", // UniMail Pro
+              "https://drive.google.com/file/d/1bPIBa0fBWZjrDqF6JpsuaGkv0dcC2bIX/view?usp=sharing", // Chat App
             ];
             return (
               <a

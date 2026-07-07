@@ -19,7 +19,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const fullName = "Dhruvesh Patil";
-    let timeoutId: ReturnType<typeof window.setTimeout>;
+    let timeoutId: ReturnType<typeof globalThis.setTimeout>;
     let isMounted = true;
 
     const typeText = (index: number, isDeleting: boolean) => {
@@ -43,14 +43,14 @@ export default function HomePage() {
             : index + 1;
       const nextDeleting = hasFinishedTyping ? true : hasFinishedDeleting ? false : isDeleting;
 
-      timeoutId = window.setTimeout(() => typeText(nextIndex, nextDeleting), nextDelay);
+      timeoutId = globalThis.setTimeout(() => typeText(nextIndex, nextDeleting), nextDelay);
     };
 
-    timeoutId = window.setTimeout(() => typeText(0, false), 350);
+    timeoutId = globalThis.setTimeout(() => typeText(0, false), 350);
 
     return () => {
       isMounted = false;
-      window.clearTimeout(timeoutId);
+      globalThis.clearTimeout(timeoutId);
     };
   }, []);
 

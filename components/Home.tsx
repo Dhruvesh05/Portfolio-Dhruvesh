@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { projectEntries } from "./portfolioData";
 
 export default function HomePage() {
   const [scrollY, setScrollY] = useState(0);
+  const [typedName, setTypedName] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,8 +17,67 @@ export default function HomePage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const fullName = "Dhruvesh Patil";
+    let timeoutId: ReturnType<typeof window.setTimeout>;
+    let isMounted = true;
+
+    const typeText = (index: number, isDeleting: boolean) => {
+      if (!isMounted) return;
+
+      const nextText = isDeleting
+        ? fullName.slice(0, Math.max(0, index - 1))
+        : fullName.slice(0, index + 1);
+
+      setTypedName(nextText);
+
+      const hasFinishedTyping = !isDeleting && nextText.length === fullName.length;
+      const hasFinishedDeleting = isDeleting && nextText.length === 0;
+      const nextDelay = hasFinishedTyping ? 1400 : 90;
+      const nextIndex = hasFinishedTyping
+        ? index
+        : hasFinishedDeleting
+          ? 0
+          : isDeleting
+            ? index - 1
+            : index + 1;
+      const nextDeleting = hasFinishedTyping ? true : hasFinishedDeleting ? false : isDeleting;
+
+      timeoutId = window.setTimeout(() => typeText(nextIndex, nextDeleting), nextDelay);
+    };
+
+    timeoutId = window.setTimeout(() => typeText(0, false), 350);
+
+    return () => {
+      isMounted = false;
+      window.clearTimeout(timeoutId);
+    };
+  }, []);
+
   // Calculate scale based on scroll (starts at 1, zooms out to 0.5)
   const scale = Math.max(0.9, 1 - scrollY / 1000);
+  const portfolioStats = [
+    {
+      label: "Projects Built",
+      value: String(projectEntries.length),
+      detail: "Across internships, clients, and group work",
+    },
+    {
+      label: "Technologies",
+      value: "20+",
+      detail: "Languages, frameworks, and tools across the portfolio",
+    },
+    {
+      label: "GitHub Commits",
+      value: "19",
+      detail: "Commits tracked in this workspace",
+    },
+    {
+      label: "Lines of Code",
+      value: "2,460",
+      detail: "Approximate source lines in the repo",
+    },
+  ];
 
   return (
     <main className="bg-white dark:bg-black text-black dark:text-white">
@@ -29,7 +90,10 @@ export default function HomePage() {
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-3 sm:mb-4 md:mb-6 tracking-tight">
             <span className="block text-xs sm:text-sm md:text-base opacity-70 mb-1.5 sm:mb-2 font-normal">Hello, I&apos;m</span>
-            Dhruvesh Patil
+            <span className="block min-h-[1.2em] whitespace-nowrap">
+              <span className="sr-only">Dhruvesh Patil</span>
+              <span aria-hidden="true">{typedName || "\u00a0"}</span>
+            </span>
           </h1>
 
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-3 sm:mb-4 md:mb-6 font-semibold">
@@ -125,7 +189,7 @@ export default function HomePage() {
 
       {/* ================= ALL SECTIONS WRAPPER ================= */}
       <section className="relative z-10 bg-white/80 dark:bg-black/80 backdrop-blur-md">
-        
+
         {/* ================= ABOUT & EDUCATION ================= */}
         <div id="about" className="py-16 md:py-24 px-4 md:px-6 max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-12 text-center">About Me</h2>
@@ -180,6 +244,28 @@ export default function HomePage() {
             >
               Know More About Me →
             </Link>
+          </div>
+        </div>
+
+        {/* ================= QUICK STATS ================= */}
+        <div className="px-4 md:px-6 pb-16 md:pb-24 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
+            {portfolioStats.map((stat) => (
+              <div
+                key={stat.label}
+                className="rounded-2xl border-2 border-black dark:border-white bg-white/90 dark:bg-black/90 p-5 md:p-6 shadow-lg transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl"
+              >
+                <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.3em] opacity-60">
+                  {stat.label}
+                </p>
+                <div className="text-3xl md:text-4xl font-black mb-2">
+                  {stat.value}
+                </div>
+                <p className="text-sm leading-relaxed opacity-70">
+                  {stat.detail}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 

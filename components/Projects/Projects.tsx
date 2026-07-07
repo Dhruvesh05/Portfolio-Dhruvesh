@@ -1,365 +1,195 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-
-const internshipProjects = [
-  {
-    title: "Ayunext Solutions (2-Month Internship)",
-    org: "Ayunext Solutions",
-    desc: "Worked on real-world web development tasks during a 2-month internship, contributing to live projects and implementing production-ready features in a professional environment. Gained hands-on industry experience, strengthened problem-solving skills, and delivered meaningful features under real deadlines.",
-    link: "/projects/ayunext",
-    live: "https://www.ayunexts.com/",
-    github: "https://github.com/Dhruvesh05/ayunexts",
-    image: "/ayunext.png",
-  },
-];
-
-// https://drive.google.com/drive/folders/1IT2JkdOorLKzmR26lQA-CrwHvbiNDhtn?usp=sharing
-
-const clientProjects = [
-  {
-    title: "Full Stack Developer",
-    org: "Shubh Construction - Client Project",
-    desc: "Shubh Constructions is a full-stack construction management platform built with Next.js, Node.js, Express, Supabase and Cloudinary. It streamlines project tracking, client bookings, and expense management through a centralized digital system with real-time updates, secure APIs, and an intuitive user interface.",
-    link: "/projects/shubh-constructions",
-    live: "https://shubhcons.in",
-    github: "https://github.com/Dhruvesh05/full_stack",
-    image: "/shubhcons.png",
-  },
-];
-
-const groupProjects = [
-
-  {
-    title: "Skinlytix: Intelligent skincare recommendation engine powered by machine learning",
-    org: "React + Spring Boot",
-    desc: "Skinlytix is an AI-powered skincare recommendation system that analyzes cosmetic ingredients using machine learning. It provides personalized product suggestions, identifies similar products and affordable dupes, and visualizes skincare market trends.",
-    link: "/projects/skinlytix",
-    live: "https://skinlytics-lyart.vercel.app/",
-    github: "https://github.com/Dhruvesh05/GlowGuide",
-    image: "/skinlytix.png",
-  },
-
-  {
-    title: "CSI-KKWIEER (CSI Student Chapter Website)",
-    org: "Student Chapter Project",
-    desc: "An official website for the Computer Society of India (CSI) student chapter at KKWIEER, showcasing events, members, and technical activities. Improved visibility and communication for the student chapter by providing a centralized and professional online presence.",
-    link: "/projects/csi-kkwieer",
-    live: "https://csi-kkwieer.vercel.app",
-    github: "https://github.com/Sarthak2477/CSI-KKWIEER",
-    image: "/csi.png",
-  },
-
-
-  {
-    title: "LinkTrace-3D Flow Visualizer & Bug Explorer",
-    org: "Development Tool",
-    desc: "A 3D visualization tool that maps file-to-file connections and error flows within a codebase, helping developers understand project structure and debug efficiently. Enhanced code comprehension and debugging by transforming complex dependencies into an interactive visual experience.",
-    link: "/projects/linktrace-3d",
-    live: "https://link-trace-3-d-flow-visualizer-bug.vercel.app/",
-    github: "https://github.com/Dhruvesh05/LinkTrace-3D-Flow-Visualizer-Bug-Explorer",
-    image: "/linktrace.png",
-  },
-  {
-    title: "UniMail Pro – Department Dispatch Mail System",
-    org: "University Project",
-    desc: "A centralized email management system for university departments, enabling structured email drafting, translation, storage, and export of official communications. Streamlined departmental communication workflows and reduced manual effort in managing and exporting official emails.",
-    link: "/projects/unimail-pro",
-    live: "https://unimail-kkwieer.vercel.app/",
-    github: "https://github.com/Hrishikesh-Gavai/UniMail-KKWIEER",
-    image: "/deptproj.png",
-  },
-  {
-    title: "ProChat : Real-Time Chat Application",
-    org: "React + Spring Boot",
-    desc: "A full-stack real-time chat application enabling users to connect and exchange messages instantly using a modern React frontend and Spring Boot backend. Demonstrated scalable full-stack architecture and real-time communication, simulating industry-grade chat systems.",
-    link: "/projects/realtime-chat",
-    live: "https://chat-app-frontend-nine-sigma.vercel.app/",
-    github: "https://github.com/Dhruvesh05/chat-app-frontend",
-    image: "/prochat.png",
-  },
-  
-];
-
-
-const finalYearProject = [
-  {
-    title: "Final Year Project",
-    org: "Best Project Award - KKWIEER  ",
-    desc: "Coming Soon....",
-    link: "/projects/final-year",
-    image: "/comingsoon.png",
-  },
-];
+import PortfolioDetail from "../PortfolioDetail";
+import {
+  clientProjects,
+  groupProjects,
+  internshipProjects,
+} from "../portfolioData";
 
 export default function ProjectsSection() {
+  const [selectedProject, setSelectedProject] = useState<(typeof internshipProjects)[number] | null>(null);
+  const stats = [
+    { label: "Internship", value: String(internshipProjects.length) },
+    { label: "Client work", value: String(clientProjects.length) },
+    { label: "Group builds", value: String(groupProjects.length) },
+    { label: "Total showcases", value: String(internshipProjects.length + clientProjects.length + groupProjects.length) },
+  ];
+
+  const projectGroups = [
+    {
+      label: "Internship Projects",
+      description: "Work shipped in real-world environments with practical ownership and live demos.",
+      items: internshipProjects,
+      accent: "from-amber-50 via-white to-white dark:from-amber-950/30 dark:via-black dark:to-black",
+    },
+    {
+      label: "Client-Based Projects",
+      description: "Client-facing solutions with polished interfaces and production-minded execution.",
+      items: clientProjects,
+      accent: "from-sky-50 via-white to-white dark:from-sky-950/30 dark:via-black dark:to-black",
+    },
+    {
+      label: "Group Projects",
+      description: "Team-built products that combine collaboration, delivery, and technical depth.",
+      items: groupProjects,
+      accent: "from-rose-50 via-white to-white dark:from-rose-950/30 dark:via-black dark:to-black",
+    },
+  ];
+
+  const openProject = (item: (typeof internshipProjects)[number]) => {
+    setSelectedProject(item);
+  };
+
+  const handleCardKeyDown = (event: React.KeyboardEvent<HTMLElement>, item: (typeof internshipProjects)[number]) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openProject(item);
+    }
+  };
+
   return (
     <section
       id="projects"
-      className="w-full py-12 md:py-20 lg:py-24 px-4 md:px-6 bg-white dark:bg-black text-black dark:text-white"
+      className="relative overflow-hidden w-full px-4 py-12 text-black dark:bg-black dark:text-white md:px-6 md:py-20 lg:py-24"
     >
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 md:mb-12 lg:mb-16">
-        Projects
-      </h2>
-
-      {/* INTERNSHIP PROJECTS */}
-      <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-6 md:mb-8 text-center">Internship Projects</h3>
-
-      <div className="w-full max-w-5xl mx-auto">
-        <div className="flex flex-col gap-4 md:gap-5">
-          {internshipProjects.map((item, i) => (
-            <a
-              key={i}
-              href="https://drive.google.com/drive/folders/1U28Kx7YRQnaYQUEWe_wi3IJCHWY20h8F?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden block"
-            >
-              <div className="flex flex-col md:flex-row">
-                <div className="relative w-full md:w-1/2 lg:w-[45%] h-48 md:h-auto shrink-0">
-                  <Image
-                    src={item.image}
-                    alt={item.org}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 45vw"
-                    className="object-cover"
-                  />
-                </div>
-
-                <div className="flex-1 p-4 md:p-5 lg:p-6 flex flex-col justify-between md:min-h-[280px]">
-                  <div>
-                    <h4 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl">{item.title}</h4>
-                    <p className="text-xs sm:text-sm md:text-base opacity-80 mt-1 md:mt-2">{item.org}</p>
-                    <p className="text-xs sm:text-sm md:text-base opacity-70 mt-2 md:mt-3">{item.desc}</p>
-                  </div>
-
-                  <div className="mt-4 md:mt-5 flex flex-wrap gap-2">
-                    <a
-                      href={item.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
-                    >
-                      Live
-                    </a>
-                    <a
-                      href={item.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
-                    >
-                      GitHub
-                    </a>
-                    <a
-                      href="https://drive.google.com/file/d/1asaEA1YVshXZDlrBucP_aBDqg6VuU82I/view?usp=sharing"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition text-center"
-                    >
-                      More
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-0 top-16 h-72 w-72 rounded-full bg-neutral-200/70 blur-3xl dark:bg-neutral-800/50" />
+        <div className="absolute right-0 top-36 h-80 w-80 rounded-full bg-black/5 blur-3xl dark:bg-white/5" />
       </div>
 
-      {/* CLIENT-BASED PROJECTS */}
-      <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mt-12 md:mt-16 lg:mt-20 mb-6 md:mb-8 text-center">Client-Based Projects</h3>
+      <div className="relative mx-auto max-w-7xl">
+        <div className="mb-12 md:mb-16 lg:mb-20">
+          <p className="inline-flex items-center rounded-full border border-black/15 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] opacity-80 backdrop-blur dark:border-white/15 dark:bg-black/70">
+            Projects
+          </p>
+          <div className="mt-5 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
+              <h2 className="text-4xl font-black tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+                Projects designed to look sharp and feel worth exploring.
+              </h2>
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed opacity-70 sm:text-base md:text-lg">
+                The goal here is presentation and clarity: each card should communicate the value, the stack,
+                and the experience at a glance.
+              </p>
+            </div>
 
-      <div className="w-full max-w-5xl mx-auto">
-        <div className="flex flex-col gap-4 md:gap-5">
-          {clientProjects.map((item, i) => (
-            <a
-              key={i}
-              href="https://drive.google.com/drive/folders/1IT2JkdOorLKzmR26lQA-CrwHvbiNDhtn?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden block"
-            >
-              <div className="flex flex-col md:flex-row">
-                <div className="relative w-full md:w-1/2 lg:w-[45%] h-48 md:h-auto shrink-0">
-                  <Image
-                    src={item.image}
-                    alt={item.org}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 40vw"
-                    className="object-cover"
-                  />
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              {stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl border border-black/15 bg-white/85 px-4 py-3 shadow-[0_16px_50px_rgba(0,0,0,0.08)] backdrop-blur dark:border-white/15 dark:bg-black/70"
+                >
+                  <p className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] opacity-55">{stat.label}</p>
+                  <p className="mt-2 text-sm font-semibold">{stat.value}</p>
                 </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
-                <div className="flex-1 p-4 md:p-5 lg:p-6 flex flex-col justify-between md:min-h-[280px]">
-                  <div>
-                    <h4 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl">{item.title}</h4>
-                    <p className="text-xs sm:text-sm md:text-base opacity-80 mt-1 md:mt-2">{item.org}</p>
-                    <p className="text-xs sm:text-sm md:text-base opacity-70 mt-2 md:mt-3">{item.desc}</p>
-                  </div>
-
-                  <div className="mt-4 md:mt-5 flex flex-wrap gap-2">
-                    <a
-                      href={item.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
-                    >
-                      Live
-                    </a>
-                    <a
-                      href={item.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
-                    >
-                      GitHub
-                    </a>
-                    <a
-                      href="https://drive.google.com/drive/folders/1IT2JkdOorLKzmR26lQA-CrwHvbiNDhtn?usp=sharing"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition text-center"
-                    >
-                      More
-                    </a>
-                  </div>
+        <div className="space-y-10 md:space-y-12 lg:space-y-14">
+          {projectGroups.map((group) => (
+            <section key={group.label} className={`rounded-[2.25rem] border border-black/10 bg-gradient-to-br ${group.accent} p-4 sm:p-6 md:p-8 shadow-[0_20px_70px_rgba(0,0,0,0.08)] dark:border-white/10`}>
+              <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-55">{group.label}</p>
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed opacity-70 sm:text-base">{group.description}</p>
+                </div>
+                <div className="rounded-full border border-black/10 bg-white/70 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] opacity-70 backdrop-blur dark:border-white/10 dark:bg-black/60">
+                  {group.items.length} showcase{group.items.length === 1 ? "" : "s"}
                 </div>
               </div>
-            </a>
-          ))}
-        </div>
-      </div>
 
-      {/* GROUP PROJECTS */}
-      <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mt-12 md:mt-16 lg:mt-20 mb-6 md:mb-8 text-center">Group Projects</h3>
-
-      <div className="w-full max-w-5xl mx-auto">
-        <div className="flex flex-col gap-4 md:gap-5">
-          {groupProjects.map((item, i) => {
-            // Drive links for each project in order
-            const driveLinks = [
-              "https://drive.google.com/file/d/16L8s5aQzqNnUyBIOcuh3aYDPbzyCYBA7/view?usp=sharing",
-              "https://drive.google.com/file/d/1xl6RoCfpXemZ2tB7M7Pv9xDFx3CWmzQs/view?usp=sharing", // CSI
-              "https://drive.google.com/file/d/1oHb3vJVvSNjnEC3Zc9hCSN47yQU8NT-8/view?usp=sharing", // LinkTrace-3D
-              "https://drive.google.com/file/d/121fqO1YcF09bQ9BYctM0Z10ILFU0qP7u/view?usp=sharing", // UniMail Pro
-              "https://drive.google.com/file/d/1bPIBa0fBWZjrDqF6JpsuaGkv0dcC2bIX/view?usp=sharing", // Chat App
-            ];
-            return (
-              <a
-                key={i}
-                href={driveLinks[i]}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden block"
-              >
-                <div className="flex flex-col md:flex-row">
-                  <div className="relative w-full md:w-1/2 lg:w-[45%] h-48 md:h-auto shrink-0">
-                    <Image
-                      src={item.image}
-                      alt={item.org}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 40vw"
-                      className="object-cover"
-                    />
-                  </div>
-
-                  <div className="flex-1 p-4 md:p-5 lg:p-6 flex flex-col justify-between md:min-h-[280px]">
-                    <div>
-                      <h4 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl">{item.title}</h4>
-                      <p className="text-xs sm:text-sm md:text-base opacity-80 mt-1 md:mt-2">{item.org}</p>
-                      <p className="text-xs sm:text-sm md:text-base opacity-70 mt-2 md:mt-3">{item.desc}</p>
+              <div className="grid gap-5 lg:grid-cols-2">
+                {group.items.map((item, i) => (
+                  <article
+                    key={i}
+                    role="link"
+                    tabIndex={0}
+                    onClick={() => openProject(item)}
+                    onKeyDown={(event) => handleCardKeyDown(event, item)}
+                    className="group overflow-hidden rounded-[2rem] border border-black/15 bg-white/90 shadow-[0_20px_70px_rgba(0,0,0,0.10)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_28px_90px_rgba(0,0,0,0.16)] dark:border-white/15 dark:bg-black/70"
+                  >
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <Image
+                        src={item.image}
+                        alt={item.org}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+                      <div className="absolute left-4 top-4 rounded-full border border-white/30 bg-black/45 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-white backdrop-blur">
+                        Open detail
+                      </div>
                     </div>
 
-                    <div className="mt-4 md:mt-5 flex flex-wrap gap-2">
-                      <a
-                        href={item.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
-                      >
-                        Live
-                      </a>
-                      <a
-                        href={item.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
-                      >
-                        GitHub
-                      </a>
-                      <a
-                        href={driveLinks[i]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition text-center"
-                      >
-                        More
-                      </a>
+                    <div className="p-5 sm:p-6 md:p-7">
+                      <div className="flex flex-col gap-3">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-55">{group.label}</p>
+                          <h4 className="mt-2 text-xl font-black sm:text-2xl">{item.title}</h4>
+                          <p className="mt-2 text-sm opacity-75 sm:text-base">{item.org}</p>
+                        </div>
+
+                        <p className="max-w-3xl text-sm leading-relaxed opacity-75 sm:text-base">{item.desc}</p>
+                      </div>
+
+                      {item.features?.length ? (
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {item.features.map((feature) => (
+                            <span
+                              key={feature}
+                              className="rounded-full border border-black/15 bg-white px-3 py-1 text-xs font-medium opacity-85 transition-transform duration-300 hover:-translate-y-0.5 dark:border-white/15 dark:bg-black"
+                            >
+                              {feature}
+                            </span>
+                          ))}
+                        </div>
+                      ) : null}
+
+                      <div className="mt-6 flex flex-wrap gap-3">
+                        {item.live ? (
+                          <a
+                            href={item.live}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(event) => event.stopPropagation()}
+                            className="inline-flex flex-1 min-w-24 items-center justify-center rounded-full border border-black/15 bg-black px-4 py-2.5 text-xs font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg dark:border-white/15 dark:bg-white dark:text-black"
+                          >
+                            Live Demo
+                          </a>
+                        ) : null}
+                        <a
+                          href={item.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(event) => event.stopPropagation()}
+                          className="inline-flex flex-1 min-w-24 items-center justify-center rounded-full border border-black/15 bg-white px-4 py-2.5 text-xs font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:text-white hover:shadow-lg dark:border-white/15 dark:bg-black dark:hover:bg-white dark:hover:text-black"
+                        >
+                          GitHub
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </a>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* FINAL YEAR PROJECT */}
-      <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mt-12 md:mt-16 lg:mt-20 mb-6 md:mb-8 text-center">Final Year Project</h3>
-
-      <div className="w-full max-w-5xl mx-auto">
-        <div className="flex flex-col gap-4 md:gap-5">
-          {finalYearProject.map((item, i) => (
-            <Link
-              key={i}
-              href={item.link}
-              className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden"
-            >
-              <div className="flex flex-col md:flex-row">
-                <div className="relative w-full md:w-1/2 lg:w-[45%] h-48 md:h-auto shrink-0">
-                  <Image
-                    src={item.image}
-                    alt={item.org}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 45vw"
-                    className="object-cover"
-                  />
-                </div>
-
-                <div className="flex-1 p-4 md:p-5 lg:p-6 flex flex-col justify-between md:min-h-[280px]">
-                  <div>
-                    <h4 className="font-bold text-sm sm:text-base md:text-lg lg:text-xl">{item.title}</h4>
-                    <p className="text-xs sm:text-sm md:text-base opacity-80 mt-1 md:mt-2">{item.org}</p>
-                    <p className="text-xs sm:text-sm md:text-base opacity-70 mt-2 md:mt-3">{item.desc}</p>
-                  </div>
-
-                  <div className="mt-4 md:mt-5 flex flex-wrap gap-2">
-                    <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
-                      Live
-                    </button>
-                    <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
-                      GitHub
-                    </button>
-                    <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
-                      More
-                    </button>
-                  </div>
-                </div>
+                  </article>
+                ))}
               </div>
-            </Link>
+            </section>
           ))}
         </div>
+
       </div>
+
+      {selectedProject ? (
+        <PortfolioDetail
+          entry={selectedProject}
+          sectionLabel="Project"
+          onClose={() => setSelectedProject(null)}
+        />
+      ) : null}
     </section>
   );
 }

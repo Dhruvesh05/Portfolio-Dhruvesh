@@ -1,145 +1,182 @@
 import Image from "next/image";
 
 export default function AboutSection() {
-	return (
-		<section className="min-h-screen py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black">
-			<div className="max-w-6xl mx-auto">
-				{/* Header */}
-				<div className="mb-12 sm:mb-16 md:mb-20">
-					<h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-black dark:text-white">
-						About Me
-					</h2>
-				</div>
+  const focusCards = [
+    {
+      title: "Frontend-first mindset",
+      description:
+        "I shape interfaces that feel clear, responsive, and deliberate across desktop and mobile screens.",
+    },
+    {
+      title: "Full-stack growth",
+      description:
+        "My work spans React, Next.js, Java, Spring Boot, and REST APIs with an emphasis on practical delivery.",
+    },
+    {
+      title: "Portfolio building",
+      description:
+        "I like shipping projects that look polished, solve real problems, and show measurable progress.",
+    },
+  ];
 
-				{/* Profile Section */}
-				<div className="mb-16 sm:mb-20 md:mb-24">
-					<div className="border border-black dark:border-white p-6 sm:p-8 md:p-10 hover:opacity-95 transition-all duration-300 bg-white dark:bg-black">
-						<div className="grid grid-cols-1 md:grid-cols-[300px,1fr] lg:grid-cols-[350px,1fr] gap-6 sm:gap-8 md:gap-12 items-start">
-							{/* Profile Image & Buttons */}
-							<div className="flex flex-col items-center md:items-start gap-4">
-								<div className="relative">
-									<Image
-										src="/profileimage.png"
-										alt="Profile"
-										width={288}
-										height={288}
-										className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 object-cover shadow-2xl rounded-xl"
-									/>
-								</div>
-								
-								{/* Social & Resume Buttons */}
-								<div className="flex flex-wrap gap-2 justify-center md:justify-start w-full">
-									<a
-										href="https://github.com/Dhruvesh05/"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="w-9 h-9 flex items-center justify-center border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 rounded-full"
-										aria-label="GitHub"
-									>
-										<svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-											<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-										</svg>
-									</a>
-									
-									<a
-										href="https://linkedin.com/in/dhruvesh-patil-a31917280/"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="w-9 h-9 flex items-center justify-center border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 rounded-full"
-										aria-label="LinkedIn"
-									>
-										<svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-											<path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-										</svg>
-									</a>
-									
-									<a
-										href="mailto:dhruveshpatil7777@example.com"
-										className="w-9 h-9 flex items-center justify-center border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 rounded-full"
-										aria-label="Email"
-									>
-										<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-										</svg>
-									</a>
-									
-									<a
-										href="https://drive.google.com/file/d/1a-Q6RMehygXArEbf2a_IwLqzub59akoK/view?usp=drive_link"
-										target="_blank"
-										rel="noopener noreferrer"
-										className="flex items-center gap-1.5 px-3 py-1.5 text-xs border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 rounded-md font-medium"
-									>
-										<svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-										</svg>
-										Resume
-									</a>
-								</div>
-							</div>
+  const journeyPoints = [
+    "Started with web development and core CS fundamentals during college.",
+    "Moved from small experiments to more structured, production-style builds.",
+    "Learned by shipping projects, iterating quickly, and refining UI details.",
+  ];
 
-							{/* Description */}
-							<div className="space-y-4 sm:space-y-6 text-left">
-								<div>
-									<h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black dark:text-white mb-2">
-										Dhruvesh Patil
-									</h3>
-									<p className="text-black dark:text-white opacity-70 text-base sm:text-lg font-medium">
-										Computer Engineering Student
-									</p>
-								</div>
-								<div className="space-y-6 text-black dark:text-white opacity-70 leading-relaxed text-sm sm:text-base">
-								<p>
-									Hello, I&apos;m <span className="font-semibold">Dhruvesh Patil</span>
-								</p>
-								<p>
-									I&apos;m a Computer Engineering student with a strong interest in web development and building real-world, user-focused applications using modern technologies.
-								</p>
+  const interests = [
+    "UI/UX exploration",
+    "AI-powered tools",
+    "Automation",
+    "Open-source learning",
+    "DSA practice",
+    "Portfolio projects",
+  ];
 
-								<div>
-									<h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black dark:text-white mb-2">
-										My Journey
-									</h3>
-									<p>
-										My journey into technology started during my early college years, where I explored web development alongside core computer science fundamentals. Over time, I moved from basic projects to more structured, real-world applications, gaining hands-on experience through academic projects, personal builds, and internship-oriented work. I believe in learning by building and constantly refining my skills through practice and experimentation.
-									</p>
-								</div>
+  return (
+    <section className="relative min-h-screen overflow-hidden bg-white text-black dark:bg-black dark:text-white">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 left-0 h-72 w-72 rounded-full bg-neutral-200/70 blur-3xl dark:bg-neutral-800/50" />
+        <div className="absolute right-0 top-32 h-80 w-80 rounded-full bg-black/5 blur-3xl dark:bg-white/5" />
+        <div className="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-neutral-300/50 blur-3xl dark:bg-neutral-700/30" />
+      </div>
 
-								<div>
-									<h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black dark:text-white mb-2">
-										What I do
-									</h3>
-									<p>
-										I work primarily as a frontend-focused developer with experience in React.js and modern UI design. I&apos;ve also built full-stack applications using Java, Spring Boot, and REST APIs, connecting them with React frontends. I enjoy creating clean, responsive interfaces, structuring scalable codebases, and turning complex ideas into simple, usable solutions.
-									</p>
-								</div>
+      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr,0.9fr] lg:items-start">
+          <div className="space-y-8">
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
+              <div className="max-w-3xl lg:flex-1">
+                <p className="inline-flex items-center rounded-full border border-black/15 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] opacity-80 backdrop-blur dark:border-white/15 dark:bg-black/70">
+                  About Me
+                </p>
+                <h2 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+                  Building elegant web experiences with a practical engineering mindset.
+                </h2>
+                <p className="mt-5 max-w-2xl text-sm leading-relaxed opacity-70 sm:text-base md:text-lg">
+                  I&apos;m a Computer Engineering student who enjoys turning ideas into polished, real-world
+                  applications through thoughtful UI, solid architecture, and consistent iteration.
+                </p>
+              </div>
 
-								<div>
-									<h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black dark:text-white mb-2">
-										Education
-									</h3>
-									<p className="font-medium">K.K. Wagh Institute of Engineering Education and Research, Nashik</p>
-									<p className="text-sm opacity-80">B.Tech in Computer Engineering (2022 – 2026)</p>
-								</div>
+              <div className="w-full max-w-[220px] self-start lg:mt-2 lg:ml-auto lg:max-w-[240px] xl:max-w-[260px]">
+                <div className="group overflow-hidden rounded-[1.75rem] border border-black/15 bg-white/85 shadow-[0_18px_50px_rgba(0,0,0,0.10)] backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(0,0,0,0.14)] dark:border-white/15 dark:bg-black/70">
+                  <div className="relative aspect-[4/5] min-h-[200px] max-h-[280px]">
+                    <Image
+                      src="/profileimage.png"
+                      alt="Profile"
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 260px"
+                      className="object-contain object-bottom p-2.5 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                    />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white via-white/60 to-transparent dark:from-black dark:via-black/60" />
+                  </div>
 
-								<div>
-									<h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black dark:text-white mb-2">
-										Interests
-									</h3>
-									<p>
-										Beyond coding, I enjoy building portfolio-ready projects, experimenting with new UI/UX ideas, and exploring emerging technologies like AI-powered tools and automation. I actively work on improving my problem-solving skills through DSA practice and stay updated with industry trends by reading tech blogs and exploring open-source projects.
-									</p>
-								</div>
+                  <div className="border-t border-black/10 p-3.5 dark:border-white/10 sm:p-4">
+                    <p className="text-[0.62rem] font-semibold uppercase tracking-[0.24em] opacity-70">
+                      Visual focus
+                    </p>
+                    <p className="mt-2 text-xs leading-relaxed opacity-75 sm:text-sm">
+                      Framed to sit beside the intro copy without overpowering the layout.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-									<p className="italic">
-										I&apos;m currently preparing for internships and open to opportunities where I can learn, contribute, and grow as a software developer.
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-	);
+            <div className="grid gap-4 md:grid-cols-3">
+              {focusCards.map((card) => (
+                <div
+                  key={card.title}
+                  className="group rounded-[1.75rem] border border-black/15 bg-white/85 p-5 shadow-[0_16px_50px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_60px_rgba(0,0,0,0.14)] dark:border-white/15 dark:bg-black/70"
+                >
+                  <p className="text-sm font-bold transition-transform duration-500 group-hover:-translate-y-0.5">{card.title}</p>
+                  <p className="mt-3 text-sm leading-relaxed opacity-75">{card.description}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="grid gap-6 xl:grid-cols-[1.15fr,0.85fr]">
+              <div className="rounded-[2rem] border border-black/15 bg-white/85 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur dark:border-white/15 dark:bg-black/70 sm:p-8">
+                <h3 className="text-2xl font-black sm:text-3xl">My Journey</h3>
+                <div className="mt-6 space-y-4">
+                  {journeyPoints.map((point, index) => (
+                    <div key={point} className="flex gap-4">
+                      <div className="flex flex-col items-center pt-1">
+                        <span className="h-3 w-3 rounded-full bg-black dark:bg-white" />
+                        {index !== journeyPoints.length - 1 ? (
+                          <span className="mt-2 h-full w-px bg-black/20 dark:bg-white/20" />
+                        ) : null}
+                      </div>
+                      <p className="pb-4 text-sm leading-relaxed opacity-75 sm:text-base">{point}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                <div className="rounded-[2rem] border border-black/15 bg-gradient-to-br from-white/90 to-neutral-100/80 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_80px_rgba(0,0,0,0.16)] dark:border-white/15 dark:from-black/70 dark:to-neutral-900/70">
+                  <h3 className="text-2xl font-black">What I Do</h3>
+                  <p className="mt-4 text-sm leading-relaxed opacity-75">
+                    I focus on React.js, modern UI design, Java, Spring Boot, and REST APIs. I like
+                    building interfaces that feel easy to use while still being structured enough to scale.
+                  </p>
+                </div>
+
+                <div className="rounded-[2rem] border border-black/15 bg-white/85 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_80px_rgba(0,0,0,0.16)] dark:border-white/15 dark:bg-black/70">
+                  <h3 className="text-2xl font-black">Education</h3>
+                  <div className="mt-4 space-y-2 text-sm leading-relaxed opacity-75">
+                    <p className="font-semibold opacity-90">
+                      K.K. Wagh Institute of Engineering Education and Research, Nashik
+                    </p>
+                    <p>B.Tech in Computer Engineering (2022 – 2026)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-[2rem] border border-black/15 bg-white/85 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur dark:border-white/15 dark:bg-black/70 sm:p-8">
+              <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-55">Interests</p>
+                  <p className="mt-3 max-w-3xl text-sm leading-relaxed opacity-75 sm:text-base">
+                    Beyond coding, I enjoy building portfolio-ready projects, exploring UI/UX ideas, and
+                    experimenting with AI-powered tools and automation while staying sharp with DSA and
+                    open-source learning.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2 lg:justify-end">
+                  {interests.map((interest) => (
+                    <span
+                      key={interest}
+                      className="rounded-full border border-black/15 px-3 py-1.5 text-xs font-medium opacity-80 transition-transform duration-300 hover:-translate-y-0.5 dark:border-white/15"
+                    >
+                      {interest}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <a
+                href="https://drive.google.com/file/d/1a-Q6RMehygXArEbf2a_IwLqzub59akoK/view?usp=drive_link"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-full bg-black px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl dark:bg-white dark:text-black"
+              >
+                View Resume
+              </a>
+              <a
+                href="/contact"
+                className="inline-flex items-center justify-center rounded-full border border-black/20 px-6 py-3 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:text-white hover:shadow-xl dark:border-white/20 dark:hover:bg-white dark:hover:text-black"
+              >
+                Let&apos;s Connect
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
-

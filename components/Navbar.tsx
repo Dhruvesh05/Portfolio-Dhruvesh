@@ -53,7 +53,7 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           <div 
-            className={`hidden md:flex items-center bg-transparent border transition-all duration-300 ${
+            className={`hidden md:flex items-center bg-transparent border rounded-xl overflow-hidden transition-all duration-300 ${
               isScrolled ? 'border-black dark:border-white/20' : 'border-black dark:border-transparent'
             }`}
           >
@@ -84,7 +84,7 @@ export default function Navbar() {
                 aria-label="Toggle terminal"
                 className="w-10 h-10 rounded-full flex items-center justify-center text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
               >
-                <span className="font-mono text-base leading-none">&gt;_</span>
+                <span className="text-base leading-none">&gt;_</span>
               </button>
               <ThemeToggle />
             </div>
@@ -99,7 +99,7 @@ export default function Navbar() {
               className="w-10 h-10 rounded-full flex items-center justify-center text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
               aria-label="Toggle terminal"
             >
-              <span className="font-mono text-base leading-none">&gt;_</span>
+              <span className="text-base leading-none">&gt;_</span>
             </button>
             <button
               onClick={toggleMenu}
@@ -135,7 +135,7 @@ export default function Navbar() {
             }}
             className="block w-full text-left px-3 py-2 rounded-lg text-sm text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
           >
-            <span className="font-mono">&gt;_</span>
+            <span>&gt;_</span>
           </button>
           {[
             ['Home', '/'],

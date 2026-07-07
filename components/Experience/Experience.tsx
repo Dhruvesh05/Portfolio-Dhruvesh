@@ -1,236 +1,202 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-
-const technicalExperience = [
-  {
-    title: "Web Development Intern",
-    org: "Ayunext Solutions",
-    desc: "Worked on real-world web development tasks during a 2-month internship, contributing to live projects and implementing production-ready features in a professional environment. Gained hands-on industry experience, strengthened problem-solving skills, and delivered meaningful features under real deadlines.",
-    link: "/experience/ayunext",
-    live: "https://www.ayunexts.com/",
-    github: "https://github.com/Dhruvesh05/ayunexts",
-    image: "/ayunext.png",
-  },
-  {
-    title: "Full Stack Developer",
-    org: "Shubh Construction - Client Project",
-    desc: "Shubh Constructions is a full-stack construction management platform built with Next.js, Node.js, Express, Supabase and Cloudinary. It streamlines project tracking, client bookings, and expense management through a centralized digital system with real-time updates, secure APIs, and an intuitive user interface.",
-    link: "/experience/shubh-constructions",
-    live: "https://shubhcons.in",
-    github: "https://github.com/Dhruvesh05/full_stack",
-    image: "/shubhcons.png",
-  },
-
-  {
-    title: "ML + Full Stack Developer",
-    org: "Skinlytix",
-    desc: "Skinlytix is an AI-powered skincare recommendation system that analyzes cosmetic ingredients using machine learning. It provides personalized product suggestions, identifies similar products and affordable dupes, and visualizes skincare market trends.",
-    link: "/experience/skinlytix",
-    live: "https://skinlytics-lyart.vercel.app/",
-    github: "https://github.com/Dhruvesh05/GlowGuide",
-    image: "/skinlytix.png",
-  },
-
-  {
-    title: "Web Team Member",
-    org: "CSI-KKWIEER Official Website",
-    desc: "An official website for the Computer Society of India (CSI) student chapter at KKWIEER, showcasing events, members, and technical activities. Improved visibility and communication for the student chapter by providing a centralized and professional online presence.",
-    link: "/experience/csi-website",
-    live: "https://csi-kkwieer.vercel.app",
-    github: "https://github.com/Sarthak2477/CSI-KKWIEER",
-    image: "/csi.png",
-  },
-  
-    {
-    title: "Full Stack Developer",
-    org: "UniMail Pro - Department Project",
-    desc: "A centralized email management system for university departments, enabling structured email drafting, translation, storage, and export of official communications. Streamlined departmental communication workflows and reduced manual effort in managing and exporting official emails.",
-    link: "/experience/departmental-project",
-    live: "https://unimail-kkwieer.vercel.app/",
-    github: "https://github.com/Hrishikesh-Gavai/UniMail-KKWIEER",
-    image: "/deptproj.png",
-  },
-];
-
-const clubExperience = [
-  { title: "Core Member", org: "CSI KKWIEER", image: "/csilogo.png" },
-  { title: "Active Member", org: "FOSS Club KKWIEER", image: "/foss.png" },
-  { title: "Technical Member", org: "MLSC KKWIEER", image: "/mlsc.png" },
-  { title: "Event Team Member", org: "INNOV-ERA 2025", image: "/innovera.png" },
-];
+import PortfolioDetail from "../PortfolioDetail";
+import { clubExperience, technicalExperience } from "../portfolioData";
 
 export default function ExperienceSection() {
+  const [selectedExperience, setSelectedExperience] = useState<(typeof technicalExperience)[number] | null>(null);
+  const stats = [
+    { label: "Technical entries", value: String(technicalExperience.length) },
+    { label: "Clubs & activities", value: String(clubExperience.length) },
+    { label: "Live links", value: "Real demos" },
+  ];
+
+  const openExperience = (item: (typeof technicalExperience)[number]) => {
+    setSelectedExperience(item);
+  };
+
+  const handleCardKeyDown = (event: React.KeyboardEvent<HTMLElement>, item: (typeof technicalExperience)[number]) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openExperience(item);
+    }
+  };
+
   return (
     <section
       id="experience"
-      className="w-full py-12 md:py-20 lg:py-24 px-4 md:px-6 bg-white dark:bg-black text-black dark:text-white"
+      className="relative overflow-hidden w-full px-4 py-12 text-black dark:bg-black dark:text-white md:px-6 md:py-20 lg:py-24"
     >
-      <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-8 md:mb-12 lg:mb-16">
-        Experience
-      </h2>
-
-      {/* TECHNICAL */}
-      <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8 text-center">
-        Technical
-      </h3>
-
-      <div className="w-full max-w-5xl mx-auto">
-        <div className="flex flex-col gap-4 md:gap-5">
-          {technicalExperience.map((item, i) => {
-            const driveLinks = [
-              "https://drive.google.com/drive/folders/1U28Kx7YRQnaYQUEWe_wi3IJCHWY20h8F?usp=sharing",
-              "https://drive.google.com/drive/folders/1IT2JkdOorLKzmR26lQA-CrwHvbiNDhtn?usp=sharing",
-              "https://drive.google.com/file/d/16L8s5aQzqNnUyBIOcuh3aYDPbzyCYBA7/view?usp=sharing",
-              "https://drive.google.com/file/d/1xl6RoCfpXemZ2tB7M7Pv9xDFx3CWmzQs/view?usp=sharing",
-              "https://drive.google.com/file/d/121fqO1YcF09bQ9BYctM0Z10ILFU0qP7u/view?usp=sharing"
-            ];
-            return (
-              <a
-                key={i}
-                href={driveLinks[i] || "#"}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group w-full border border-black dark:border-white bg-white dark:bg-black overflow-hidden block"
-              >
-                <div className="flex flex-col md:flex-row">
-                  <div className="relative w-full md:w-96 lg:w-[28rem] h-56 md:h-64 shrink-0">
-                    <Image
-                      src={item.image}
-                      alt={item.org}
-                      fill
-                      sizes="(min-width: 1024px) 288px, (min-width: 768px) 256px, 100vw"
-                      className="object-cover"
-                    />
-                  </div>
-
-                  <div className="flex-1 p-4 md:p-5 flex flex-col justify-between">
-                    <div>
-                      <h4 className="font-bold text-base md:text-lg">{item.title}</h4>
-                      <p className="text-sm opacity-80 mt-1">{item.org}</p>
-                      <p className="text-sm opacity-70 mt-2 md:mt-3">{item.desc}</p>
-                    </div>
-
-                    <div className="mt-4 md:mt-5 flex flex-wrap gap-2">
-                      <a
-                        href={item.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
-                      >
-                        Live
-                      </a>
-                      <a
-                        href={item.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-center"
-                      >
-                        GitHub
-                      </a>
-                      {driveLinks[i] ? (
-                        <a
-                          href={driveLinks[i]}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={e => e.stopPropagation()}
-                          className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition text-center"
-                        >
-                          More
-                        </a>
-                      ) : (
-                        <button className="flex-1 min-w-[70px] px-3 sm:px-4 py-2 md:py-2.5 text-xs md:text-sm border border-black dark:border-white bg-white dark:bg-black group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition">
-                          More
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </a>
-            );
-          })}
-        </div>
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-0 top-16 h-72 w-72 rounded-full bg-neutral-200/70 blur-3xl dark:bg-neutral-800/50" />
+        <div className="absolute right-0 top-36 h-80 w-80 rounded-full bg-black/5 blur-3xl dark:bg-white/5" />
       </div>
 
-      {/* CLUBS */}
-      <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mt-12 md:mt-16 lg:mt-20 mb-6 md:mb-8 text-center">
-        Clubs & Activities
-      </h3>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-0 max-w-5xl mx-auto">
-        {clubExperience.map((item, i) => (
-          <div
-            key={i}
-            className="flex border border-black dark:border-white h-32 md:h-36 relative group bg-white dark:bg-black text-black dark:text-white"
-          >
-            <div className="w-32 md:w-40 relative shrink-0">
-              {item.image.endsWith(".svg") ? (
-                // next/image + SVG can be restricted depending on config; <img> is safe for local public assets.
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={item.image} alt={item.org} className="h-full w-full object-cover" />
-              ) : (
-                <Image
-                  src={item.image}
-                  alt={item.org}
-                  fill
-                  sizes="(min-width: 768px) 96px, 80px"
-                  className="object-cover"
-                />
-              )}
-            </div>
-            <div className="p-3 md:p-4 flex flex-col justify-center">
-              <h4 className="font-semibold text-sm md:text-base text-black dark:text-white">{item.title}</h4>
-              <p className="text-xs md:text-sm opacity-70">{item.org}</p>
+      <div className="relative mx-auto max-w-7xl">
+        <div className="mb-12 md:mb-16 lg:mb-20">
+          <p className="inline-flex items-center rounded-full border border-black/15 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] opacity-80 backdrop-blur dark:border-white/15 dark:bg-black/70">
+            Experience
+          </p>
+          <div className="mt-5 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
+              <h2 className="text-4xl font-black tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+                Experience built to show impact, not just attendance.
+              </h2>
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed opacity-70 sm:text-base md:text-lg">
+                Each project and community role is presented as a focused outcome: practical delivery,
+                visible contribution, and a clear story of what you built.
+              </p>
             </div>
 
-            <div className="absolute inset-0 bg-black/80 dark:bg-black/90 opacity-0 group-hover:opacity-100 flex items-center justify-center transition">
-              {i === 0 && (
-                <a
-                  href="https://drive.google.com/file/d/1xl6RoCfpXemZ2tB7M7Pv9xDFx3CWmzQs/view?usp=drive_link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 md:px-6 py-1.5 md:py-2 text-xs md:text-sm border border-black dark:border-white text-black dark:text-white bg-white dark:bg-black text-center"
+            <div className="grid gap-3 sm:grid-cols-3">
+              {stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl border border-black/15 bg-white/85 px-4 py-3 shadow-[0_16px_50px_rgba(0,0,0,0.08)] backdrop-blur dark:border-white/15 dark:bg-black/70"
                 >
-                  Learn More
-                </a>
-              )}
-              {i === 1 && (
-                <a
-                  href="https://drive.google.com/file/d/1rCuS2ji967hDyEobx6m9PN0aByASNkv5/view?usp=drive_link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 md:px-6 py-1.5 md:py-2 text-xs md:text-sm border border-black dark:border-white text-black dark:text-white bg-white dark:bg-black text-center"
-                >
-                  Learn More
-                </a>
-              )}
-              {i === 2 && (
-                <a
-                  href="https://drive.google.com/file/d/1langMpVCTEHyhejUYOJTR_5WLoyVgV2E/view?usp=drive_link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 md:px-6 py-1.5 md:py-2 text-xs md:text-sm border border-black dark:border-white text-black dark:text-white bg-white dark:bg-black text-center"
-                >
-                  Learn More
-                </a>
-              )}
-              {i === 3 && (
-                <a
-                  href="https://drive.google.com/file/d/16i4RtNqO-ej1maoUkpqkCbjY7iDOyIYo/view?usp=drive_link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 md:px-6 py-1.5 md:py-2 text-xs md:text-sm border border-black dark:border-white text-black dark:text-white bg-white dark:bg-black text-center"
-                >
-                  Learn More
-                </a>
-              )}
+                  <p className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] opacity-55">{stat.label}</p>
+                  <p className="mt-2 text-sm font-semibold">{stat.value}</p>
+                </div>
+              ))}
             </div>
           </div>
-        ))}
+        </div>
+
+        <div className="space-y-8 md:space-y-10">
+          <div>
+            <h3 className="mb-6 text-center text-xl font-bold uppercase tracking-[0.24em] opacity-60 md:mb-8 md:text-2xl">
+              Technical
+            </h3>
+
+            <div className="grid gap-5">
+              {technicalExperience.map((item, i) => (
+                <article
+                  key={i}
+                  role="link"
+                  tabIndex={0}
+                  onClick={() => openExperience(item)}
+                  onKeyDown={(event) => handleCardKeyDown(event, item)}
+                  className="group overflow-hidden rounded-[2rem] border border-black/15 bg-white/90 shadow-[0_20px_70px_rgba(0,0,0,0.10)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_90px_rgba(0,0,0,0.16)] dark:border-white/15 dark:bg-black/70"
+                >
+                  <div className="flex flex-col md:flex-row">
+                    <div className="relative h-56 shrink-0 md:h-auto md:w-[34%] lg:w-[30%]">
+                      <Image
+                        src={item.image}
+                        alt={item.org}
+                        fill
+                        sizes="(min-width: 1024px) 30vw, (min-width: 768px) 34vw, 100vw"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
+                      <div className="absolute left-4 top-4 rounded-full border border-white/30 bg-black/45 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-white backdrop-blur">
+                        Featured
+                      </div>
+                    </div>
+
+                    <div className="flex-1 p-5 sm:p-6 md:p-7 lg:p-8">
+                      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-55">Technical role</p>
+                          <h4 className="mt-2 text-xl font-black sm:text-2xl lg:text-3xl">{item.title}</h4>
+                          <p className="mt-2 text-sm opacity-75 sm:text-base">{item.org}</p>
+                        </div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-50">Clickable detail card</p>
+                      </div>
+
+                      <p className="mt-4 max-w-3xl text-sm leading-relaxed opacity-75 sm:text-base">{item.desc}</p>
+
+                      {item.features?.length ? (
+                        <div className="mt-5 flex flex-wrap gap-2">
+                          {item.features.map((feature) => (
+                            <span
+                              key={feature}
+                              className="rounded-full border border-black/15 bg-white px-3 py-1 text-xs font-medium opacity-85 transition-transform duration-300 hover:-translate-y-0.5 dark:border-white/15 dark:bg-black"
+                            >
+                              {feature}
+                            </span>
+                          ))}
+                        </div>
+                      ) : null}
+
+                      <div className="mt-6 flex flex-wrap gap-3">
+                        <a
+                          href={item.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(event) => event.stopPropagation()}
+                          className="inline-flex flex-1 min-w-24 items-center justify-center rounded-full border border-black/15 bg-black px-4 py-2.5 text-xs font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg dark:border-white/15 dark:bg-white dark:text-black"
+                        >
+                          Live
+                        </a>
+                        <a
+                          href={item.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(event) => event.stopPropagation()}
+                          className="inline-flex flex-1 min-w-24 items-center justify-center rounded-full border border-black/15 bg-white px-4 py-2.5 text-xs font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:text-white hover:shadow-lg dark:border-white/15 dark:bg-black dark:hover:bg-white dark:hover:text-black"
+                        >
+                          GitHub
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="mb-6 text-center text-xl font-bold uppercase tracking-[0.24em] opacity-60 md:mb-8 md:text-2xl">
+              Clubs & Activities
+            </h3>
+
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {clubExperience.map((item, i) => (
+                <div
+                  key={i}
+                  className="group overflow-hidden rounded-[1.75rem] border border-black/15 bg-white/90 shadow-[0_16px_50px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(0,0,0,0.14)] dark:border-white/15 dark:bg-black/70"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    {item.image.endsWith(".svg") ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={item.image}
+                        alt={item.org}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    ) : (
+                      <Image
+                        src={item.image}
+                        alt={item.org}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 25vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-transparent" />
+                  </div>
+                  <div className="p-4">
+                    <p className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] opacity-55">Community</p>
+                    <h4 className="mt-2 text-sm font-bold sm:text-base">{item.title}</h4>
+                    <p className="mt-1 text-xs leading-relaxed opacity-70">{item.org}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
       </div>
+
+      {selectedExperience ? (
+        <PortfolioDetail
+          entry={selectedExperience}
+          sectionLabel="Experience"
+          onClose={() => setSelectedExperience(null)}
+        />
+      ) : null}
     </section>
   );
 }

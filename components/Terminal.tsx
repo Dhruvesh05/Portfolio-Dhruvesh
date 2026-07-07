@@ -251,7 +251,7 @@ export default function TerminalWindow({ isOpen, onRequestClose, openReason = "n
 
   const terminalBodyClass = useMemo(() => {
     const base =
-      "flex-1 p-3 text-sm overflow-y-auto font-mono leading-5 cursor-text overscroll-contain focus:outline-none";
+      "flex-1 p-3 text-sm overflow-y-auto leading-5 cursor-text overscroll-contain focus:outline-none";
 
     const scrollbarHidden =
       "[scrollbar-width:none] [&::-webkit-scrollbar]:w-0 [&::-webkit-scrollbar]:h-0";

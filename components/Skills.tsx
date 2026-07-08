@@ -58,14 +58,14 @@ export default function SkillsSection() {
   return (
     <section id="skills" className="py-16 md:py-24 px-4 md:px-6 bg-white dark:bg-black text-black dark:text-white">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-3 sm:mb-4">Skills & Certifications</h2>
+        <h2 className="text-4xl font-black tracking-tight text-center mb-3 sm:mb-4 sm:text-5xl md:text-6xl lg:text-7xl">Skills & Certifications</h2>
         <p className="text-center opacity-60 mb-12 md:mb-16 max-w-2xl mx-auto text-sm md:text-base">
           Technologies I work with and achievements I&apos;ve earned
         </p>
 
         {/* Skills Section */}
         <div className="mb-16 md:mb-20">
-          <h3 className="text-2xl md:text-3xl font-bold mb-8 md:mb-10 text-center">Technical Skills</h3>
+          <h3 className="text-xl md:text-2xl font-semibold mb-8 md:mb-10 text-center">Technical Skills</h3>
           <div className="grid md:grid-cols-2 gap-6 md:gap-8">
             {skillCategories.map((category) => (
               <div
@@ -101,7 +101,7 @@ export default function SkillsSection() {
 
         {/* Certifications Section */}
         <div>
-          <h3 className="text-2xl md:text-3xl font-bold mb-8 md:mb-10 text-center">Certifications</h3>
+          <h3 className="text-xl md:text-2xl font-semibold mb-8 md:mb-10 text-center">Certifications</h3>
           <div className="grid md:grid-cols-2 gap-6 md:gap-8">
             {certifications.map((cert, index) => (
               <div

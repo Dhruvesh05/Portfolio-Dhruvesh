@@ -88,7 +88,7 @@ export default function HomePage() {
           className="max-w-4xl w-full rounded-2xl md:rounded-3xl border border-black dark:border-white bg-white dark:bg-black p-6 sm:p-8 md:p-12 lg:p-16 transition-transform duration-500 shadow-lg"
           style={{ transform: `scale(${scale})` }}
         >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-3 sm:mb-4 md:mb-6 tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-3 sm:mb-4 md:mb-6 tracking-tight">
             <span className="block text-xs sm:text-sm md:text-base opacity-70 mb-1.5 sm:mb-2 font-normal">Hello, I&apos;m</span>
             <span className="block min-h-[1.2em] whitespace-nowrap">
               <span className="sr-only">Dhruvesh Patil</span>

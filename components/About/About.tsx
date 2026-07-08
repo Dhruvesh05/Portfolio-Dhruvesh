@@ -47,10 +47,10 @@ export default function AboutSection() {
           <div className="space-y-8">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
               <div className="max-w-3xl lg:flex-1">
-                <p className="inline-flex items-center rounded-full border border-black/15 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] opacity-80 backdrop-blur dark:border-white/15 dark:bg-black/70">
+                <p className="text-4xl font-black tracking-tight opacity-80 sm:text-5xl md:text-6xl lg:text-7xl">
                   About Me
                 </p>
-                <h2 className="mt-4 text-4xl font-black tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
+                <h2 className="mt-4 text-2xl font-semibold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
                   Building elegant web experiences with a practical engineering mindset.
                 </h2>
                 <p className="mt-5 max-w-2xl text-sm leading-relaxed opacity-70 sm:text-base md:text-lg">
@@ -163,13 +163,13 @@ export default function AboutSection() {
                 href="https://drive.google.com/file/d/1a-Q6RMehygXArEbf2a_IwLqzub59akoK/view?usp=drive_link"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-full bg-black px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl dark:bg-white dark:text-black"
+                className="inline-flex items-center justify-center rounded-b-none bg-black px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white hover:text-black hover:border-2 dark:bg-black dark:text-white dark:border-2 dark:hover:bg-white dark:hover:text-black dark:hover:border-2"
               >
                 View Resume
               </a>
               <a
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-full border border-black/20 px-6 py-3 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:bg-black hover:text-white hover:shadow-xl dark:border-white/20 dark:hover:bg-white dark:hover:text-black"
+                className="inline-flex items-center justify-center rounded-b-none bg-black px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white hover:text-black hover:border-2 dark:bg-black dark:text-white dark:border-2 dark:hover:bg-white dark:hover:text-black dark:hover:border-2"
               >
                 Let&apos;s Connect
               </a>

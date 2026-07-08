@@ -34,7 +34,7 @@ export default function ContactUs() {
 			<div className="max-w-7xl mx-auto">
 				{/* Header */}
 				<div className="text-center mb-16 md:mb-20">
-					<h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
+					<h1 className="text-5xl font-black tracking-tight mb-6 sm:text-6xl md:text-7xl lg:text-8xl">
 						Get In Touch
 					</h1>
 					<p className="text-lg md:text-xl opacity-70 max-w-3xl mx-auto">
@@ -46,7 +46,7 @@ export default function ContactUs() {
 				<div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
 					{/* Left Side - Contact Form */}
 					<div className="border-2 border-black dark:border-white p-6 md:p-8 lg:p-10">
-						<h2 className="text-3xl md:text-4xl font-bold mb-8">Send a Message</h2>
+						<h2 className="text-2xl md:text-3xl font-semibold mb-8">Send a Message</h2>
 						<form onSubmit={handleSubmit} className="space-y-6">
 							<div>
 								<label htmlFor="name" className="block text-sm font-semibold mb-2">
@@ -184,7 +184,7 @@ export default function ContactUs() {
 
 				{/* Social Links Section */}
 				<div className="border-2 border-black dark:border-white p-8 md:p-12 mb-16">
-					<h2 className="text-3xl md:text-4xl font-bold text-center mb-8">Connect With Me</h2>
+					<h2 className="text-2xl md:text-3xl font-semibold text-center mb-8">Connect With Me</h2>
 					<div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
 						<a
 							href="https://github.com/Dhruvesh05"
@@ -241,7 +241,7 @@ export default function ContactUs() {
 
 				{/* Direct Email CTA */}
 				<div className="border-2 border-black dark:border-white p-8 md:p-12 text-center bg-black dark:bg-white text-white dark:text-black">
-					<h2 className="text-3xl md:text-4xl font-bold mb-4">
+					<h2 className="text-2xl md:text-3xl font-semibold mb-4">
 						Prefer Email?
 					</h2>
 					<p className="text-lg opacity-90 mb-6 max-w-2xl mx-auto">

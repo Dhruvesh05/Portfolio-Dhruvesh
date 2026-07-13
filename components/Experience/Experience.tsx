@@ -78,10 +78,10 @@ export default function ExperienceSection() {
                   tabIndex={0}
                   onClick={() => openExperience(item)}
                   onKeyDown={(event) => handleCardKeyDown(event, item)}
-                  className="group overflow-hidden rounded-[2rem] border border-black/15 bg-white/90 shadow-[0_20px_70px_rgba(0,0,0,0.10)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_90px_rgba(0,0,0,0.16)] dark:border-white/15 dark:bg-black/70"
+                  className="group overflow-hidden rounded-4xl border border-black/15 bg-white/90 shadow-[0_16px_50px_rgba(0,0,0,0.09)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(0,0,0,0.14)] dark:border-white/15 dark:bg-black/70"
                 >
                   <div className="flex flex-col md:flex-row">
-                    <div className="relative h-56 shrink-0 md:h-auto md:w-[34%] lg:w-[30%]">
+                    <div className="relative h-40 shrink-0 md:h-auto md:w-[32%] lg:w-[28%]">
                       <Image
                         src={item.image}
                         alt={item.org}
@@ -89,26 +89,24 @@ export default function ExperienceSection() {
                         sizes="(min-width: 1024px) 30vw, (min-width: 768px) 34vw, 100vw"
                         className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
+                      <div className="absolute inset-0 bg-linear-to-t from-black/45 via-black/10 to-transparent" />
                       <div className="absolute left-4 top-4 rounded-full border border-white/30 bg-black/45 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-white backdrop-blur">
                         Featured
                       </div>
                     </div>
 
-                    <div className="flex-1 p-5 sm:p-6 md:p-7 lg:p-8">
+                    <div className="flex-1 p-4 sm:p-5 md:p-6 lg:p-7">
                       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                         <div>
                           <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-55">Technical role</p>
-                          <h4 className="mt-2 text-xl font-black sm:text-2xl lg:text-3xl">{item.title}</h4>
+                          <h4 className="mt-2 text-lg font-black sm:text-xl lg:text-2xl">{item.title}</h4>
                           <p className="mt-2 text-sm opacity-75 sm:text-base">{item.org}</p>
                         </div>
                         <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-50">Clickable detail card</p>
                       </div>
 
-                      <p className="mt-4 max-w-3xl text-sm leading-relaxed opacity-75 sm:text-base">{item.desc}</p>
-
                       {item.features?.length ? (
-                        <div className="mt-5 flex flex-wrap gap-2">
+                        <div className="mt-4 flex flex-wrap gap-2">
                           {item.features.map((feature) => (
                             <span
                               key={feature}
@@ -120,7 +118,7 @@ export default function ExperienceSection() {
                         </div>
                       ) : null}
 
-                      <div className="mt-6 flex flex-wrap gap-3">
+                      <div className="mt-5 flex flex-wrap gap-3">
                         <a
                           href={item.live}
                           target="_blank"
@@ -156,9 +154,9 @@ export default function ExperienceSection() {
               {clubExperience.map((item, i) => (
                 <div
                   key={i}
-                  className="group overflow-hidden rounded-[1.75rem] border border-black/15 bg-white/90 shadow-[0_16px_50px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(0,0,0,0.14)] dark:border-white/15 dark:bg-black/70"
+                  className="group overflow-hidden rounded-2xl border border-black/15 bg-white/90 shadow-[0_14px_40px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)] dark:border-white/15 dark:bg-black/70"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="relative aspect-4/3 overflow-hidden">
                     {item.image.endsWith(".svg") ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -175,11 +173,11 @@ export default function ExperienceSection() {
                         className="object-cover transition-transform duration-700 group-hover:scale-105"
                       />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/15 to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/15 to-transparent" />
                   </div>
-                  <div className="p-4">
+                  <div className="p-3.5 sm:p-4">
                     <p className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] opacity-55">Community</p>
-                    <h4 className="mt-2 text-sm font-bold sm:text-base">{item.title}</h4>
+                    <h4 className="mt-2 text-sm font-bold sm:text-[0.95rem]">{item.title}</h4>
                     <p className="mt-1 text-xs leading-relaxed opacity-70">{item.org}</p>
                   </div>
                 </div>

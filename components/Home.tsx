@@ -170,7 +170,7 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-0">
             <Link
               href="/projects"
-              className="px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base rounded-2xl sm:rounded-2xl sm:rounded-r-none border-2 border-black dark:border-white bg-black text-white dark:bg-white dark:text-black hover:bg-black hover:text-white transition font-semibold"
+              className="px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base rounded-2xl sm:rounded-2xl sm:rounded-r-none border-2 border-black dark:border-white bg-black text-white dark:bg-white dark:text-black hover:bg-white hover:text-black transition font-semibold dark:hover:bg-black dark:hover:text-white"
             >
               View My Work →
             </Link>
@@ -249,11 +249,11 @@ export default function HomePage() {
 
         {/* ================= QUICK STATS ================= */}
         <div className="px-4 md:px-6 pb-16 md:pb-24 max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-0">
             {portfolioStats.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-2xl border-2 border-black dark:border-white bg-white/90 dark:bg-black/90 p-5 md:p-6 shadow-lg transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl"
+                className="rounded-none border border-black dark:border-white bg-white/90 dark:bg-black/90 p-5 md:p-6 shadow-lg transition-transform duration-300 hover:bg-black hover:text-white hover:shadow-2xl dark:hover:bg-white dark:hover:text-black"
               >
                 <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.3em] opacity-60">
                   {stat.label}
@@ -469,7 +469,7 @@ export default function HomePage() {
 
           <div className="grid md:grid-cols-2 gap-6 md:gap-8">
             {/* Project 1 */}
-            <div className="rounded-2xl border-2 border-black dark:border-white bg-white dark:bg-black overflow-hidden hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
+            <div className="rounded-3xl border-2 border-black dark:border-white bg-white dark:bg-black overflow-hidden hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
               {/* Project Image */}
               <div className="w-full h-56 md:h-76 bg-gray-200 dark:bg-gray-800 overflow-hidden">
                 <img 
@@ -514,7 +514,7 @@ export default function HomePage() {
             </div>
 
             {/* Project 2 */}
-            <div className="rounded-2xl border-2 border-black dark:border-white bg-white dark:bg-black overflow-hidden hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
+            <div className="rounded-3xl border-2 border-black dark:border-white bg-white dark:bg-black overflow-hidden hover:shadow-2xl hover:scale-[1.02] transition-all duration-300">
               {/* Project Image */}
               <div className="w-full h-56 md:h-76 bg-gray-200 dark:bg-gray-800 overflow-hidden">
                 <img 
@@ -572,7 +572,7 @@ export default function HomePage() {
         <div id="contact" className="py-16 md:py-24 px-4 md:px-6 max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-6 md:mb-10">Contact Me</h2>
           
-          <div className="rounded-2xl border-2 border-black dark:border-white p-8 md:p-12 hover:shadow-xl transition-all duration-300">
+          <div className="rounded-4xl border-2 border-black dark:border-white p-8 md:p-12 hover:shadow-xl transition-all duration-300">
             {/* Location */}
             <div className="flex items-center justify-center gap-3 mb-8">
               <svg className="w-6 h-6 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24">

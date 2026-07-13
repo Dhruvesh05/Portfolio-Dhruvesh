@@ -111,9 +111,9 @@ export default function ProjectsSection() {
                     tabIndex={0}
                     onClick={() => openProject(item)}
                     onKeyDown={(event) => handleCardKeyDown(event, item)}
-                    className="group overflow-hidden rounded-[2rem] border border-black/15 bg-white/90 shadow-[0_20px_70px_rgba(0,0,0,0.10)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_28px_90px_rgba(0,0,0,0.16)] dark:border-white/15 dark:bg-black/70"
+                    className="group overflow-hidden rounded-[1.75rem] border border-black/15 bg-white/90 shadow-[0_16px_50px_rgba(0,0,0,0.09)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(0,0,0,0.14)] dark:border-white/15 dark:bg-black/70"
                   >
-                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <div className="relative aspect-[16/11] overflow-hidden">
                       <Image
                         src={item.image}
                         alt={item.org}
@@ -127,19 +127,17 @@ export default function ProjectsSection() {
                       </div>
                     </div>
 
-                    <div className="p-5 sm:p-6 md:p-7">
+                    <div className="p-4 sm:p-5 md:p-6">
                       <div className="flex flex-col gap-3">
                         <div>
                           <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-55">{group.label}</p>
-                          <h4 className="mt-2 text-xl font-black sm:text-2xl">{item.title}</h4>
+                          <h4 className="mt-2 text-lg font-black sm:text-xl">{item.title}</h4>
                           <p className="mt-2 text-sm opacity-75 sm:text-base">{item.org}</p>
                         </div>
-
-                        <p className="max-w-3xl text-sm leading-relaxed opacity-75 sm:text-base">{item.desc}</p>
                       </div>
 
                       {item.features?.length ? (
-                        <div className="mt-5 flex flex-wrap gap-2">
+                        <div className="mt-4 flex flex-wrap gap-2">
                           {item.features.map((feature) => (
                             <span
                               key={feature}
@@ -151,7 +149,7 @@ export default function ProjectsSection() {
                         </div>
                       ) : null}
 
-                      <div className="mt-6 flex flex-wrap gap-3">
+                      <div className="mt-5 flex flex-wrap gap-3">
                         {item.live ? (
                           <a
                             href={item.live}

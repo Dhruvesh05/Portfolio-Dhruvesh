@@ -50,11 +50,21 @@ export default function ExperienceSection() {
               </p>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-3">
-              {stats.map((stat) => (
+            <div className="grid sm:grid-cols-3">
+              {stats.map((stat, i) => (
                 <div
                   key={stat.label}
-                  className="rounded-2xl border border-black/15 bg-white/85 px-4 py-3 shadow-[0_16px_50px_rgba(0,0,0,0.08)] backdrop-blur dark:border-white/15 dark:bg-black/70"
+                  className={[
+                    "border border-black/15 bg-white/85 px-4 py-3 shadow-[0_16px_50px_rgba(0,0,0,0.08)] backdrop-blur dark:border-white/15 dark:bg-black/70",
+                    // Mobile (stacked): round top of first, bottom of last; collapse top border on 2nd & 3rd
+                    i === 0 && "rounded-tl-2xl rounded-tr-2xl",
+                    i === stats.length - 1 && "rounded-bl-2xl rounded-br-2xl",
+                    i > 0 && "border-t-0",
+                    // sm+ (single row): round left of first, right of last; collapse left border on 2nd & 3rd
+                    i === 0 && "sm:rounded-tl-2xl sm:rounded-bl-2xl sm:rounded-tr-none sm:rounded-br-none",
+                    i > 0 && i < stats.length - 1 && "sm:rounded-none sm:border-t sm:border-l-0",
+                    i === stats.length - 1 && "sm:rounded-tr-2xl sm:rounded-br-2xl sm:rounded-tl-none sm:rounded-bl-none sm:border-t sm:border-l-0",
+                  ].filter(Boolean).join(" ")}
                 >
                   <p className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] opacity-55">{stat.label}</p>
                   <p className="mt-2 text-sm font-semibold">{stat.value}</p>
@@ -81,7 +91,7 @@ export default function ExperienceSection() {
                   className="group overflow-hidden rounded-4xl border border-black/15 bg-white/90 shadow-[0_16px_50px_rgba(0,0,0,0.09)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(0,0,0,0.14)] dark:border-white/15 dark:bg-black/70"
                 >
                   <div className="flex flex-col md:flex-row">
-                    <div className="relative h-40 shrink-0 md:h-auto md:w-[32%] lg:w-[28%]">
+                    <div className="relative h-64 shrink-0 md:h-auto md:w-[42%] lg:w-[38%]">
                       <Image
                         src={item.image}
                         alt={item.org}
@@ -150,38 +160,93 @@ export default function ExperienceSection() {
               Clubs & Activities
             </h3>
 
-            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {clubExperience.map((item, i) => (
-                <div
-                  key={i}
-                  className="group overflow-hidden rounded-2xl border border-black/15 bg-white/90 shadow-[0_14px_40px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)] dark:border-white/15 dark:bg-black/70"
-                >
-                  <div className="relative aspect-4/3 overflow-hidden">
-                    {item.image.endsWith(".svg") ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={item.image}
-                        alt={item.org}
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                    ) : (
-                      <Image
-                        src={item.image}
-                        alt={item.org}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 25vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/15 to-transparent" />
+<div className="grid md:grid-cols-2 xl:grid-cols-4">
+              {clubExperience.map((item, i) => {
+                const total = clubExperience.length;
+                // md: 2-col grid — which column (0 or 1) and which row
+                const mdCol = i % 2;
+                const mdRow = Math.floor(i / 2);
+                const mdTotalRows = Math.ceil(total / 2);
+                const isFirstMdInRow = mdCol === 0;
+                const isLastMdInRow = mdCol === 1 || i === total - 1;
+                const isFirstMdRow = mdRow === 0;
+                const isLastMdRow = mdRow === mdTotalRows - 1;
+                // xl: 4-col grid
+                const xlCol = i % 4;
+                const xlRow = Math.floor(i / 4);
+                const xlTotalRows = Math.ceil(total / 4);
+                const isFirstXlInRow = xlCol === 0;
+                const isLastXlInRow = xlCol === 3 || i === total - 1;
+                const isFirstXlRow = xlRow === 0;
+                const isLastXlRow = xlRow === xlTotalRows - 1;
+                return (
+                  <div
+                    key={i}
+                    className={[
+                      "group overflow-hidden border border-black/15 bg-white/90 shadow-[0_14px_40px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)] dark:border-white/15 dark:bg-black/70",
+                      // ── Mobile (1-col stacked) ──
+                      i === 0 && "rounded-tl-2xl rounded-tr-2xl",
+                      i === total - 1 && "rounded-bl-2xl rounded-br-2xl",
+                      i > 0 && "border-t-0",
+                      // ── md (2-col) ──
+                      // restore top border for first row items after mobile collapse
+                      isFirstMdRow && "md:border-t",
+                      // left column: restore left border
+                      isFirstMdInRow && "md:border-l",
+                      // right column: collapse left border
+                      !isFirstMdInRow && "md:border-l-0",
+                      // rows beyond first: collapse top border
+                      !isFirstMdRow && "md:border-t-0",
+                      // rounding — top-left corner
+                      (i === 0) && "md:rounded-tl-2xl",
+                      // top-right corner
+                      (i === 1) && "md:rounded-tr-2xl",
+                      // bottom-left corner
+                      (isLastMdRow && isFirstMdInRow) && "md:rounded-bl-2xl",
+                      // bottom-right corner
+                      (isLastMdRow && isLastMdInRow) && "md:rounded-br-2xl",
+                      // clear mobile-only rounding at md
+                      i !== 0 && "md:rounded-tl-none md:rounded-tr-none",
+                      i !== total - 1 && "md:rounded-bl-none md:rounded-br-none",
+                      // ── xl (4-col) ──
+                      isFirstXlRow && "xl:border-t",
+                      isFirstXlInRow && "xl:border-l",
+                      !isFirstXlInRow && "xl:border-l-0",
+                      !isFirstXlRow && "xl:border-t-0",
+                      // rounding
+                      (xlRow === 0 && isFirstXlInRow) ? "xl:rounded-tl-2xl" : "xl:rounded-tl-none",
+                      (xlRow === 0 && isLastXlInRow) ? "xl:rounded-tr-2xl" : "xl:rounded-tr-none",
+                      (isLastXlRow && isFirstXlInRow) ? "xl:rounded-bl-2xl" : "xl:rounded-bl-none",
+                      (isLastXlRow && isLastXlInRow) ? "xl:rounded-br-2xl" : "xl:rounded-br-none",
+                    ].filter(Boolean).join(" ")}
+                  >
+                    <div className="relative aspect-4/3 overflow-hidden">
+                      {item.image.endsWith(".svg") ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={item.image}
+                          alt={item.org}
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      ) : (
+                        <Image
+                          src={item.image}
+                          alt={item.org}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 25vw"
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/15 to-transparent" />
+                    </div>
+                    <div className="p-3.5 sm:p-4">
+                      <p className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] opacity-55">Community</p>
+                      <h4 className="mt-2 text-sm font-bold sm:text-[0.95rem]">{item.title}</h4>
+                      <p className="mt-1 text-xs leading-relaxed opacity-70">{item.org}</p>
+                    </div>
                   </div>
-                  <div className="p-3.5 sm:p-4">
-                    <p className="text-[0.65rem] font-semibold uppercase tracking-[0.22em] opacity-55">Community</p>
-                    <h4 className="mt-2 text-sm font-bold sm:text-[0.95rem]">{item.title}</h4>
-                    <p className="mt-1 text-xs leading-relaxed opacity-70">{item.org}</p>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

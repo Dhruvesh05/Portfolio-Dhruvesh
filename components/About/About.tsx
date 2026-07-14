@@ -61,15 +61,14 @@ export default function AboutSection() {
 
               <div className="w-full max-w-[220px] self-start lg:mt-2 lg:ml-auto lg:max-w-[240px] xl:max-w-[260px]">
                 <div className="group overflow-hidden rounded-[1.75rem] border border-black/15 bg-white/85 shadow-[0_18px_50px_rgba(0,0,0,0.10)] backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(0,0,0,0.14)] dark:border-white/15 dark:bg-black/70">
-                  <div className="relative aspect-[4/5] min-h-[200px] max-h-[280px]">
+                  <div className="relative aspect-[4/5]">
                     <Image
                       src="/profileimage.png"
                       alt="Profile"
                       fill
                       sizes="(max-width: 1024px) 100vw, 260px"
-                      className="object-contain object-bottom p-2.5 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                      className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                     />
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white via-white/60 to-transparent dark:from-black dark:via-black/60" />
                   </div>
 
                   <div className="border-t border-black/10 p-3.5 dark:border-white/10 sm:p-4">
@@ -84,11 +83,21 @@ export default function AboutSection() {
               </div>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-3">
-              {focusCards.map((card) => (
+            <div className="grid md:grid-cols-3">
+              {focusCards.map((card, i) => (
                 <div
                   key={card.title}
-                  className="group rounded-[1.75rem] border border-black/15 bg-white/85 p-5 shadow-[0_16px_50px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_60px_rgba(0,0,0,0.14)] dark:border-white/15 dark:bg-black/70"
+                  className={[
+                    "group border border-black/15 bg-white/85 p-5 shadow-[0_16px_50px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_60px_rgba(0,0,0,0.14)] dark:border-white/15 dark:bg-black/70",
+                    // Mobile (stacked): round top of first, bottom of last; collapse top border on 2nd & 3rd
+                    i === 0 && "rounded-tl-[1rem] rounded-tr-[1rem]",
+                    i === focusCards.length - 1 && "rounded-bl-[1rem] rounded-br-[1rem]",
+                    i > 0 && "border-t-0",
+                    // Desktop (side-by-side): round left of first, right of last; collapse left border on 2nd & 3rd
+                    i === 0 && "md:rounded-tl-[1rem] md:rounded-bl-[1rem] md:rounded-tr-none md:rounded-br-none",
+                    i > 0 && i < focusCards.length - 1 && "md:rounded-none md:border-t md:border-l-0",
+                    i === focusCards.length - 1 && "md:rounded-tr-[1rem] md:rounded-br-[1rem] md:rounded-tl-none md:rounded-bl-none md:border-t md:border-l-0",
+                  ].filter(Boolean).join(" ")}
                 >
                   <p className="text-sm font-bold transition-transform duration-500 group-hover:-translate-y-0.5">{card.title}</p>
                   <p className="mt-3 text-sm leading-relaxed opacity-75">{card.description}</p>
@@ -97,7 +106,7 @@ export default function AboutSection() {
             </div>
 
             <div className="grid gap-6 xl:grid-cols-[1.15fr,0.85fr]">
-              <div className="rounded-[2rem] border border-black/15 bg-white/85 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur dark:border-white/15 dark:bg-black/70 sm:p-8">
+              <div className="rounded-[1.5rem] border border-black/15 bg-white/85 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur dark:border-white/15 dark:bg-black/70 sm:p-8">
                 <h3 className="text-2xl font-black sm:text-3xl">My Journey</h3>
                 <div className="mt-6 space-y-4">
                   {journeyPoints.map((point, index) => (
@@ -115,7 +124,7 @@ export default function AboutSection() {
               </div>
 
               <div className="space-y-6">
-                <div className="rounded-[2rem] border border-black/15 bg-gradient-to-br from-white/90 to-neutral-100/80 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_80px_rgba(0,0,0,0.16)] dark:border-white/15 dark:from-black/70 dark:to-neutral-900/70">
+                <div className="rounded-[1.5rem] border border-black/15 bg-gradient-to-br from-white/90 to-neutral-100/80 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_80px_rgba(0,0,0,0.16)] dark:border-white/15 dark:from-black/70 dark:to-neutral-900/70">
                   <h3 className="text-2xl font-black">What I Do</h3>
                   <p className="mt-4 text-sm leading-relaxed opacity-75">
                     I focus on React.js, modern UI design, Java, Spring Boot, and REST APIs. I like
@@ -123,7 +132,7 @@ export default function AboutSection() {
                   </p>
                 </div>
 
-                <div className="rounded-[2rem] border border-black/15 bg-white/85 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_80px_rgba(0,0,0,0.16)] dark:border-white/15 dark:bg-black/70">
+                <div className="rounded-[1.5rem] border border-black/15 bg-white/85 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_80px_rgba(0,0,0,0.16)] dark:border-white/15 dark:bg-black/70">
                   <h3 className="text-2xl font-black">Education</h3>
                   <div className="mt-4 space-y-2 text-sm leading-relaxed opacity-75">
                     <p className="font-semibold opacity-90">
@@ -135,7 +144,7 @@ export default function AboutSection() {
               </div>
             </div>
 
-            <div className="rounded-[2rem] border border-black/15 bg-white/85 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur dark:border-white/15 dark:bg-black/70 sm:p-8">
+            <div className="rounded-[1.5rem] border border-black/15 bg-white/85 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur dark:border-white/15 dark:bg-black/70 sm:p-8">
               <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-55">Interests</p>
@@ -158,7 +167,7 @@ export default function AboutSection() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex flex-col gap sm:flex-row">
               <a
                 href="https://drive.google.com/file/d/1a-Q6RMehygXArEbf2a_IwLqzub59akoK/view?usp=drive_link"
                 target="_blank"

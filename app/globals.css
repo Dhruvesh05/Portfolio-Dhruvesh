@@ -64,3 +64,12 @@ textarea {
   color: var(--foreground);
   border: 1px solid var(--border-color);
 }
+
+/* Horizontal bounce for the projects scroll hint */
+@keyframes bounce-x {
+  0%, 100% { transform: translateX(0);     }
+  50%       { transform: translateX(5px);  }
+}
+.animate-bounce-x {
+  animation: bounce-x 1.4s ease-in-out infinite;
+}

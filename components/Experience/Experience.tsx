@@ -55,10 +55,10 @@ export default function ExperienceSection() {
                 <div
                   key={stat.label}
                   className={[
-                    "border border-black/15 bg-white/85 px-4 py-3 shadow-[0_16px_50px_rgba(0,0,0,0.08)] backdrop-blur dark:border-white/15 dark:bg-black/70",
+                    "border border-black/15 bg-white/85 px-4 py-3  dark:border-white/15 dark:bg-black/70",
                     // Mobile (stacked): round top of first, bottom of last; collapse top border on 2nd & 3rd
-                    i === 0 && "rounded-tl-2xl rounded-tr-2xl",
-                    i === stats.length - 1 && "rounded-bl-2xl rounded-br-2xl",
+                    i === 0 && "rounded-tl-1xl rounded-tr-1xl",
+                    i === stats.length - 1 && "rounded-bl-1xl rounded-br-1xl",
                     i > 0 && "border-t-0",
                     // sm+ (single row): round left of first, right of last; collapse left border on 2nd & 3rd
                     i === 0 && "sm:rounded-tl-2xl sm:rounded-bl-2xl sm:rounded-tr-none sm:rounded-br-none",
@@ -160,7 +160,7 @@ export default function ExperienceSection() {
               Clubs & Activities
             </h3>
 
-<div className="grid md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid md:grid-cols-2 xl:grid-cols-4">
               {clubExperience.map((item, i) => {
                 const total = clubExperience.length;
                 // md: 2-col grid — which column (0 or 1) and which row
@@ -183,7 +183,7 @@ export default function ExperienceSection() {
                   <div
                     key={i}
                     className={[
-                      "group overflow-hidden border border-black/15 bg-white/90 shadow-[0_14px_40px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)] dark:border-white/15 dark:bg-black/70",
+                      "group overflow-hidden border border-black/15 bg-white/90 transition-all duration-500 hover:bg-black hover:text-white dark:border-white/15 dark:bg-black/70",
                       // ── Mobile (1-col stacked) ──
                       i === 0 && "rounded-tl-2xl rounded-tr-2xl",
                       i === total - 1 && "rounded-bl-2xl rounded-br-2xl",

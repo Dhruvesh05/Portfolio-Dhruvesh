@@ -60,7 +60,7 @@ export default function AboutSection() {
               </div>
 
               <div className="w-full max-w-[220px] self-start lg:mt-2 lg:ml-auto lg:max-w-[240px] xl:max-w-[260px]">
-                <div className="group overflow-hidden rounded-[1.75rem] border border-black/15 bg-white/85 shadow-[0_18px_50px_rgba(0,0,0,0.10)] backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(0,0,0,0.14)] dark:border-white/15 dark:bg-black/70">
+                <div className="group overflow-hidden rounded-[1.75rem] border border-black/0 bg-white/85 shadow-[0_18px_50px_rgba(0,0,0,0.1)] backdrop-blur transition-all duration-500 hover:shadow-[0_24px_70px_rgba(0,0,0,0.14)] dark:border-white/15 dark:bg-black/70">
                   <div className="relative aspect-[4/5]">
                     <Image
                       src="/profileimage.png"
@@ -88,7 +88,7 @@ export default function AboutSection() {
                 <div
                   key={card.title}
                   className={[
-                    "group border border-black/15 bg-white/85 p-5 shadow-[0_16px_50px_rgba(0,0,0,0.08)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_22px_60px_rgba(0,0,0,0.14)] dark:border-white/15 dark:bg-black/70",
+                    "group border border-black/15 bg-white/85 p-5 shadow-[0_16px_50px_rgba(0,0,0,0.08)] transition-all duration-500 hover:shadow-[0_22px_60px_rgba(0,0,0,0.14)] dark:border-white/15 dark:bg-black/70",
                     // Mobile (stacked): round top of first, bottom of last; collapse top border on 2nd & 3rd
                     i === 0 && "rounded-tl-[1rem] rounded-tr-[1rem]",
                     i === focusCards.length - 1 && "rounded-bl-[1rem] rounded-br-[1rem]",
@@ -106,7 +106,7 @@ export default function AboutSection() {
             </div>
 
             <div className="grid gap-6 xl:grid-cols-[1.15fr,0.85fr]">
-              <div className="rounded-[1.5rem] border border-black/15 bg-white/85 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur dark:border-white/15 dark:bg-black/70 sm:p-8">
+              <div>
                 <h3 className="text-2xl font-black sm:text-3xl">My Journey</h3>
                 <div className="mt-6 space-y-4">
                   {journeyPoints.map((point, index) => (
@@ -124,7 +124,7 @@ export default function AboutSection() {
               </div>
 
               <div className="space-y-6">
-                <div className="rounded-[1.5rem] border border-black/15 bg-gradient-to-br from-white/90 to-neutral-100/80 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_80px_rgba(0,0,0,0.16)] dark:border-white/15 dark:from-black/70 dark:to-neutral-900/70">
+                <div>
                   <h3 className="text-2xl font-black">What I Do</h3>
                   <p className="mt-4 text-sm leading-relaxed opacity-75">
                     I focus on React.js, modern UI design, Java, Spring Boot, and REST APIs. I like
@@ -132,7 +132,7 @@ export default function AboutSection() {
                   </p>
                 </div>
 
-                <div className="rounded-[1.5rem] border border-black/15 bg-white/85 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_26px_80px_rgba(0,0,0,0.16)] dark:border-white/15 dark:bg-black/70">
+                <div>
                   <h3 className="text-2xl font-black">Education</h3>
                   <div className="mt-4 space-y-2 text-sm leading-relaxed opacity-75">
                     <p className="font-semibold opacity-90">
@@ -167,18 +167,18 @@ export default function AboutSection() {
               </div>
             </div>
 
-            <div className="flex flex-col gap sm:flex-row">
+            <div className="inline-flex overflow-hidden rounded-[0.5rem] border border-black/30 dark:border-white/30">
               <a
                 href="https://drive.google.com/file/d/1a-Q6RMehygXArEbf2a_IwLqzub59akoK/view?usp=drive_link"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-b-none bg-black px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white hover:text-black hover:border-2 dark:bg-black dark:text-white dark:border-2 dark:hover:bg-white dark:hover:text-black dark:hover:border-2"
+                className="inline-flex items-center justify-center border-r border-black/30 px-6 py-2.5 text-sm font-semibold transition-all duration-300 hover:bg-black hover:text-white dark:border-white/30 dark:hover:bg-white dark:hover:text-black"
               >
                 View Resume
               </a>
               <a
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-b-none bg-black px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white hover:text-black hover:border-2 dark:bg-black dark:text-white dark:border-2 dark:hover:bg-white dark:hover:text-black dark:hover:border-2"
+                className="inline-flex items-center justify-center px-6 py-2.5 text-sm font-semibold transition-all duration-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black"
               >
                 Let&apos;s Connect
               </a>

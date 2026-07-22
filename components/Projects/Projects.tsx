@@ -107,10 +107,10 @@ export default function ProjectsSection() {
                   <div
                     key={stat.label}
                     className={[
-                      "border border-black/15 bg-white/85 px-4 py-3 shadow-[0_16px_50px_rgba(0,0,0,0.08)] backdrop-blur dark:border-white/15 dark:bg-black/70",
+                      "border border-black/15 bg-white/85 px-4 py-3 dark:border-white/15 dark:bg-black/70",
                       // Mobile (1-col stacked)
-                      i === 0 && "rounded-tl-2xl rounded-tr-2xl",
-                      i === total - 1 && "rounded-bl-2xl rounded-br-2xl",
+                      i === 0 && "rounded-tl-1xl rounded-tr-1xl",
+                      i === total - 1 && "rounded-bl-1xl rounded-br-1xl",
                       i > 0 && "border-t-0",
                       // sm (2-col)
                       isFirstSmRow && "sm:border-t",

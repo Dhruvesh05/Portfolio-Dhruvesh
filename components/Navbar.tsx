@@ -57,7 +57,7 @@ export default function Navbar() {
 
             {/* Desktop Menu */}
             <div
-              className={`hidden md:flex items-center bg-transparent border rounded-xl overflow-hidden transition-all duration-300 ${isScrolled ? 'border-black dark:border-white/20' : 'border-black dark:border-transparent'
+              className={`hidden md:flex items-center bg-transparent border rounded-xl overflow-hidden transition-all duration-300 ${isScrolled ? 'border-black/10 dark:border-white/20' : 'border-black/10 dark:border-transparent'
                 }`}
             >
               {[

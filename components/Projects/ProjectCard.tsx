@@ -11,7 +11,7 @@ export default function ProjectCard({ project, index, category }: ProjectCardPro
   return (
     <Link
       href="/projects"
-      className="group relative flex-shrink-0 w-[72vw] sm:w-[52vw] md:w-[44vw] lg:w-[36vw] xl:w-[32vw] overflow-hidden rounded-2xl bg-white dark:bg-neutral-900 shadow-[0_20px_60px_rgba(0,0,0,0.12)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.2)] transition-shadow duration-500 select-none"
+      className="group relative flex-shrink-0 w-[260px] sm:w-[270px] md:w-[280px] lg:w-[300px] xl:w-[300px] overflow-hidden rounded-2xl bg-white dark:bg-neutral-900 shadow-[0_20px_60px_rgba(0,0,0,0.12)] hover:shadow-[0_30px_80px_rgba(0,0,0,0.2)] transition-shadow duration-500 select-none"
       draggable={false}
       aria-label={`View project: ${project.title}`}
     >

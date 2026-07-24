@@ -144,7 +144,7 @@ export default function AboutSection() {
               </div>
             </div>
 
-            <div className="rounded-[1.5rem] border border-black/15 bg-white/85 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur dark:border-white/15 dark:bg-black/70 sm:p-8">
+            <div className="rounded-[1rem] border border-black/15 bg-white/85 p-6 shadow-[0_20px_70px_rgba(0,0,0,0.10)] backdrop-blur dark:border-white/15 dark:bg-black/70 sm:p-8">
               <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.24em] opacity-55">Interests</p>

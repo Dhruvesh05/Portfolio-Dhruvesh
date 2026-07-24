@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -46,22 +46,14 @@ function DesktopSection() {
     /**
      * OUTER WRAPPER
      * Height is set dynamically in useHorizontalScroll to:
-     *   horizontalScrollDistance + window.innerHeight
+     * horizontalScrollDistance + window.innerHeight
      * This gives the browser real scroll room while the inner sticky
      * container stays pinned at 100vh.
      */
     <div ref={wrapperRef} className="relative w-full" aria-label="Projects section">
 
       {/* STICKY CONTAINER — pinned to viewport while user scrolls */}
-      <div className="sticky top-0 h-screen overflow-hidden">
-
-        {/* ── Background ──────────────────────────────────────────────── */}
-        <div className="absolute inset-0 bg-white dark:bg-black">
-          <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            <div className="absolute -top-32 -left-32 h-[600px] w-[600px] rounded-full bg-neutral-100/80 blur-[120px] dark:bg-neutral-900/60" />
-            <div className="absolute -bottom-32 -right-32 h-[500px] w-[500px] rounded-full bg-neutral-200/60 blur-[100px] dark:bg-neutral-800/40" />
-          </div>
-        </div>
+      <div className="sticky top-0 h-screen overflow-hidden bg-transparent">
 
         {/* ── Section header ─────────────────────────────────────────── */}
         <div className="relative z-10 flex items-center justify-between px-8 pt-10 pb-6 md:px-14 md:pt-14">
@@ -86,7 +78,7 @@ function DesktopSection() {
         </div>
 
         {/* ── Horizontal track ───────────────────────────────────────── */}
-        <div className="relative z-10 flex items-center h-[calc(100vh-130px)]">
+        <div className="relative z-10 flex items-center h-[calc(100vh-130px)] bg-transparent">
           {/* Left padding spacer */}
           <div className="flex-shrink-0 w-8 md:w-14" />
 
@@ -131,8 +123,8 @@ function DesktopSection() {
         <ScrollHint />
 
         {/* ── Edge fades ─────────────────────────────────────────────── */}
-        <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-8 bg-gradient-to-r from-white dark:from-black to-transparent md:w-14" />
-        <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-8 bg-gradient-to-l from-white dark:from-black to-transparent md:w-14" />
+        <div className="pointer-events-none absolute left-0 top-0 z-20 h-full w-8 bg-gradient-to-r from-transparent to-transparent md:w-14" />
+        <div className="pointer-events-none absolute right-0 top-0 z-20 h-full w-8 bg-gradient-to-l from-transparent to-transparent md:w-14" />
       </div>
     </div>
   );
@@ -141,7 +133,7 @@ function DesktopSection() {
 // ─── Scroll hint pill ─────────────────────────────────────────────────────────
 function ScrollHint() {
   return (
-    <div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-white/80 dark:bg-black/80 backdrop-blur-sm px-4 py-2 pointer-events-none select-none">
+    <div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-black/40 backdrop-blur-sm px-4 py-2 pointer-events-none select-none">
       <svg
         className="h-3.5 w-3.5 opacity-60 animate-bounce-x"
         fill="none"
@@ -162,7 +154,7 @@ function ScrollHint() {
 // ─── Mobile fallback — plain vertical list ────────────────────────────────────
 function MobileFallback() {
   return (
-    <section className="px-4 py-16 bg-white dark:bg-black">
+    <section className="px-4 py-16 bg-transparent dark:bg-transparent">
       <div className="mb-10">
         <p className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] opacity-50 mb-2">
           Featured Work
@@ -182,7 +174,7 @@ function MobileFallback() {
       <div className="mt-10 text-center">
         <Link
           href="/projects"
-          className="inline-block px-6 py-3 border border-black dark:border-white hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition text-sm font-semibold"
+          className="inline-block px-6 py-3 border border-white hover:bg-white hover:text-black transition text-sm font-semibold rounded-xl"
         >
           View All Projects →
         </Link>

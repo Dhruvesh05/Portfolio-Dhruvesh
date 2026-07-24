@@ -23,13 +23,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    // suppressHydrationWarning on html prevents next-themes injection errors
     <html lang="en" suppressHydrationWarning>
-      <body className={`${dmSans.variable} antialiased`}>
+      {/* Adding it to the body as well helps prevent errors from browser extensions injecting scripts */}
+      <body className={`${dmSans.variable} antialiased`} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem={false}
           storageKey="portfolio-theme"
+          disableTransitionOnChange
         >
           <TerminalProvider>
             <Navbar />

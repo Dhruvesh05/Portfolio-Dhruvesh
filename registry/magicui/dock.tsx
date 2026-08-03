@@ -53,7 +53,7 @@ const Dock = React.forwardRef<HTMLDivElement, DockProps>(
         onMouseMove={(e) => mouseX.set(e.pageX)}
         onMouseLeave={() => mouseX.set(Infinity)}
         className={cn(
-          "mx-auto flex h-16 w-max gap-2 items-end rounded-2xl border border-black/10 dark:border-white/10 bg-white/80 dark:bg-black/80 backdrop-blur-md px-4 pb-3 shadow-xl",
+          "mx-auto flex h-16 w-max gap-2 items-end rounded-2xl border border-black/10 dark:border-white/10 bg-white/40 dark:bg-black/40 backdrop-blur-md px-4 pb-3 shadow-xl",
           {
             "items-start": direction === "top",
             "items-center": direction === "middle",

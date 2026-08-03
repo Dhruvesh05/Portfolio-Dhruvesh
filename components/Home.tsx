@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, useScroll, useMotionValueEvent } from "framer-motion";
 import {
   clientProjects,
   groupProjects,
@@ -62,6 +62,22 @@ function HeroVideo() {
       preload="metadata"
       // Natural and original colors of the video
       className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
+    />
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PREMIUM TILTED BACKGROUND — used ONLY behind the Featured Projects section.
+// Content stays perfectly straight; only these background layers are rotated.
+// ─────────────────────────────────────────────────────────────────────────────
+function FeaturedProjectsTiltedBackground() {
+  return (
+    <div
+      className="absolute inset-0 pointer-events-none"
+      aria-hidden="true"
+      style={{
+        background: "linear-gradient(112deg, #000000 0%, #1a0800 20%, #4a1200 45%, #8b2500 70%, #c94010 85%, #e8621a 100%)",
+      }}
     />
   );
 }
@@ -186,83 +202,63 @@ function FeaturedProjectsCarousel() {
   // Budget container ref — scroll progress is measured from this element
   const budgetRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const isMobileRef = useRef(false);
 
-  // Computed budget height (desktop only); starts at 0 before mount
-  const [budgetH, setBudgetH] = useState(0);
+  // Track scroll state mapping cleanly via framer-motion
+  const { scrollYProgress } = useScroll({
+    target: budgetRef,
+    // Maps progress 0->1 exactly while the element is pinned in viewport
+    offset: ["start start", "end end"]
+  });
 
-  // Spring-smoothed x translation
-  const rawX = useMotionValue(0);
-  const springX = useSpring(rawX, { stiffness: 60, damping: 22, mass: 0.8 });
+  const [range, setRange] = useState({ minX: 0, maxX: 0 });
 
-  /** maxX = first card centred, minX = last card centred */
-  const getRange = () => {
-    const vw = window.innerWidth;
-    const cardW = vw >= 1024 ? CARD_W.lg : vw >= 768 ? CARD_W.md : CARD_W.sm;
-    const maxX = vw / 2 - cardW / 2;                               // card 0 centred
-    const minX = vw / 2 - cardW / 2 - (N - 1) * (cardW + CARD_GAP); // card N-1 centred
-    return { minX, maxX, travel: maxX - minX };
-  };
-
-  // ── compute budget height + set initial x ──────────────────────────────────
+  // Update layout calculations on resize/mount
   useEffect(() => {
     const update = () => {
-      const mobile = window.innerWidth < 768;
-      isMobileRef.current = mobile;
-      if (!mobile) {
-        const { maxX, travel } = getRange();
-        setBudgetH(window.innerHeight + travel);
-        rawX.set(maxX); // initialise to first card centred
+      if (window.innerWidth >= 768) {
+        const vw = window.innerWidth;
+        const cardW = vw >= 1024 ? CARD_W.lg : vw >= 768 ? CARD_W.md : CARD_W.sm;
+        const maxX = vw / 2 - cardW / 2;
+        const minX = vw / 2 - cardW / 2 - (N - 1) * (cardW + CARD_GAP);
+        setRange({ minX, maxX });
       }
     };
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [N]);
 
-  // ── scroll listener: drives rawX from budget scroll progress ──────────────
-  useEffect(() => {
-    const onScroll = () => {
-      if (isMobileRef.current || !budgetRef.current) return;
-      const { maxX, travel } = getRange();
-      const rect = budgetRef.current.getBoundingClientRect();
-      const budget = budgetRef.current.offsetHeight - window.innerHeight;
-      if (budget <= 0) return;
-      const scrolled = Math.min(Math.max(-rect.top, 0), budget);
-      const progress = scrolled / budget;            // 0 = start, 1 = end
-      rawX.set(maxX - progress * travel);             // maxX → minX
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // Framer Motion transforms the 0->1 scroll directly into pixel mapping instantly
+  const rawX = useTransform(scrollYProgress, [0, 1], [range.maxX, range.minX]);
+
+  // Snappier spring configuration to stop "floating" after scroll stops
+  const springX = useSpring(rawX, { stiffness: 300, damping: 30, mass: 0.5 });
 
   // ── depth effect ──────────────────────────────────────────────────────────
   const [centerIdx, setCenterIdx] = useState(0);
-  useEffect(() => {
-    return springX.on("change", (xVal) => {
-      const vw = window.innerWidth;
-      const cardW = vw >= 1024 ? CARD_W.lg : vw >= 768 ? CARD_W.md : CARD_W.sm;
-      const center = vw / 2;
-      const idx = allFeaturedProjects.reduce((best, _, i) => {
-        const cc = xVal + i * (cardW + CARD_GAP) + cardW / 2;
-        const db = Math.abs(xVal + best * (cardW + CARD_GAP) + cardW / 2 - center);
-        return Math.abs(cc - center) < db ? i : best;
-      }, 0);
-      setCenterIdx(idx);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [N]);
+
+  // Efficiently update depth index using Framer Motion's event hook
+  useMotionValueEvent(springX, "change", (xVal) => {
+    if (window.innerWidth < 768) return;
+    const vw = window.innerWidth;
+    const cardW = vw >= 1024 ? CARD_W.lg : vw >= 768 ? CARD_W.md : CARD_W.sm;
+    const center = vw / 2;
+    const idx = allFeaturedProjects.reduce((best, _, i) => {
+      const cc = xVal + i * (cardW + CARD_GAP) + cardW / 2;
+      const db = Math.abs(xVal + best * (cardW + CARD_GAP) + cardW / 2 - center);
+      return Math.abs(cc - center) < db ? i : best;
+    }, 0);
+    setCenterIdx(idx);
+  });
 
   return (
     <div ref={budgetRef} className="relative w-full h-auto md:h-[400vh]">
       {/* ── DESKTOP STICKY VIEW ── */}
       <div className="hidden md:flex flex-col justify-center sticky top-0 h-screen w-full overflow-hidden pointer-events-none">
 
-        {/* Tilted Gradient Ribbon - Only tall enough to cover the carousel area */}
+        {/* Tilted Gradient Ribbon */}
         <div
-          className="absolute top-[10%] bottom-[10%] lg:top-[15%] lg:bottom-[15%] left-0 right-0 pointer-events-none z-0"
+          className="absolute top-[5%] bottom-[5%] lg:top-[8%] lg:bottom-[8%] left-0 right-0 pointer-events-none z-0"
           style={{
             transform: "skewY(-3deg)",
             scale: "1.05",
@@ -270,27 +266,15 @@ function FeaturedProjectsCarousel() {
           }}
         />
 
-        <div className="pointer-events-auto relative z-10">
-          {/* Header */}
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between mb-8 md:mb-12 px-4 md:px-12 w-full max-w-7xl mx-auto">
+        <div className="pointer-events-auto relative z-10 flex flex-col items-center">
+          {/* Header - Centered */}
+          <div className="flex flex-col items-center justify-center text-center mb-8 md:mb-12 px-4 md:px-12 w-full max-w-7xl mx-auto">
             <div>
               <p className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-white/60 mb-2">
-                Featured Work
               </p>
               <h2 className="text-3xl font-black tracking-tight sm:text-4xl md:text-5xl lg:text-6xl text-white">
                 Featured Projects
               </h2>
-            </div>
-            <div className="flex items-center gap-3">
-              <Link
-                href="/projects"
-                className="inline-flex items-center gap-2.5 rounded-full border border-white/25 px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-white hover:text-black hover:border-white"
-              >
-                All Projects
-                <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
             </div>
           </div>
 
@@ -309,15 +293,16 @@ function FeaturedProjectsCarousel() {
                   <motion.div
                     key={project.slug}
                     animate={{ scale, opacity }}
-                    transition={{ type: "spring", stiffness: 120, damping: 18 }}
-                    className="shrink-0 w-[280px] md:w-[320px] lg:w-[340px]"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    // White background classes
+                    className="shrink-0 w-[280px] md:w-[320px] lg:w-[340px] bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden shadow-lg border border-black/5 dark:border-white/5"
                     style={{ willChange: "transform, opacity" }}
                   >
                     <ProjectCard project={project} index={i} category={project._category} />
                   </motion.div>
                 );
               })}
-              {/* End CTA */}
+              {/* End CTA Card */}
               <div className="shrink-0 w-40 flex flex-col items-center justify-center gap-4">
                 <Link
                   href="/projects"
@@ -334,6 +319,20 @@ function FeaturedProjectsCarousel() {
               </div>
             </motion.div>
           </div>
+
+          {/* Button Below Carousel */}
+          <div className="flex justify-center mt-8 md:mt-12 w-full px-4">
+            <Link
+              href="/projects"
+              className="inline-flex items-center gap-2.5 rounded-full border border-white/25 px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-white hover:text-black hover:border-white"
+            >
+              All Projects
+              <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+
         </div>
       </div>
 
@@ -352,9 +351,9 @@ function FeaturedProjectsCarousel() {
           }}
         />
         <div className="relative z-10">
-          <div className="mb-8">
+          {/* Header - Centered for Mobile */}
+          <div className="mb-8 text-center">
             <p className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-white/60 mb-2">
-              Featured Work
             </p>
             <h2 className="text-3xl font-black tracking-tight text-white">
               Featured Projects
@@ -362,7 +361,10 @@ function FeaturedProjectsCarousel() {
           </div>
           <div className="flex flex-col gap-6">
             {allFeaturedProjects.map((project, i) => (
-              <div key={project.slug}>
+              <div
+                key={project.slug}
+                className="bg-white dark:bg-neutral-900 rounded-2xl overflow-hidden shadow-lg border border-black/5 dark:border-white/5"
+              >
                 <ProjectCard project={project} index={i} category={project._category} />
               </div>
             ))}
@@ -558,25 +560,23 @@ export default function HomePage() {
   ];
 
   return (
-    <main className="bg-white dark:bg-black text-black dark:text-white">
+    <main className="bg-white dark:bg-black text-black dark:text-white relative">
 
       {/* ================= HERO ================= */}
-      {/* Changed to `top-0` and `h-screen`. Added `pt-16 md:pt-24` 
-        so content stays clear of the navbar while the video fills behind it. 
-      */}
-      <section className="fixed top-0 left-0 right-0 h-screen flex items-center justify-center text-center px-3 sm:px-4 md:px-6 bg-transparent z-0 overflow-hidden pt-16 md:pt-24">
+      {/* Changed `fixed` back to `relative w-full h-screen` for standard scrolling! */}
+      <section className="relative w-full h-screen flex items-center justify-center text-center px-3 sm:px-4 md:px-6 z-0 overflow-hidden pt-16 md:pt-24">
 
         {/* Neumorphic animated wave background */}
         <HeroNeumorphicWaves />
 
-        {/* Lazy video background - fully natural colors */}
+        {/* Lazy video background - natural colors - it will stick to this hero container natively */}
         <HeroVideo />
 
         <div
           className="relative z-10 max-w-4xl w-full rounded-xl md:rounded-xl border border-none dark:border-none bg-transparent dark:bg-transparent backdrop-blur-sm p-6 sm:p-8 md:p-12 lg:p-16 transition-transform duration-500 shadow-lg"
           style={{ transform: `scale(${scale})` }}
         >
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-3 sm:mb-4 md:mb-6 tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-3 sm:mb-4 md:mb-6 tracking-tight text-white/80">
             <span className="block text-xs sm:text-sm md:text-base opacity-70 mb-1.5 sm:mb-2 font-normal">Hello, I&apos;m</span>
             <span className="block min-h-[1.2em] whitespace-nowrap">
               <span className="sr-only">Dhruvesh Patil</span>
@@ -584,11 +584,11 @@ export default function HomePage() {
             </span>
           </h1>
 
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-3 sm:mb-4 md:mb-6 font-semibold">
+          <p className="text-base text-white/80 sm:text-lg md:text-xl lg:text-2xl mb-3 sm:mb-4 md:mb-6 font-semibold">
             Full Stack Developer & Designer
           </p>
 
-          <p className="opacity-70 mb-6 sm:mb-8 md:mb-10 leading-relaxed text-sm sm:text-base md:text-base max-w-2xl mx-auto px-2 sm:px-0">
+          <p className="opacity-100 mb-6 sm:mb-8 md:mb-10 leading-relaxed text-sm sm:text-base md:text-base max-w-2xl mx-auto px-2 sm:px-0 text-white/80">
             B.Tech Computer Engineering student at K.K. Wagh Institute,
             passionate about building modern web applications, VR experiences,
             and exploring emerging technologies.
@@ -602,13 +602,13 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-0">
             <Link
               href="/projects"
-              className="px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base rounded-xl sm:rounded-xl sm:rounded-r-none border-1 border-black dark:border-white bg-black text-white dark:bg-white dark:text-black hover:bg-white hover:text-black transition font-semibold dark:hover:bg-black dark:hover:text-white"
+              className="px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base rounded-xl sm:rounded-xl sm:rounded-r-none border-1 border-white/20 dark:border-black/20 bg-transparent dark:bg-transparent text-white dark:text-black hover:bg-white/90 hover:text-black transition font-semibold dark:hover:bg-black/90 dark:hover:text-white"
             >
               View My Work →
             </Link>
             <Link
               href="https://drive.google.com/file/d/1a-Q6RMehygXArEbf2a_IwLqzub59akoK/view?usp=drive_link"
-              className="px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base rounded-xl sm:rounded-r-xl sm:rounded-l-none border-1 border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition font-bold"
+              className="px-5 md:px-6 py-2.5 md:py-3 text-sm md:text-base rounded-xl sm:rounded-r-xl sm:rounded-l-none border-1 border-white/20 dark:border-black/20 text-white dark:text-black hover:bg-white/90 dark:hover:bg-black/90 hover:text-black dark:hover:text-white transition font-bold"
             >
               Checkout My Resume
             </Link>
@@ -616,323 +616,317 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Spacer to allow scrolling past the fixed Hero */}
-      <div className="h-screen"></div>
+      {/* NO MORE WRAPPERS. Everything sits naturally in the DOM. Normal scroll restored. */}
 
-      {/* ================= ALL SECTIONS WRAPPER ================= */}
-      {/* Solid background slides up to cover the Hero video */}
-      <section className="relative z-10 bg-white dark:bg-black">
+      {/* ================= ABOUT & EDUCATION ================= */}
+      <div id="about" className="py-16 md:py-24 px-4 md:px-6 max-w-6xl mx-auto">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-12 text-center">About Me</h2>
 
-        {/* ================= ABOUT & EDUCATION ================= */}
-        <div id="about" className="py-16 md:py-24 px-4 md:px-6 max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-12 text-center">About Me</h2>
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+          {/* About Me Card */}
+          <div className="rounded-2xl bg-white dark:bg-neutral-900 p-6 md:p-8 hover:shadow-xl transition-all duration-300 border border-black/5 dark:border-white/5">
+            <h3 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">About Me</h3>
+            <p className="opacity-70 leading-relaxed mb-4 text-sm md:text-base">
+              I&apos;m a Computer Engineering student at K.K. Wagh Institute of Engineering Education & Research,
+              Nashik, currently pursuing my B.Tech degree (2023-2027). With hands-on experience in full-stack
+              development using React, Next.js, Node.js, and database technologies like PostgreSQL and MongoDB,
+              I enjoy building scalable web applications and immersive VR experiences.
+            </p>
+            <p className="opacity-70 leading-relaxed text-sm md:text-base">
+              Currently working as a Web Development Intern at Ayunext Solutions and actively contributing
+              to technical communities like CSI, FOSS Club, and MLSC. I&apos;m passionate about turning complex
+              problems into elegant solutions through clean code and innovative technology.
+            </p>
+          </div>
 
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
-            {/* About Me Card */}
-            <div className="rounded-2xl bg-white dark:bg-neutral-900 p-6 md:p-8 hover:shadow-xl transition-all duration-300 border border-black/5 dark:border-white/5">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">About Me</h3>
-              <p className="opacity-70 leading-relaxed mb-4 text-sm md:text-base">
-                I&apos;m a Computer Engineering student at K.K. Wagh Institute of Engineering Education & Research,
-                Nashik, currently pursuing my B.Tech degree (2023-2027). With hands-on experience in full-stack
-                development using React, Next.js, Node.js, and database technologies like PostgreSQL and MongoDB,
-                I enjoy building scalable web applications and immersive VR experiences.
-              </p>
-              <p className="opacity-70 leading-relaxed text-sm md:text-base">
-                Currently working as a Web Development Intern at Ayunext Solutions and actively contributing
-                to technical communities like CSI, FOSS Club, and MLSC. I&apos;m passionate about turning complex
-                problems into elegant solutions through clean code and innovative technology.
-              </p>
+          {/* Education Card */}
+          <div id="education" className="rounded-2xl bg-white dark:bg-neutral-900 p-6 md:p-8 hover:shadow-xl transition-all duration-300 border border-black/5 dark:border-white/5">
+            <h3 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">Education</h3>
+
+            {/* B.Tech */}
+            <div className="mb-5 pb-5 border-b border-black/20 dark:border-white/20">
+              <h4 className="text-base md:text-lg font-bold mb-1">Bachelor of Technology in Computer Engineering</h4>
+              <p className="text-sm opacity-80 mb-0.5">K.K. Wagh Institute of Engineering Education & Research</p>
+              <p className="text-xs opacity-70">2023 - 2027 | Nashik, Maharashtra</p>
             </div>
 
-            {/* Education Card */}
-            <div id="education" className="rounded-2xl bg-white dark:bg-neutral-900 p-6 md:p-8 hover:shadow-xl transition-all duration-300 border border-black/5 dark:border-white/5">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">Education</h3>
+            {/* 12th */}
+            <div className="mb-5 pb-5 border-b border-black/20 dark:border-white/20">
+              <h4 className="text-base md:text-lg font-bold mb-1">Higher Secondary (12th) - Science</h4>
+              <p className="text-sm opacity-80 mb-0.5">K.D Gavit Secondary and Higher Secondary School</p>
+              <p className="text-xs opacity-70">2023 | Grade: 74.67%</p>
+            </div>
 
-              {/* B.Tech */}
-              <div className="mb-5 pb-5 border-b border-black/20 dark:border-white/20">
-                <h4 className="text-base md:text-lg font-bold mb-1">Bachelor of Technology in Computer Engineering</h4>
-                <p className="text-sm opacity-80 mb-0.5">K.K. Wagh Institute of Engineering Education & Research</p>
-                <p className="text-xs opacity-70">2023 - 2027 | Nashik, Maharashtra</p>
-              </div>
-
-              {/* 12th */}
-              <div className="mb-5 pb-5 border-b border-black/20 dark:border-white/20">
-                <h4 className="text-base md:text-lg font-bold mb-1">Higher Secondary (12th) - Science</h4>
-                <p className="text-sm opacity-80 mb-0.5">K.D Gavit Secondary and Higher Secondary School</p>
-                <p className="text-xs opacity-70">2023 | Grade: 74.67%</p>
-              </div>
-
-              {/* 10th */}
-              <div>
-                <h4 className="text-base md:text-lg font-bold mb-1">Secondary School (10th)</h4>
-                <p className="text-sm opacity-80 mb-0.5">Jay Ambe International School, Bharuch</p>
-                <p className="text-xs opacity-70">Grade: 90%</p>
-              </div>
+            {/* 10th */}
+            <div>
+              <h4 className="text-base md:text-lg font-bold mb-1">Secondary School (10th)</h4>
+              <p className="text-sm opacity-80 mb-0.5">Jay Ambe International School, Bharuch</p>
+              <p className="text-xs opacity-70">Grade: 90%</p>
             </div>
           </div>
-          <div className="text-center mt-8">
-            <Link
-              href="/about"
-              className="inline-block px-6 py-3  border-1 border-black/25 rounded-xl dark:border-white/25 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
+        </div>
+        <div className="text-center mt-8">
+          <Link
+            href="/about"
+            className="inline-block px-6 py-3  border-1 border-black/25 rounded-xl dark:border-white/25 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
+          >
+            Know More About Me →
+          </Link>
+        </div>
+      </div>
+
+      {/* ================= QUICK STATS ================= */}
+      <div className="px-4 md:px-6 pb-16 md:pb-24 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-0">
+          {portfolioStats.map((stat) => (
+            <div
+              key={stat.label}
+              className="rounded-none bg-white dark:bg-neutral-900 p-5 md:p-6 shadow-lg transition-transform duration-300 hover:bg-black hover:text-white hover:shadow-2xl dark:hover:bg-white dark:hover:text-black border border-black/5 dark:border-white/5 md:border-y-0 md:first:border-l-0 md:last:border-r-0"
             >
-              Know More About Me →
-            </Link>
-          </div>
-        </div>
-
-        {/* ================= QUICK STATS ================= */}
-        <div className="px-4 md:px-6 pb-16 md:pb-24 max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-0">
-            {portfolioStats.map((stat) => (
-              <div
-                key={stat.label}
-                className="rounded-none bg-white dark:bg-neutral-900 p-5 md:p-6 shadow-lg transition-transform duration-300 hover:bg-black hover:text-white hover:shadow-2xl dark:hover:bg-white dark:hover:text-black border border-black/5 dark:border-white/5 md:border-y-0 md:first:border-l-0 md:last:border-r-0"
-              >
-                <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.3em] opacity-60">
-                  {stat.label}
-                </p>
-                <div className="text-3xl md:text-4xl font-black mb-2">
-                  {stat.value}
-                </div>
-                <p className="text-sm leading-relaxed opacity-70">
-                  {stat.detail}
-                </p>
+              <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.3em] opacity-60">
+                {stat.label}
+              </p>
+              <div className="text-3xl md:text-4xl font-black mb-2">
+                {stat.value}
               </div>
-            ))}
+              <p className="text-sm leading-relaxed opacity-70">
+                {stat.detail}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ================= EXPERIENCE ================= */}
+      <div id="experience" className="py-16 md:py-24 px-4 md:px-6 max-w-6xl mx-auto">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-12 text-center">Experience</h2>
+
+        <div className="space-y-8">
+          {/* Ayunext Solutions */}
+          <div className="rounded-2xl bg-white dark:bg-neutral-900 p-6 md:p-8 hover:shadow-xl transition-all duration-300 border border-black/5 dark:border-white/5">
+            <div className="flex flex-col md:flex-row gap-6 md:gap-8">
+              {/* Company Logo/Image */}
+              <div className="flex-shrink-0">
+                <div className="w-full md:w-64 h-64 rounded-xl flex items-center justify-center bg-white p-4">
+                  <img
+                    src="/ayunext.png"
+                    alt="Ayunext Solutions"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              </div>
+
+              {/* Experience Details */}
+              <div className="flex-grow">
+                <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                  <div>
+                    <h3 className="text-xl md:text-2xl font-bold mb-2">Web Development Intern</h3>
+                    <p className="text-base md:text-lg opacity-80 mb-1">Ayunext Solutions</p>
+                    <p className="text-sm opacity-70">Nashik, Maharashtra</p>
+                  </div>
+                  <div className="text-sm opacity-70 mt-2 md:mt-0">1st Sept 2025 – 30th Oct 2025</div>
+                </div>
+
+                <div className="space-y-2 text-sm md:text-base opacity-70">
+                  <p>• Developing and maintaining web applications using modern technologies</p>
+                  <p>• Working on full-stack projects with React, Next.js, and Node.js</p>
+                  <p>• Collaborating with the team to deliver high-quality software solutions</p>
+                  <p>• Implementing responsive designs and optimizing application performance</p>
+                </div>
+
+                <div className="flex flex-wrap gap-2 mt-4">
+                  <span className="text-xs px-3 py-1 border-2 border-black dark:border-white rounded-md">React.js</span>
+                  <span className="text-xs px-3 py-1 border-2 border-black dark:border-white rounded-md">Next.js</span>
+                  <span className="text-xs px-3 py-1 border-2 border-black dark:border-white rounded-md">Node.js</span>
+                  <span className="text-xs px-3 py-1 border-2 border-black dark:border-white rounded-md">Full Stack</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* ================= EXPERIENCE ================= */}
-        <div id="experience" className="py-16 md:py-24 px-4 md:px-6 max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 md:mb-12 text-center">Experience</h2>
+        <div className="text-center mt-8">
+          <Link
+            href="/experience"
+            className="inline-block px-6 py-3  border-1 border-black/25 rounded-xl dark:border-white/25 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
+          >
+            View All Experience →
+          </Link>
+        </div>
+      </div>
 
-          <div className="space-y-8">
-            {/* Ayunext Solutions */}
-            <div className="rounded-2xl bg-white dark:bg-neutral-900 p-6 md:p-8 hover:shadow-xl transition-all duration-300 border border-black/5 dark:border-white/5">
-              <div className="flex flex-col md:flex-row gap-6 md:gap-8">
-                {/* Company Logo/Image */}
-                <div className="flex-shrink-0">
-                  <div className="w-full md:w-64 h-64 rounded-xl flex items-center justify-center bg-white p-4">
+      {/* ================= SKILLS ================= */}
+      <div id="skills" className="py-16 md:py-24 px-4 md:px-6">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-3 sm:mb-4">Technical Skills</h2>
+          <p className="text-center opacity-60 mb-8 sm:mb-12 max-w-2xl mx-auto text-sm md:text-base">
+            Technologies and tools I use to bring ideas to life
+          </p>
+
+          <div className="grid sm:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
+            {/* Programming Languages */}
+            <div className="group rounded-2xl md:rounded-3xl bg-white dark:bg-neutral-900 p-6 md:p-8 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 border border-black/5 dark:border-white/5">
+              <h4 className="text-xl md:text-2xl font-bold mb-6 text-center">Programming Languages</h4>
+              <div className="grid grid-cols-3 sm:grid-cols-6 gap-4 md:gap-6">
+                <div className="flex flex-col items-center justify-center gap-2 group">
+                  <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
                     <img
-                      src="/ayunext.png"
-                      alt="Ayunext Solutions"
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg"
+                      alt="C"
                       className="w-full h-full object-contain"
                     />
                   </div>
+                  <span className="text-xs font-medium text-center opacity-80">C</span>
                 </div>
-
-                {/* Experience Details */}
-                <div className="flex-grow">
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
-                    <div>
-                      <h3 className="text-xl md:text-2xl font-bold mb-2">Web Development Intern</h3>
-                      <p className="text-base md:text-lg opacity-80 mb-1">Ayunext Solutions</p>
-                      <p className="text-sm opacity-70">Nashik, Maharashtra</p>
-                    </div>
-                    <div className="text-sm opacity-70 mt-2 md:mt-0">1st Sept 2025 – 30th Oct 2025</div>
+                <div className="flex flex-col items-center justify-center gap-2 group">
+                  <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+                      alt="C++"
+                      className="w-full h-full object-contain"
+                    />
                   </div>
-
-                  <div className="space-y-2 text-sm md:text-base opacity-70">
-                    <p>• Developing and maintaining web applications using modern technologies</p>
-                    <p>• Working on full-stack projects with React, Next.js, and Node.js</p>
-                    <p>• Collaborating with the team to deliver high-quality software solutions</p>
-                    <p>• Implementing responsive designs and optimizing application performance</p>
+                  <span className="text-xs font-medium text-center opacity-80">C++</span>
+                </div>
+                <div className="flex flex-col items-center justify-center gap-2 group">
+                  <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                      alt="JavaScript"
+                      className="w-full h-full object-contain"
+                    />
                   </div>
-
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    <span className="text-xs px-3 py-1 border-2 border-black dark:border-white rounded-md">React.js</span>
-                    <span className="text-xs px-3 py-1 border-2 border-black dark:border-white rounded-md">Next.js</span>
-                    <span className="text-xs px-3 py-1 border-2 border-black dark:border-white rounded-md">Node.js</span>
-                    <span className="text-xs px-3 py-1 border-2 border-black dark:border-white rounded-md">Full Stack</span>
+                  <span className="text-xs font-medium text-center opacity-80">JavaScript</span>
+                </div>
+                <div className="flex flex-col items-center justify-center gap-2 group">
+                  <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azuresqldatabase/azuresqldatabase-original.svg"
+                      alt="SQL"
+                      className="w-full h-full object-contain"
+                    />
                   </div>
+                  <span className="text-xs font-medium text-center opacity-80">SQL</span>
+                </div>
+                <div className="flex flex-col items-center justify-center gap-2 group">
+                  <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                      alt="HTML"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-center opacity-80">HTML</span>
+                </div>
+                <div className="flex flex-col items-center justify-center gap-2 group">
+                  <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                      alt="CSS"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-center opacity-80">CSS</span>
                 </div>
               </div>
             </div>
+
+            {/* Frameworks & Libraries */}
+            <div className="group rounded-2xl md:rounded-3xl bg-white dark:bg-neutral-900 p-6 md:p-8 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 border border-black/5 dark:border-white/5">
+              <h4 className="text-xl md:text-2xl font-bold mb-6 text-center">Frameworks & Libraries</h4>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6">
+                <div className="flex flex-col items-center justify-center gap-2 group">
+                  <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                      alt="React.js"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-center opacity-80">React.js</span>
+                </div>
+                <div className="flex flex-col items-center justify-center gap-2 group">
+                  <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                      alt="Node.js"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-center opacity-80">Node.js</span>
+                </div>
+                <div className="flex flex-col items-center justify-center gap-2 group">
+                  <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
+                      alt="Express.js"
+                      className="w-full h-full object-contain dark:invert"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-center opacity-80">Express.js</span>
+                </div>
+                <div className="flex flex-col items-center justify-center gap-2 group">
+                  <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
+                    <img
+                      src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+                      alt="Next.js"
+                      className="w-full h-full object-contain dark:invert"
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-center opacity-80">Next.js</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div className="text-center mt-8">
+          <Link
+            href="/skills"
+            className="inline-block px-6 py-3  border-1 border-black/25 rounded-xl dark:border-white/25 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
+          >
+            View All Skills →
+          </Link>
+        </div>
+      </div>
+
+      {/* ================= FEATURED PROJECTS ================= */}
+      <div id="projects" className="relative w-full my-24">
+        <FeaturedProjectsCarousel />
+      </div>
+
+      {/* ================= CONTACT ME ================= */}
+      <div id="contact" className="py-16 md:py-24 px-4 md:px-6 max-w-5xl mx-auto">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-6 md:mb-10">Contact Me</h2>
+
+        <div className="rounded-4xl bg-white dark:bg-neutral-900 p-8 md:p-12 hover:shadow-xl transition-all duration-300 border border-black/5 dark:border-white/5">
+          {/* Location */}
+          <div className="flex items-center justify-center gap-3 mb-8">
+            <svg className="w-6 h-6 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z" />
+            </svg>
+            <p className="text-lg md:text-xl font-semibold">Nashik, Maharashtra, India</p>
+          </div>
+
+          {/* Social Links — MagicUI Dock */}
+          <div className="flex justify-center mb-2">
+            <SocialDock />
           </div>
 
           <div className="text-center mt-8">
-            <Link
-              href="/experience"
-              className="inline-block px-6 py-3  border-1 border-black/25 rounded-xl dark:border-white/25 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
-            >
-              View All Experience →
-            </Link>
-          </div>
-        </div>
-
-        {/* ================= SKILLS ================= */}
-        <div id="skills" className="py-16 md:py-24 px-4 md:px-6">
-          <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-3 sm:mb-4">Technical Skills</h2>
-            <p className="text-center opacity-60 mb-8 sm:mb-12 max-w-2xl mx-auto text-sm md:text-base">
-              Technologies and tools I use to bring ideas to life
+            <p className="text-sm md:text-base opacity-70 mb-6">
+              Feel free to reach out for collaborations, opportunities, or just a friendly chat!
             </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
-              {/* Programming Languages */}
-              <div className="group rounded-2xl md:rounded-3xl bg-white dark:bg-neutral-900 p-6 md:p-8 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 border border-black/5 dark:border-white/5">
-                <h4 className="text-xl md:text-2xl font-bold mb-6 text-center">Programming Languages</h4>
-                <div className="grid grid-cols-3 sm:grid-cols-6 gap-4 md:gap-6">
-                  <div className="flex flex-col items-center justify-center gap-2 group">
-                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg"
-                        alt="C"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <span className="text-xs font-medium text-center opacity-80">C</span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center gap-2 group">
-                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
-                        alt="C++"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <span className="text-xs font-medium text-center opacity-80">C++</span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center gap-2 group">
-                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                        alt="JavaScript"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <span className="text-xs font-medium text-center opacity-80">JavaScript</span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center gap-2 group">
-                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azuresqldatabase/azuresqldatabase-original.svg"
-                        alt="SQL"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <span className="text-xs font-medium text-center opacity-80">SQL</span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center gap-2 group">
-                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-                        alt="HTML"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <span className="text-xs font-medium text-center opacity-80">HTML</span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center gap-2 group">
-                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
-                        alt="CSS"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <span className="text-xs font-medium text-center opacity-80">CSS</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Frameworks & Libraries */}
-              <div className="group rounded-2xl md:rounded-3xl bg-white dark:bg-neutral-900 p-6 md:p-8 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 border border-black/5 dark:border-white/5">
-                <h4 className="text-xl md:text-2xl font-bold mb-6 text-center">Frameworks & Libraries</h4>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6">
-                  <div className="flex flex-col items-center justify-center gap-2 group">
-                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
-                        alt="React.js"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <span className="text-xs font-medium text-center opacity-80">React.js</span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center gap-2 group">
-                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
-                        alt="Node.js"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                    <span className="text-xs font-medium text-center opacity-80">Node.js</span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center gap-2 group">
-                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg"
-                        alt="Express.js"
-                        className="w-full h-full object-contain dark:invert"
-                      />
-                    </div>
-                    <span className="text-xs font-medium text-center opacity-80">Express.js</span>
-                  </div>
-                  <div className="flex flex-col items-center justify-center gap-2 group">
-                    <div className="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center hover:scale-110 transition-transform duration-300">
-                      <img
-                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
-                        alt="Next.js"
-                        className="w-full h-full object-contain dark:invert"
-                      />
-                    </div>
-                    <span className="text-xs font-medium text-center opacity-80">Next.js</span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-          <div className="text-center mt-8">
             <Link
-              href="/skills"
-              className="inline-block px-6 py-3  border-1 border-black/25 rounded-xl dark:border-white/25 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition"
+              href="/contact"
+              className="inline-block px-8 py-3 border-1 border-black rounded-md dark:border-white bg-black text-white dark:bg-white dark:text-black hover:bg-transparent hover:text-black dark:hover:bg-transparent dark:hover:text-white transition-all duration-300 font-semibold"
             >
-              View All Skills →
+              Get In Touch →
             </Link>
           </div>
         </div>
+      </div>
 
-        {/* ================= FEATURED PROJECTS ================= */}
-        <div id="projects" className="relative w-full my-24">
-          <FeaturedProjectsCarousel />
-        </div>
-
-        {/* ================= CONTACT ME ================= */}
-        <div id="contact" className="py-16 md:py-24 px-4 md:px-6 max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-6 md:mb-10">Contact Me</h2>
-
-          <div className="rounded-4xl bg-white dark:bg-neutral-900 p-8 md:p-12 hover:shadow-xl transition-all duration-300 border border-black/5 dark:border-white/5">
-            {/* Location */}
-            <div className="flex items-center justify-center gap-3 mb-8">
-              <svg className="w-6 h-6 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-4.198 0-8 3.403-8 7.602 0 4.198 3.469 9.21 8 16.398 4.531-7.188 8-12.2 8-16.398 0-4.199-3.801-7.602-8-7.602zm0 11c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z" />
-              </svg>
-              <p className="text-lg md:text-xl font-semibold">Nashik, Maharashtra, India</p>
-            </div>
-
-            {/* Social Links — MagicUI Dock */}
-            <div className="flex justify-center mb-2">
-              <SocialDock />
-            </div>
-
-            <div className="text-center mt-8">
-              <p className="text-sm md:text-base opacity-70 mb-6">
-                Feel free to reach out for collaborations, opportunities, or just a friendly chat!
-              </p>
-              <Link
-                href="/contact"
-                className="inline-block px-8 py-3 border-1 border-black rounded-md dark:border-white bg-black text-white dark:bg-white dark:text-black hover:bg-transparent hover:text-black dark:hover:bg-transparent dark:hover:text-white transition-all duration-300 font-semibold"
-              >
-                Get In Touch →
-              </Link>
-            </div>
-          </div>
-        </div>
-
-      </section>
     </main>
   );
 }

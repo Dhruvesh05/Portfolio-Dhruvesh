@@ -71,42 +71,50 @@ export default function Navbar() {
                 <Link
                   key={href}
                   href={href}
-                  className="relative text-black dark:text-white text-sm lg:text-base px-2 lg:px-4 py-2 hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
+                  className="relative text-black dark:text-white text-sm lg:text-base px-2 lg:px-4 py-2 hover:bg-black/50 hover:text-white dark:hover:bg-white/50 dark:hover:text-black transition-all duration-300"
                 >
                   {label}
                 </Link>
               ))}
             </div>
 
-            {/* Desktop Theme Toggle */}
+            {/* Desktop Theme Toggle & Terminal */}
             <div className="absolute right-0 hidden md:block">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => toggleVisibility()}
                   aria-label="Toggle terminal"
-                  className="w-10 h-10 rounded-full flex items-center justify-center text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-300"
                 >
                   <span className="text-base leading-none">&gt;_</span>
                 </button>
-                <ThemeToggle />
+
+                {/* This wrapper specifically targets the internal <button> of the ThemeToggle.
+                  It forces it to be a circle and changes its background on hover to match the terminal button. 
+                */}
+                <div className="[&_button]:w-10 [&_button]:h-10 [&_button]:flex [&_button]:items-center [&_button]:justify-center [&_button]:rounded-full [&_button]:transition-colors [&_button]:duration-300 [&_button]:hover:bg-black/10 dark:[&_button]:hover:bg-white/10">
+                  <ThemeToggle />
+                </div>
               </div>
             </div>
 
-            {/* Mobile Menu Button */}
-            <div className="absolute right-0 md:hidden flex items-center gap-2">
-              <ThemeToggle />
+            {/* Mobile Menu Button, Theme Toggle & Terminal */}
+            <div className="absolute right-0 md:hidden flex items-center gap-1">
+              <div className="[&_button]:w-10 [&_button]:h-10 [&_button]:flex [&_button]:items-center [&_button]:justify-center [&_button]:rounded-full [&_button]:transition-colors [&_button]:duration-300 [&_button]:hover:bg-black/10 dark:[&_button]:hover:bg-white/10">
+                <ThemeToggle />
+              </div>
               <button
                 type="button"
                 onClick={() => toggleVisibility()}
-                className="w-10 h-10 rounded-full flex items-center justify-center text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-300"
                 aria-label="Toggle terminal"
               >
                 <span className="text-base leading-none">&gt;_</span>
               </button>
               <button
                 onClick={toggleMenu}
-                className="p-2 text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300 rounded-full"
+                className="w-10 h-10 flex items-center justify-center rounded-full text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-300"
                 aria-label="Toggle menu"
               >
                 {isOpen ? (
@@ -123,7 +131,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu Dropdown */}
         <div
           className={`md:hidden border-t border-black/10 dark:border-white/10 transition-all duration-500 ease-in-out ${isOpen ? 'max-h-150 opacity-100' : 'max-h-0 opacity-0'
             } overflow-hidden`}
@@ -135,9 +143,9 @@ export default function Navbar() {
                 toggleVisibility();
                 setIsOpen(false);
               }}
-              className="block w-full text-left px-3 py-2 rounded-lg text-sm text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
+              className="block w-full text-left px-3 py-2 rounded-lg text-sm text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors duration-300"
             >
-              <span>&gt;_</span>
+              <span>&gt;_ Terminal</span>
             </button>
             {[
               ['Home', '/'],
@@ -151,7 +159,7 @@ export default function Navbar() {
                 key={href}
                 href={href}
                 onClick={() => setIsOpen(false)}
-                className="block w-full text-left px-3 py-2 rounded-lg text-sm text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black transition-all duration-300"
+                className="block w-full text-left px-3 py-2 rounded-lg text-sm text-black dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors duration-300"
               >
                 {label}
               </Link>
